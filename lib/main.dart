@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'dart:async';
 import 'dart:convert';
-
-
+import 'screenargument.dart';
+import 'constnum.dart';
 
 void main() {
-  runApp(const HomePage());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/' : (context) => const HomePage(),
-        //'/constnum' : (context) => const ConstNum(),
+        '/constnum' : (context) => const ConstNum(),
         //'/mtype' : (context) => const Mtype(),
         //'/countnum' : (context) => const CountNum()
       },
@@ -32,28 +32,14 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class HomePage extends StatelessWidget {
-    const HomePage({super.key});
+class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    const title = 'Long List';
-
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: title,
-      home: HomePageContent(),
-    );
-  }
-}
-class HomePageContent extends StatefulWidget {
-  const HomePageContent({Key? key}) : super(key: key);
-
-  @override
-  State<HomePageContent> createState() => _HomePageContentState();
+  State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageContentState extends State<HomePageContent> {
+class _HomePageState extends State<HomePage> {
   String _data = "";
   //Map MapString;
 
@@ -111,12 +97,12 @@ class _HomePageContentState extends State<HomePageContent> {
     );
   }
 }
-class ScreenArguments {
+/*class ScreenArguments {
   final String title;
   final String message;
 
   ScreenArguments( this.title, this.message );
-}
+}*/
 
 class ItemWidget extends StatelessWidget {
   const ItemWidget({
@@ -136,8 +122,8 @@ class ItemWidget extends StatelessWidget {
       ),
       onPressed: () {
         //myReset();
-        Navigator.pushNamed(context, '/',
-            arguments: ScreenArguments("Villany", "Villany"));
+        Navigator.pushReplacementNamed(context, '/constnum',
+            arguments: ScreenArguments("username", text));
       },
       child: Text(text),
       )
@@ -228,3 +214,4 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
+
