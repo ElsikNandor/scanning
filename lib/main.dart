@@ -115,10 +115,13 @@ class ItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //final args = ModalRoute.of(context)!.settings.arguments as ScreenArguments;
-    return Center(
+    return Column(
+      children : [
+        SizedBox(height: 50,),
+     Center(
         child: ElevatedButton(
       style: ElevatedButton.styleFrom(
-        minimumSize: Size(150, 40),
+        minimumSize: Size(150, 100),
       ),
       onPressed: () {
         //myReset();
@@ -127,7 +130,11 @@ class ItemWidget extends StatelessWidget {
       },
       child: Text(text),
       )
-    );
+    ),
+      SizedBox(
+          height: 0
+      ),
+      ]) ;
 
 
     /*Card(
