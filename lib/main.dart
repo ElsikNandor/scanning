@@ -4,6 +4,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'screenargument.dart';
 import 'constnum.dart';
+import 'mtype.dart';
 
 void main() {
   runApp(const MyApp());
@@ -25,7 +26,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/' : (context) => const HomePage(),
         '/constnum' : (context) => const ConstNum(),
-        //'/mtype' : (context) => const Mtype(),
+        '/mtype' : (context) => const mType(),
         //'/countnum' : (context) => const CountNum()
       },
     );

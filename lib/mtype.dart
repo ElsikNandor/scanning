@@ -2,19 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'dart:async';
 import 'screenargument.dart';
-import 'mtype.dart';
 
 final _formKey = GlobalKey<FormState>();
-String userName = "Username";
-String meterNumber = "";
-class ConstNum extends StatefulWidget {
-  const ConstNum({Key? key}) : super(key: key);
+String argString = "Username";
+String meterType = "";
+class mType extends StatefulWidget {
+  const mType({Key? key}) : super(key: key);
 
   @override
-  State<ConstNum> createState() => _ConstNumState();
+  State<mType> createState() => _mTypeState();
 }
 
-class _ConstNumState extends State<ConstNum> {
+class _mTypeState extends State<mType> {
   String _data = "";
   //Map MapString;
 
@@ -28,12 +27,12 @@ class _ConstNumState extends State<ConstNum> {
   @override
   Widget build(BuildContext context) {
     final args = ModalRoute.of(context)!.settings.arguments as ScreenArguments;
-    userName = args.message;
+    argString = args.message;
     final formkey = GlobalKey<FormState>();
     //final ButtonStyle style = TextButton.styleFrom(textStyle:  Theme.of(context).colorScheme.onPrimary,);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Gyszbev'),
+        title: const Text('Típbev'),
         actions: <Widget>[
         TextButton.icon(
         icon: const Icon(Icons.cabin, color: Colors.white,) ,
@@ -45,39 +44,39 @@ class _ConstNumState extends State<ConstNum> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             SizedBox(
-              height:10,
+              height: 10,
             ),
-          Text(
-          "Select: " + userName ),
-        constInputForm(),
-        SizedBox(
-          height:2,
-        ),
-              SizedBox(
-                width: 110,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      onPrimary: Theme.of(context).colorScheme.onPrimary,
-                      primary: Theme.of(context).colorScheme.primary)
-                      .copyWith(elevation: ButtonStyleButton.allOrNull(0.0)),
-                  onPressed: () {
-                    setState(() {
-                      if (_formKey.currentState!.validate()) {
-                        Navigator.pushReplacementNamed(context, '/mtype',
-                            arguments: ScreenArguments("user_meter", userName+";"+meterNumber) );
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('Tovább')),);
-                      }
-                    });
+            Text(
+                "Select: " + argString ),
+            constInputForm(),
+            SizedBox(
+              height: 2,
+            ),
+            SizedBox(
+              width: 110,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    onPrimary: Theme.of(context).colorScheme.onPrimary,
+                    primary: Theme.of(context).colorScheme.primary)
+                    .copyWith(elevation: ButtonStyleButton.allOrNull(0.0)),
+                onPressed: () {
+                  setState(() {
+                    if (_formKey.currentState!.validate()) {
+                      Navigator.pushReplacementNamed(context, '/mtype',
+                          arguments: ScreenArguments("user_meter", argString+";"+meterType) );
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('Tovább')),);
+                    }
+                  });
 
-                    //calculation();
+                  //calculation();
 
 
-                  },
-                  child: Text("Tovább"),
-                ),
+                },
+                child: Text("Tovább"),
               ),
-      ])
+            ),
+          ])
     );
   }
 }
@@ -126,7 +125,7 @@ class constInputFormState extends State<constInputForm> {
         children: [
           TextFormField(
             decoration: InputDecoration(
-              labelText: 'Gyártási szám',
+              labelText: 'Gázmérő típusa',
               border: OutlineInputBorder(),
             ),
             // The validator receives the text that the user has entered.
@@ -136,13 +135,13 @@ class constInputFormState extends State<constInputForm> {
                 return 'A mező nem lehet üres!';
               }
 
-              try {
+              /*try {
                 itmp = double.parse(value);
               } catch(_) {
                 //myReset();
                 return 'A mező csak számokat tartalmazhat!';
-              }
-              meterNumber = value;
+              }*/
+              meterType = value;
               return null;
             },
           ),
