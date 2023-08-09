@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'dart:async';
 import 'screenargument.dart';
+import 'myclasses.dart';
 
 final _formKey = GlobalKey<FormState>();
 String argString = "Username";
@@ -15,11 +16,17 @@ class mType extends StatefulWidget {
 
 class _mTypeState extends State<mType> {
   String _data = "";
-  //Map MapString;
-
+  Future<void> _loadData() async {
+    final loadedData = await rootBundle.loadString('assets/metertype.txt');
+    setState(() {
+      _data = loadedData;
+    });
+  }
   void initState() {
     super.initState();
+    _loadData();
     setState(() {
+
     });
   }
 
@@ -27,56 +34,36 @@ class _mTypeState extends State<mType> {
   @override
   Widget build(BuildContext context) {
     final args = ModalRoute.of(context)!.settings.arguments as ScreenArguments;
+    int metersCount = _data.split(",").length.toInt();
     argString = args.message;
     final formkey = GlobalKey<FormState>();
     //final ButtonStyle style = TextButton.styleFrom(textStyle:  Theme.of(context).colorScheme.onPrimary,);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Típbev'),
+        title: Text(metersCount.toString()),
         actions: <Widget>[
         TextButton.icon(
         icon: const Icon(Icons.cabin, color: Colors.white,) ,
         onPressed: () { Navigator.pushReplacementNamed(context, '/'); },
-        label: const Text(''),
+        label: const Text( "" ),
       )]
       ),
-      body: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            SizedBox(
-              height: 10,
-            ),
-            Text(
-                "Select: " + argString ),
-            constInputForm(),
-            SizedBox(
-              height: 2,
-            ),
-            SizedBox(
-              width: 110,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                    onPrimary: Theme.of(context).colorScheme.onPrimary,
-                    primary: Theme.of(context).colorScheme.primary)
-                    .copyWith(elevation: ButtonStyleButton.allOrNull(0.0)),
-                onPressed: () {
-                  setState(() {
-                    if (_formKey.currentState!.validate()) {
-                      Navigator.pushReplacementNamed(context, '/mtype',
-                          arguments: ScreenArguments("user_meter", argString+";"+meterType) );
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Tovább')),);
-                    }
-                  });
-
-                  //calculation();
-
-
-                },
-                child: Text("Tovább"),
-              ),
-            ),
-          ])
+      body: Scrollbar( child:
+      GridView.count(
+        primary: false,
+        padding: const EdgeInsets.all(50),
+        mainAxisSpacing: 30,
+        crossAxisSpacing: 30,
+        crossAxisCount: 4,
+        children:
+        List.generate(metersCount, (index) {
+          return ItemWidget(text:  _data.split(",")[index],
+            path: '/readingData',
+            data: argString+';'+_data.split(",")[index],
+          );
+        }),
+      ),
+      ),
     );
   }
 }

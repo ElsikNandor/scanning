@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart' show rootBundle;
+import 'package:flutter/services.dart';
 import 'dart:async';
 import 'dart:convert';
 import 'screenargument.dart';
 import 'constnum.dart';
 import 'mtype.dart';
+import 'readingdata.dart';
+import 'myclasses.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.landscapeLeft, DeviceOrientation.landscapeRight]);
   runApp(const MyApp());
 }
 
@@ -27,6 +32,7 @@ class MyApp extends StatelessWidget {
         '/' : (context) => const HomePage(),
         '/constnum' : (context) => const ConstNum(),
         '/mtype' : (context) => const mType(),
+        '/readingData' : (context) => const readingData(),
         //'/countnum' : (context) => const CountNum()
       },
     );
@@ -42,17 +48,11 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   String _data = "";
-  //Map MapString;
-
-
-  // This function is triggered when the user presses the floating button
   Future<void> _loadData() async {
     final loadedData = await rootBundle.loadString('assets/data.txt');
     setState(() {
         _data = loadedData;
     });
-
-
   }
   void initState() {
     super.initState();
@@ -69,33 +69,26 @@ class _HomePageState extends State<HomePage> {
     int nameCount = _data.split(",").length.toInt();
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Program név'),
+        title: const Text('Adatrögzítő választó'),
       ),
-      body: LayoutBuilder(builder: (context, constraints)  {
-    return SingleChildScrollView(
-    child: ConstrainedBox(
-    constraints: BoxConstraints(minHeight: constraints.maxHeight),
-    child: Column(
-    //mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    mainAxisAlignment: MainAxisAlignment.start,
-    //crossAxisAlignment: CrossAxisAlignment.stretch,
-      crossAxisAlignment: CrossAxisAlignment.center,
-    children: List.generate(
-    nameCount, (index) => ItemWidget(text:  _data.split(",")[index])),
-    ),
-    ),
+      body: Scrollbar( child:
+        GridView.count(
+            primary: false,
+        padding: const EdgeInsets.all(50),
+        mainAxisSpacing: 30,
+    crossAxisSpacing: 30,
+    crossAxisCount: 4,
+     children:
+    List.generate(nameCount, (index) {
+    return ItemWidget(text:  _data.split(",")[index],
+        path: '/constnum',
+      data: _data.split(",")[index]
     );
+
     }),
-      /*body: Center(
-          child: SizedBox(
-              width: 300,
-              child: Text(_data.split(",").length.toString(),
-                  style: const TextStyle(fontSize: 24)))),
-              //child: Text(_data ?? 'Nothing to show',
-                //  style: const TextStyle(fontSize: 24)))),
-      floatingActionButton: FloatingActionButton(
-          onPressed: _loadData, child: const Icon(Icons.add)),*/
-    );
+      ),
+      ),
+     );
   }
 }
 /*class ScreenArguments {
@@ -105,47 +98,7 @@ class _HomePageState extends State<HomePage> {
   ScreenArguments( this.title, this.message );
 }*/
 
-class ItemWidget extends StatelessWidget {
-  const ItemWidget({
-    super.key,
-    required this.text,
-  });
 
-  final String text;
-
-  @override
-  Widget build(BuildContext context) {
-    //final args = ModalRoute.of(context)!.settings.arguments as ScreenArguments;
-    return Column(
-      children : [
-        SizedBox(height: 50,),
-     Center(
-        child: ElevatedButton(
-      style: ElevatedButton.styleFrom(
-        minimumSize: Size(150, 100),
-      ),
-      onPressed: () {
-        //myReset();
-        Navigator.pushReplacementNamed(context, '/constnum',
-            arguments: ScreenArguments("username", text));
-      },
-      child: Text(text),
-      )
-    ),
-      SizedBox(
-          height: 0
-      ),
-      ]) ;
-
-
-    /*Card(
-      child: SizedBox(
-        height: 100,
-        child: Center(child: Text(text)),
-      ),
-    );*/
-  }
-}
 
 class MyHomePage extends StatefulWidget {
   //const MyHomePage({Key? key, required this.title}) : super(key: key);
