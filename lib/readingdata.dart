@@ -46,7 +46,9 @@ class _readingDataState extends State<readingData> {
         label: const Text( "" ),
       )]
       ),
-      body:Row (
+      body:Center(
+        child:
+      Column (
       children: [
       Column(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -99,10 +101,21 @@ class _readingDataState extends State<readingData> {
                 style: TextStyle( color: Colors.white, fontWeight: FontWeight.bold),
                 "Számláló állás: ---"//+ argString.split(";")[2]
             ),
+          ),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              minimumSize: Size(150, 40),
+            ),
+            onPressed: () {
+              //myReset();
+              Navigator.pushReplacementNamed(context, '/');
+            },
+            child: Text("Mentés"),
           )
         ],
       ),
       ]
+      ),
       ),
     );
   }
