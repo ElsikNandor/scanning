@@ -40,26 +40,23 @@ class _mTypeState extends State<mType> {
     //final ButtonStyle style = TextButton.styleFrom(textStyle:  Theme.of(context).colorScheme.onPrimary,);
     return Scaffold(
       appBar: AppBar(
-        title: Text(metersCount.toString()),
+        title: Text(argString.split(";")[0]),
         actions: <Widget>[
-        TextButton.icon(
-        icon: const Icon(Icons.cabin, color: Colors.white,) ,
-        onPressed: () { Navigator.pushReplacementNamed(context, '/'); },
-        label: const Text( "" ),
-      )]
+        myMenu(username: argString.split(";")[0])
+        ]
       ),
       body: Scrollbar( child:
       GridView.count(
         primary: false,
         padding: const EdgeInsets.all(50),
-        mainAxisSpacing: 30,
-        crossAxisSpacing: 30,
-        crossAxisCount: 4,
+        mainAxisSpacing: 20,
+        crossAxisSpacing: 20,
+        crossAxisCount: 5,
         children:
         List.generate(metersCount, (index) {
           return ItemWidget(text:  _data.split(",")[index],
-            path: '/readingData',
-            data: argString+';'+_data.split(",")[index],
+            path: '/yof',
+            data: argString+';'+_data.split(",")[index], user: argString.split(";")[0]
           );
         }),
       ),

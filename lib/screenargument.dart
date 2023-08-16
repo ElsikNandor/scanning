@@ -1,6 +1,6 @@
 class ScreenArguments {
-  final String title;
+  final String user;
   final String message;
 
-  ScreenArguments( this.title, this.message );
+  ScreenArguments( this.user, this.message );
 }

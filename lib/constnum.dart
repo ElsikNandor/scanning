@@ -3,6 +3,7 @@ import 'package:flutter/services.dart' show rootBundle;
 import 'dart:async';
 import 'screenargument.dart';
 import 'mtype.dart';
+import 'myclasses.dart';
 
 final _formKey = GlobalKey<FormState>();
 String userName = "Username";
@@ -33,15 +34,18 @@ class _ConstNumState extends State<ConstNum> {
     //final ButtonStyle style = TextButton.styleFrom(textStyle:  Theme.of(context).colorScheme.onPrimary,);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Gyszbev'),
+        title: Text('Gyszbev '+ userName),
         actions: <Widget>[
-        TextButton.icon(
-        icon: const Icon(Icons.cabin, color: Colors.white,) ,
-        onPressed: () { Navigator.pushReplacementNamed(context, '/'); },
-        label: const Text(''),
-      )]
+          myMenu( username: userName,),]
       ),
-      body: Column(
+        body: SingleChildScrollView(
+          child:
+         Center(
+        child:
+        SizedBox(
+          width: 500,
+          child:
+      Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             SizedBox(
@@ -58,13 +62,16 @@ class _ConstNumState extends State<ConstNum> {
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                       onPrimary: Theme.of(context).colorScheme.onPrimary,
-                      primary: Theme.of(context).colorScheme.primary)
-                      .copyWith(elevation: ButtonStyleButton.allOrNull(0.0)),
-                  onPressed: () {
+                      primary: Theme.of(context).colorScheme.primary,
+                      minimumSize: Size(150,100),
+                      )
+                      .copyWith(elevation: ButtonStyleButton.allOrNull(0.0)
+                  ),
+                    onPressed: () {
                     setState(() {
                       if (_formKey.currentState!.validate()) {
                         Navigator.pushReplacementNamed(context, '/mtype',
-                            arguments: ScreenArguments("user_meter", userName+";"+meterNumber) );
+                            arguments: ScreenArguments(userName, userName+";"+meterNumber) );
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(content: Text('Tovább')),);
                       }
@@ -78,6 +85,9 @@ class _ConstNumState extends State<ConstNum> {
                 ),
               ),
       ])
+        )
+        )
+        )
     );
   }
 }
@@ -121,12 +131,15 @@ class constInputFormState extends State<constInputForm> {
     // Build a Form widget using the _formKey created above.
     return Form(
       key: _formKey,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+       child: //Column(
+      //   crossAxisAlignment: CrossAxisAlignment.start,
+      //   children: [
           TextFormField(
+            autofocus: true,
+            keyboardType: TextInputType.number,
             decoration: InputDecoration(
               labelText: 'Gyártási szám',
+
               border: OutlineInputBorder(),
             ),
             // The validator receives the text that the user has entered.
@@ -147,8 +160,8 @@ class constInputFormState extends State<constInputForm> {
             },
           ),
 
-        ],
-      ),
+      //   ],
+      // ),
     );
   }
 }

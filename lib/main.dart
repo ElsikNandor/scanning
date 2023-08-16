@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:scanning/fileFlutter.dart';
+import 'package:scanning/yof.dart';
 import 'dart:async';
 import 'dart:convert';
 import 'screenargument.dart';
@@ -7,6 +9,7 @@ import 'constnum.dart';
 import 'mtype.dart';
 import 'readingdata.dart';
 import 'myclasses.dart';
+import 'fileFlutter.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -29,10 +32,12 @@ class MyApp extends StatelessWidget {
       //home: const MyHomePage(title: 'Flutter Demo Home Page'),
       initialRoute: '/',
       routes: {
-        '/' : (context) => const HomePage(),
+        '/' : (context) => FlutterDemo(storage: CounterStorage()),
+        //const HomePage(),
         '/constnum' : (context) => const ConstNum(),
         '/mtype' : (context) => const mType(),
         '/readingData' : (context) => const readingData(),
+        '/yof' :  (context) => const yearOfManufacture(),
         //'/countnum' : (context) => const CountNum()
       },
     );
@@ -70,19 +75,20 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Adatrögzítő választó'),
+        actions: [myMenu(username : "")],
       ),
       body: Scrollbar( child:
         GridView.count(
             primary: false,
         padding: const EdgeInsets.all(50),
-        mainAxisSpacing: 30,
-    crossAxisSpacing: 30,
-    crossAxisCount: 4,
+        mainAxisSpacing: 20,
+    crossAxisSpacing: 20,
+    crossAxisCount: 5,
      children:
     List.generate(nameCount, (index) {
     return ItemWidget(text:  _data.split(",")[index],
         path: '/constnum',
-      data: _data.split(",")[index]
+      data: _data.split(",")[index], user: _data.split(",")[index]
     );
 
     }),
