@@ -1,12 +1,10 @@
+//import 'dart:html';
 import 'package:flutter/material.dart';
-import 'package:scanning/mtype.dart';
 import 'screenargument.dart';
-import 'main.dart';
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 import 'dart:async';
-import 'dart:typed_data';
-import 'package:flutter/services.dart' show rootBundle;
+//import 'package:permission_handler/permission_handler.dart';
 
 String _data = "";
 class ItemWidget extends StatelessWidget {
@@ -98,15 +96,37 @@ class myMenu extends StatelessWidget {
 class CounterStorage {
 
   Future<String> get _localPath async {
-    final directory = await getApplicationDocumentsDirectory();
 
-    return directory.path;
+    // if (await Permission.manageExternalStorage.isPermanentlyDenied) {
+    //   openAppSettings();
+    // }
+
+    //final directory = await getExternalStorageDirectory();
+    //final directory = await getExternalStorageDirectory();
+    //await getExternalStorageDirectory();
+    //Directory("/assets/assets/");
+    //final directory = await Directory("/datas/");
+    if( Platform.isAndroid == true){
+      final directory = await Directory("/storage/emulated/0/Documents/");
+      return directory.path;
+    }
+    else
+      {
+        final directory = await Directory("./build/windows/runner/Release/datas/");
+        return directory.path;
+      }
+    //  if( Platform.isAndroid ){
+    //   final directory = await getApplicationDocumentsDirectory();
+    //   return directory.path;
+    // }
+
 
   }
 
   Future<File> get _localFile async {
     final path = await _localPath;
-      return File('$path/counter.txt');
+    String allpath = path + "counter.txt";
+      return File(allpath);
   }
 
   Future<int> readCounter() async {
@@ -133,8 +153,14 @@ class CounterStorage {
 
   Future<void> copyToAssets() async {
     final File file = await _localFile;
-    file.copy("${_localPath}/ize/");
+    file.copy("${_localPath}/counter2.txt");
     print("write");
+  }
+
+  Future<String> getPath() async {
+    final f = await _localPath;
+
+    return f;
   }
 
 }

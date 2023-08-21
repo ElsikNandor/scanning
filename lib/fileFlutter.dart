@@ -1,10 +1,14 @@
+// import 'dart:html';
 import 'dart:async';
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'myclasses.dart';
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:platform/platform.dart';
+
 void main() {
   runApp(
     MaterialApp(
@@ -27,30 +31,79 @@ class FlutterDemo extends StatefulWidget {
 
 class _FlutterDemoState extends State<FlutterDemo> {
   int _counter = 0;
+  String hhh = "---";
+  bool _allowWriteFile = false;
+  String path = "dirs";
 
   @override
   void initState() {
     super.initState();
+    requestPermission();
+    fWrite();
     widget.storage.readCounter().then((value) {
       setState(() {
         _counter = value;
-
+      });
+    });
+   widget.storage.getPath().then((value) {
+      setState(() {
+        path = value;
       });
     });
   }
 
+  Future<void> requestPermission() async {
+    final permission = Permission.manageExternalStorage;
+    var status = await Permission.manageExternalStorage.status;
+    bool isShown = await Permission.manageExternalStorage
+        .shouldShowRequestRationale;
+    PermissionStatus _permissionStatus = PermissionStatus.denied;
+
+
+    if (status.isDenied || status.isGranted == false) {
+      hhh = "Permission is denied :(";
+      await Permission.manageExternalStorage.request();
+      hhh += " req";
+      if (await Permission.manageExternalStorage
+          .request()
+          .isGranted ||
+          await Permission.storage
+              .request()
+              .isGranted ) {
+        PermissionStatus permissionStatus =
+        await Permission.manageExternalStorage.status;
+        hhh += " req granted";
+        setState(() {
+          _permissionStatus = permissionStatus;
+          hhh = _permissionStatus.toString();
+        });
+      }
+
+      //openAppSettings();
+    }
+    else{
+       hhh = "ok";
+    }
+
+  }
   Future<File> _incrementCounter() {
     setState(() {
       _counter++;
-      widget.storage.copyToAssets();
+      //widget.storage.copyToAssets();
     });
 
     // Write the variable as a string to the file.
     return widget.storage.writeCounter(_counter);
   }
 
+  Future<void> fWrite() async  {
+    var file = await File('./file.txt');
+    var sink = await file.openWrite();
+    sink.write('FILE ACCESSED ${DateTime.now()}\n');
 
-
+    // Close the IOSink to free system resources.
+    sink.close();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,9 +112,17 @@ class _FlutterDemoState extends State<FlutterDemo> {
         title: const Text('Reading and Writing Files'),
       ),
       body: Center(
-        child: Text(
-          'Button tapped $_counter time${_counter == 1 ? '' : 's'}.',
-        ),
+        child: Column(
+          children: [
+            Text(
+              'Button tapped $_counter time${_counter == 1 ? '' : 's'}.',
+            ),
+            Text(hhh),
+            Text(path),
+          ],
+        )
+
+
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
