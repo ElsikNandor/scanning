@@ -112,7 +112,8 @@ class CounterStorage {
     }
     else
       {
-        final directory = await Directory("./build/windows/runner/Release/datas/");
+        //final directory = await Directory("./build/windows/runner/Release/datas/");
+        final directory = await Directory("c:/src/");
         return directory.path;
       }
     //  if( Platform.isAndroid ){
@@ -124,8 +125,10 @@ class CounterStorage {
   }
 
   Future<File> get _localFile async {
+    DateTime today = DateTime.now();
+    String dateStr = "${today.year}_${today.month}_${today.day}";
     final path = await _localPath;
-    String allpath = path + "counter.txt";
+    String allpath = path + "mero_bontas_"+dateStr;
       return File(allpath);
   }
 
