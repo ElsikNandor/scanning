@@ -5,7 +5,7 @@ import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 import 'dart:async';
 //import 'package:permission_handler/permission_handler.dart';
-
+import 'package:permission_handler/permission_handler.dart';
 String _data = "";
 class ItemWidget extends StatelessWidget {
   const ItemWidget({
@@ -93,7 +93,11 @@ class myMenu extends StatelessWidget {
   State<cStorage> createState() => _CounterStorage();
 }
 */
-class CounterStorage {
+class CounterStorage  {
+  const CounterStorage({required this.filename});
+
+  final String filename;
+
 
   Future<String> get _localPath async {
 
@@ -106,10 +110,12 @@ class CounterStorage {
     //await getExternalStorageDirectory();
     //Directory("/assets/assets/");
     //final directory = await Directory("/datas/");
+
     if( Platform.isAndroid == true){
-      final directory = await Directory("/storage/emulated/0/Documents/");
-      return directory.path;
-    }
+         // await Directory("/stdorage/emulated/0/Documents/").exists();
+        final directory = await Directory("/stdorage/emulated/0/Documents/");
+        return directory.path;
+     }
     else
       {
         //final directory = await Directory("./build/windows/runner/Release/datas/");
@@ -124,13 +130,18 @@ class CounterStorage {
 
   }
 
+  Future<String> getFileName() async{
+    return filename;
+  }
+
   Future<File> get _localFile async {
     DateTime today = DateTime.now();
     String dateStr = "${today.year}_${today.month}_${today.day}";
-    final path = await _localPath;
-    String allpath = path + "mero_bontas_"+dateStr;
+     final path = await _localPath;
+      final filename = await getFileName();
+      String allpath = "$path"+"$filename"+"_"+"$dateStr"+"tesz2.csv";
       return File(allpath);
-  }
+    }
 
   Future<int> readCounter() async {
     try {
@@ -142,16 +153,31 @@ class CounterStorage {
       return int.parse(contents);
 
     } catch (e) {
-      // If encountering an error, return 0
+      print("nincs!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
       return 0;
     }
   }
 
-  Future<File> writeCounter(int counter) async {
+  Future<int> writeMeterData(String meterdata) async {
     final file = await _localFile;
+    try{
+       if ( file.existsSync() == true ){
+        file.writeAsString('$meterdata\n', mode: FileMode.append, encoding: SystemEncoding());
+        print("van");
+      }
+        else
+          {
+            file.writeAsString('$meterdata\n', encoding: SystemEncoding());
+            print("nincs");
+          }
 
+      return 1;
+    }
+    catch(e){
+      return 0;
+    }
     // Write the file
-    return file.writeAsString('$counter');
+
   }
 
   Future<void> copyToAssets() async {

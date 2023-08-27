@@ -13,12 +13,27 @@ void main() {
   runApp(
     MaterialApp(
       title: 'Reading and Writing Files',
-      home: FlutterDemo(storage: CounterStorage()),
+      home: xd()
+        // FlutterDemo(storage: CounterStorage("l")),
     ),
   );
 }
 
+class xd extends StatefulWidget {
+  const xd({super.key});
 
+  @override
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold();
+  }
+
+  @override
+  State<StatefulWidget> createState() {
+    // TODO: implement createState
+    throw UnimplementedError();
+  }
+}
 
 class FlutterDemo extends StatefulWidget {
   const FlutterDemo({super.key, required this.storage});
@@ -30,26 +45,25 @@ class FlutterDemo extends StatefulWidget {
 }
 
 class _FlutterDemoState extends State<FlutterDemo> {
-  int _counter = 0;
+  String _counter = "";
   String hhh = "---";
-  bool _allowWriteFile = false;
   String path = "dirs";
-
+  bool _allowWriteFile = false;
   @override
   void initState() {
     super.initState();
     requestPermission();
     fWrite();
-    widget.storage.readCounter().then((value) {
-      setState(() {
-        _counter = value;
-      });
-    });
-   widget.storage.getPath().then((value) {
-      setState(() {
-        path = value;
-      });
-    });
+   //  widget.storage.readCounter().then((value) {
+   //    setState(() {
+   //      _counter = "";
+   //    });
+   //  });
+   // widget.storage.getPath().then((value) {
+   //    setState(() {
+   //      path = value;
+   //    });
+   //  });
   }
 
   Future<void> requestPermission() async {
@@ -86,15 +100,16 @@ class _FlutterDemoState extends State<FlutterDemo> {
     }
 
   }
-  Future<File> _incrementCounter() {
-    setState(() {
-      _counter++;
-      //widget.storage.copyToAssets();
-    });
-
-    // Write the variable as a string to the file.
-    return widget.storage.writeCounter(_counter);
-  }
+  // Future<File> _incrementCounter() {
+  //   setState(() {
+  //     _counter = "";
+  //     //widget.storage.copyToAssets();
+  //   });
+  //
+  //   // Write the variable as a string to the file.
+  //   widget.storage.writeMeterData("l");
+  //   return widget.storage.getPath();
+  // }
 
   Future<void> fWrite() async  {
     var file = await File('./file.txt');
@@ -124,11 +139,11 @@ class _FlutterDemoState extends State<FlutterDemo> {
 
 
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   // onPressed: _incrementCounter,
+      //   tooltip: 'Increment',
+      //   child: const Icon(Icons.add),
+      // ),
     );
   }
 }

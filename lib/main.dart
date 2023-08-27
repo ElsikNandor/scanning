@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:scanning/fileFlutter.dart';
 import 'package:scanning/yof.dart';
 import 'dart:async';
-import 'dart:convert';
-import 'screenargument.dart';
 import 'constnum.dart';
 import 'mtype.dart';
 import 'readingdata.dart';
 import 'myclasses.dart';
-import 'fileFlutter.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -32,8 +29,8 @@ class MyApp extends StatelessWidget {
       //home: const MyHomePage(title: 'Flutter Demo Home Page'),
       initialRoute: '/',
       routes: {
-        '/' : (context) => FlutterDemo(storage: CounterStorage()),
-        //const HomePage(),
+        //'/' : (context) => FlutterDemo(storage: CounterStorage()),
+        '/' : (context) => const HomePage(),
         '/constnum' : (context) => const ConstNum(),
         '/mtype' : (context) => const mType(),
         '/readingData' : (context) => const readingData(),
@@ -53,14 +50,57 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   String _data = "";
+  String hhh = "---";
+  String path = "dirs";
+
   Future<void> _loadData() async {
     final loadedData = await rootBundle.loadString('assets/data.txt');
     setState(() {
         _data = loadedData;
     });
   }
+
+  Future<void> requestPermission() async {
+    final permission = Permission.manageExternalStorage;
+    var status = await Permission.manageExternalStorage.status;
+    bool isShown = await Permission.manageExternalStorage
+        .shouldShowRequestRationale;
+    PermissionStatus _permissionStatus = PermissionStatus.denied;
+
+    await Permission.manageExternalStorage.request();
+    if (status.isDenied || status.isGranted == false) {
+      hhh = "Permission is denied :(";
+      await Permission.manageExternalStorage.request();
+      //hhh += " req";
+      if (await Permission.manageExternalStorage
+          .request()
+          .isGranted ||
+          await Permission.storage
+              .request()
+              .isGranted ) {
+        PermissionStatus permissionStatus =
+        await Permission.manageExternalStorage.status;
+        //hhh += " req granted";
+        setState(() {
+          _permissionStatus = permissionStatus;
+          //hhh = _permissionStatus.toString();
+        });
+      }
+
+      //openAppSettings();
+    }
+    else{
+      setState(() {
+        hhh = "ok";
+      });
+
+    }
+
+  }
+
   void initState() {
     super.initState();
+    requestPermission();
     _loadData();
     String? savedValue = "";
       setState(() {
@@ -74,7 +114,7 @@ class _HomePageState extends State<HomePage> {
     int nameCount = _data.split(",").length.toInt();
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Adatrögzítő választó'),
+        title: Text("Adatrögzítő választó. perm: $hhh"),
         actions: [myMenu(username : "")],
       ),
       body: Scrollbar( child:

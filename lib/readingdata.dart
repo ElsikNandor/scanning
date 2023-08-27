@@ -40,6 +40,7 @@ class _readingDataState extends State<readingData> {
     int metersCount = _data.split(",").length.toInt();
     argString = args.message;
     final CounterStorage storage;
+    String saveStatus = "";
     //final ButtonStyle style = TextButton.styleFrom(textStyle:  Theme.of(context).colorScheme.onPrimary,);
     return Scaffold(
       appBar: AppBar(
@@ -58,8 +59,8 @@ class _readingDataState extends State<readingData> {
         crossAxisAlignment: CrossAxisAlignment.center,
         //mainAxisAlignment:const  MainAxisAlignment.center,
         children: [
-           const Text(
-              "fileName().toString();"
+            Text(
+              argString
            ),
           SizedBox(height: 20,),
           Container(
@@ -105,19 +106,57 @@ class _readingDataState extends State<readingData> {
                   SizedBox(
                     height: 20,
                   ),
-          ElevatedButton(
+          ElevatedButton.icon(
             style: ElevatedButton.styleFrom(
               minimumSize: Size(150, 100),
               maximumSize: Size(150, 100),
+              primary: Colors.green,
+
+            ),
+            icon: Icon(
+                Icons.done,
+              size: 24,
             ),
             onPressed: () {
               //myReset();
 
+              //setState(() {
+                try{
+                  CounterStorage(filename : "meterdata").writeMeterData(argString);
+                  saveStatus ="Sikeres mentés!";
+                }catch (e) {
+                  // If encountering an error, return 0
+                  saveStatus ="Nem sikerült a mentés! Kérj segítséget!";
+                }
+                ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text(saveStatus)));
+              //});
               //Navigator.pushReplacementNamed(context, "/constnum",
                 //  arguments: ScreenArguments(argString.split(";")[0], argString.split(";")[0]));
             },
-            child: Text("Mentés"),
-          )
+            label: Text("Jó"),
+          ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  ElevatedButton.icon(
+                    style: ElevatedButton.styleFrom(
+                      minimumSize: Size(150, 100),
+                      maximumSize: Size(150, 100),
+                      primary: Colors.red,
+                      
+                    ),
+                    onPressed: () {
+                      //myReset();
+
+                      //Navigator.pushReplacementNamed(context, "/constnum",
+                      //  arguments: ScreenArguments(argString.split(";")[0], argString.split(";")[0]));
+                    },
+                    icon: Icon( Icons.restore_from_trash,
+                      size: 24,
+                    ),
+                    label: Text("Selejt"),
+                  )
                 ]
                 )
               ],
