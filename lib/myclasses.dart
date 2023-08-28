@@ -94,10 +94,20 @@ class myMenu extends StatelessWidget {
 }
 */
 class CounterStorage  {
-  const CounterStorage({required this.filename});
+ // const CounterStorage({required this.filename});
 
-  final String filename;
+  String filename = "";
+  String adroidDir = "/storage/emulated/0/Documents/";
+  String winDir = "c:/src/";
 
+  Future<String> getFileName() async {
+    return await this.filename;
+  }
+
+  Future<void> setFName(String fn) async
+  {
+    this.filename = fn;
+  }
 
   Future<String> get _localPath async {
 
@@ -112,15 +122,27 @@ class CounterStorage  {
     //final directory = await Directory("/datas/");
 
     if( Platform.isAndroid == true){
+      final directory = await Directory(this.adroidDir);
          // await Directory("/stdorage/emulated/0/Documents/").exists();
-        final directory = await Directory("/stdorage/emulated/0/Documents/");
+        if( !directory.existsSync() ){
+          final directory = await getApplicationDocumentsDirectory();
+          return directory.path;
+        }
         return directory.path;
+
      }
     else
       {
         //final directory = await Directory("./build/windows/runner/Release/datas/");
-        final directory = await Directory("c:/src/");
-        return directory.path;
+          final directory = await Directory(this.winDir);
+          if ( !directory.existsSync() )
+            {
+              final directory = await Directory.current;
+              print("bub");
+              print(directory.path as String);
+              return directory.path;
+            }
+          return directory.path;
       }
     //  if( Platform.isAndroid ){
     //   final directory = await getApplicationDocumentsDirectory();
@@ -130,16 +152,13 @@ class CounterStorage  {
 
   }
 
-  Future<String> getFileName() async{
-    return filename;
-  }
 
   Future<File> get _localFile async {
     DateTime today = DateTime.now();
     String dateStr = "${today.year}_${today.month}_${today.day}";
      final path = await _localPath;
-      final filename = await getFileName();
-      String allpath = "$path"+"$filename"+"_"+"$dateStr"+"tesz2.csv";
+      final fn = this.filename;
+      String allpath = "$path"+"$fn"+"_"+"$dateStr"+".csv";
       return File(allpath);
     }
 

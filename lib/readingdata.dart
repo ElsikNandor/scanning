@@ -39,7 +39,7 @@ class _readingDataState extends State<readingData> {
     final args = ModalRoute.of(context)!.settings.arguments as ScreenArguments;
     int metersCount = _data.split(",").length.toInt();
     argString = args.message;
-    final CounterStorage storage;
+    final CounterStorage storage = CounterStorage();
     String saveStatus = "";
     //final ButtonStyle style = TextButton.styleFrom(textStyle:  Theme.of(context).colorScheme.onPrimary,);
     return Scaffold(
@@ -119,17 +119,23 @@ class _readingDataState extends State<readingData> {
             ),
             onPressed: () {
               //myReset();
-
+                storage.filename = "meterdata_good_" ;
               //setState(() {
                 try{
-                  CounterStorage(filename : "meterdata").writeMeterData(argString);
-                  saveStatus ="Sikeres mentés!";
+                  storage.writeMeterData(argString);
+                  setState(() {
+                    saveStatus ="Sikeres mentés!";
+                  });
+
                 }catch (e) {
                   // If encountering an error, return 0
-                  saveStatus ="Nem sikerült a mentés! Kérj segítséget!";
+                  setState(() {
+                    saveStatus ="Nem sikerült a mentés! Kérj segítséget!";
+                  });
+
                 }
                 ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text(saveStatus)));
+                    SnackBar(content: Text(saveStatus +" " + storage.filename)));
               //});
               //Navigator.pushReplacementNamed(context, "/constnum",
                 //  arguments: ScreenArguments(argString.split(";")[0], argString.split(";")[0]));
@@ -148,7 +154,23 @@ class _readingDataState extends State<readingData> {
                     ),
                     onPressed: () {
                       //myReset();
+                      storage.filename = "meterdata_waster_" ;
+                      //setState(() {
+                      try{
+                        storage.writeMeterData(argString);
+                        setState(() {
+                          saveStatus ="Sikeres mentés!";
+                        });
 
+                      }catch (e) {
+                        // If encountering an error, return 0
+                        setState(() {
+                          saveStatus ="Nem sikerült a mentés! Kérj segítséget!";
+                        });
+
+                      }
+                      ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text(saveStatus +" " + storage.filename)));
                       //Navigator.pushReplacementNamed(context, "/constnum",
                       //  arguments: ScreenArguments(argString.split(";")[0], argString.split(";")[0]));
                     },
