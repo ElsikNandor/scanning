@@ -3,18 +3,19 @@ import 'package:flutter/services.dart' show rootBundle;
 import 'dart:async';
 import 'screenargument.dart';
 import 'myclasses.dart';
+import 'gears_map.dart';
 
 final _formKey = GlobalKey<FormState>();
 String argString = "Username";
 String meterType = "";
-class yearOfManufacture extends StatefulWidget {
-  const yearOfManufacture({Key? key}) : super(key: key);
+class GearPairs extends StatefulWidget {
+  const GearPairs({Key? key}) : super(key: key);
 
   @override
-  State<yearOfManufacture> createState() => _yearOfManufactureState();
+  State<GearPairs> createState() => _GearPairsState();
 }
 
-class _yearOfManufactureState extends State<yearOfManufacture> {
+class _GearPairsState extends State<GearPairs> {
   String _data = "";
   Future<void> _loadData() async {
     final loadedData = await rootBundle.loadString('assets/yofs.txt');
@@ -29,7 +30,7 @@ class _yearOfManufactureState extends State<yearOfManufacture> {
 
     });
   }
-
+  //List<String> g = gears[0];
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +46,13 @@ class _yearOfManufactureState extends State<yearOfManufacture> {
             myMenu(username: argString.split(";")[0])
           ]
       ),
-      body: Scrollbar( child:
+      body:
+        Column(
+          children:
+          Text(gears[0]["csk"] as String),
+
+        )
+      /*Scrollbar( child:
       GridView.count(
         primary: false,
         padding: const EdgeInsets.all(50),
@@ -53,14 +60,15 @@ class _yearOfManufactureState extends State<yearOfManufacture> {
         crossAxisSpacing: 20,
         crossAxisCount: 5,
         children:
-        List.generate(metersCount, (index) {
-          return ItemWidget(text:  _data.split(",")[index],
+        List.generate(gears.length, (index) {
+          var g = gears[0];
+          return ItemWidget(text: index.toString(),
               path: '/countpos',
               data: argString+';'+_data.split(",")[index], user: argString.split(";")[0]
           );
         }),
       ),
-      ),
+      ),*/
     );
   }
 }

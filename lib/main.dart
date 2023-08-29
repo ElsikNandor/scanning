@@ -7,6 +7,8 @@ import 'mtype.dart';
 import 'readingdata.dart';
 import 'myclasses.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'counting_position.dart';
+import 'gear_pairs.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -35,6 +37,8 @@ class MyApp extends StatelessWidget {
         '/mtype' : (context) => const mType(),
         '/readingData' : (context) => const readingData(),
         '/yof' :  (context) => const yearOfManufacture(),
+        '/countpos' : (context) => const CountPos(),
+        '/gearpairs' : (context) => const GearPairs(),
         //'/countnum' : (context) => const CountNum()
       },
     );

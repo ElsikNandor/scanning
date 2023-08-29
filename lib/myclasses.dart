@@ -97,8 +97,8 @@ class CounterStorage  {
  // const CounterStorage({required this.filename});
 
   String filename = "";
-  String adroidDir = "/storage/emulated/0/Documents/";
-  String winDir = "c:/src/";
+  String adroidDir = "/storage/emulated/0/Documents";
+  String winDir = "c:/srtc";
 
   Future<String> getFileName() async {
     return await this.filename;
@@ -158,7 +158,7 @@ class CounterStorage  {
     String dateStr = "${today.year}_${today.month}_${today.day}";
      final path = await _localPath;
       final fn = this.filename;
-      String allpath = "$path"+"$fn"+"_"+"$dateStr"+".csv";
+      String allpath = "$path/"+"$fn"+"_"+"$dateStr"+".csv";
       return File(allpath);
     }
 

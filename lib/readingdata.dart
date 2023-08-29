@@ -95,7 +95,9 @@ class _readingDataState extends State<readingData> {
             ),
           ),
            SizedBox(height: 5,),
-          myListElements(title: "Gyártási Év:", content: argString.split(";")[3])
+          myListElements(title: "Gyártási Év:", content: argString.split(";")[3]),
+          SizedBox(height: 5,),
+          myListElements(title: "Számlálóállás:", content: argString.split(";")[4]),
         ],
       ),
                 Column(
