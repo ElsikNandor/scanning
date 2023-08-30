@@ -9,6 +9,9 @@ import 'myclasses.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'counting_position.dart';
 import 'gear_pairs.dart';
+import 'gears_map.dart';
+
+fileManip fmanip = new fileManip();
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -106,6 +109,8 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     requestPermission();
     _loadData();
+    //fmanip.readItronGears();
+    //fmanip.loadItronGears();
     String? savedValue = "";
       setState(() {
         savedValue = _data;

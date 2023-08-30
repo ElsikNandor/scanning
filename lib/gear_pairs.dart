@@ -8,6 +8,8 @@ import 'gears_map.dart';
 final _formKey = GlobalKey<FormState>();
 String argString = "Username";
 String meterType = "";
+fileManip fmanip = new fileManip();
+List gear = [];
 class GearPairs extends StatefulWidget {
   const GearPairs({Key? key}) : super(key: key);
 
@@ -17,26 +19,32 @@ class GearPairs extends StatefulWidget {
 
 class _GearPairsState extends State<GearPairs> {
   String _data = "";
-  Future<void> _loadData() async {
-    final loadedData = await rootBundle.loadString('assets/yofs.txt');
-    setState(() {
-      _data = loadedData;
-    });
-  }
+  var gearsdata = fmanip.loadItronGears();
   void initState() {
     super.initState();
-    _loadData();
-    setState(() {
-
+     setState(() {
+      loadGearList();
+        //gears = gearsdata;
     });
   }
 
+  Future<void> loadGearList() async {
+
+    gears = await fmanip.loadItronGears();
+    print("f" + gears.length.toString());
+}
   //gasMeterGear g = gears[0];
 
   @override
   Widget build(BuildContext context) {
-    final args = ModalRoute.of(context)!.settings.arguments as ScreenArguments;
-    int metersCount = _data.split(",").length.toInt();
+    final args = ModalRoute
+        .of(context)!
+        .settings
+        .arguments as ScreenArguments;
+    int metersCount = _data
+        .split(",")
+        .length
+        .toInt();
     argString = args.message;
     final formkey = GlobalKey<FormState>();
     //final ButtonStyle style = TextButton.styleFrom(textStyle:  Theme.of(context).colorScheme.onPrimary,);
@@ -47,13 +55,42 @@ class _GearPairsState extends State<GearPairs> {
             myMenu(username: argString.split(";")[0])
           ]
       ),
-      body:
-        Column(
-          children: [
-            Text( " ize : " + gears[0].gear  ),
-          ]
-
-        )
+      body: Scrollbar(child:
+      GridView.count(
+        primary: false,
+        padding: const EdgeInsets.all(30),
+        mainAxisSpacing: 30,
+        crossAxisSpacing: 30,
+        crossAxisCount: 5,
+        children:
+        List.generate(gears.length, (index) {
+          return ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              minimumSize: Size(20, 20),
+              maximumSize: Size(50, 50),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(130.0)
+              ),
+            ),
+            onPressed: () {
+              //myReset();
+              //Navigator.pushReplacementNamed(context, path,
+              //  arguments: ScreenArguments(user, data));
+            },
+            child: Text(index.toString() + gears[index].gear + " " + gears[index].color + " " +
+                gears[index].hole),
+          );
+        }),
+      ),
+      ),
+    );
+  }
+        // Column(
+        //   children: [
+        //     Text( " ize : " + gears[1].color  ),
+        //   ]
+        //
+        // )
       /*Scrollbar( child:
       GridView.count(
         primary: false,
@@ -71,6 +108,4 @@ class _GearPairsState extends State<GearPairs> {
         }),
       ),
       ),*/
-    );
-  }
 }

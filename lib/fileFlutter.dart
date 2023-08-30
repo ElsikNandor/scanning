@@ -5,6 +5,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:scanning/readingdata.dart';
 import 'myclasses.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:platform/platform.dart';
@@ -37,9 +38,7 @@ class xd extends StatefulWidget {
 
 class FlutterDemo extends StatefulWidget {
   const FlutterDemo({super.key, required this.storage});
-
   final CounterStorage storage;
-
   @override
   State<FlutterDemo> createState() => _FlutterDemoState();
 }
