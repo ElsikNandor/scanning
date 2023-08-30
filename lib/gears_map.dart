@@ -6,10 +6,96 @@
   Map<String, dynamic> filmJedi     = {"title": "The Return of the Jedi",
     "year": 1983};
 
- Map<int, Map<String, String>> gears = {0 : {"csk":'1', "2" : '2', "3" : '3'} };
+ List<gasMeterGear> gears = [
+   gasMeterGear(gear: "32/40", color: "white", hole: "1"),
+   gasMeterGear(gear: "g", color: "c", hole: "h"),
+   gasMeterGear(gear: "g", color: "c", hole: "h"),
+   gasMeterGear(gear: "g", color: "c", hole: "h"),
+   gasMeterGear(gear: "g", color: "c", hole: "h"),
+   gasMeterGear(gear: "g", color: "c", hole: "h"),
+   gasMeterGear(gear: "g", color: "c", hole: "h"),
+   gasMeterGear(gear: "g", color: "c", hole: "h"),
+   gasMeterGear(gear: "g", color: "c", hole: "h"),
+   gasMeterGear(gear: "g", color: "c", hole: "h"),
+   gasMeterGear(gear: "g", color: "c", hole: "h"),
+   gasMeterGear(gear: "g", color: "c", hole: "h"),
+   gasMeterGear(gear: "g", color: "c", hole: "h"),
+   gasMeterGear(gear: "g", color: "c", hole: "h"),
+   gasMeterGear(gear: "g", color: "c", hole: "h"),
+   gasMeterGear(gear: "g", color: "c", hole: "h"),
+   gasMeterGear(gear: "g", color: "c", hole: "h"),
+   gasMeterGear(gear: "g", color: "c", hole: "h"),
+   gasMeterGear(gear: "g", color: "c", hole: "h"),
+   gasMeterGear(gear: "g", color: "c", hole: "h"),
+   gasMeterGear(gear: "g", color: "c", hole: "h"),
+   gasMeterGear(gear: "g", color: "c", hole: "h"),
+   gasMeterGear(gear: "g", color: "c", hole: "h"),
+   gasMeterGear(gear: "g", color: "c", hole: "h"),
+   gasMeterGear(gear: "g", color: "c", hole: "h"),
+   gasMeterGear(gear: "g", color: "c", hole: "h"),
+   gasMeterGear(gear: "g", color: "c", hole: "h"),
+   gasMeterGear(gear: "g", color: "c", hole: "h"),
+   gasMeterGear(gear: "g", color: "c", hole: "h"),
+   gasMeterGear(gear: "g", color: "c", hole: "h"),
+   gasMeterGear(gear: "g", color: "c", hole: "h"),
+   gasMeterGear(gear: "g", color: "c", hole: "h"),
+   gasMeterGear(gear: "g", color: "c", hole: "h"),
+   gasMeterGear(gear: "g", color: "c", hole: "h"),
+   gasMeterGear(gear: "g", color: "c", hole: "h"),
+   gasMeterGear(gear: "g", color: "c", hole: "h"),
+   gasMeterGear(gear: "g", color: "c", hole: "h"),
+   gasMeterGear(gear: "g", color: "c", hole: "h"),
+   gasMeterGear(gear: "g", color: "c", hole: "h"),
+   gasMeterGear(gear: "g", color: "c", hole: "h"),
+   gasMeterGear(gear: "g", color: "c", hole: "h"),
+   gasMeterGear(gear: "g", color: "c", hole: "h"),
+   gasMeterGear(gear: "g", color: "c", hole: "h"),
+   gasMeterGear(gear: "g", color: "c", hole: "h"),
+   gasMeterGear(gear: "g", color: "c", hole: "h"),
+   gasMeterGear(gear: "g", color: "c", hole: "h"),
+   gasMeterGear(gear: "g", color: "c", hole: "h"),
+   gasMeterGear(gear: "g", color: "c", hole: "h"),
+   gasMeterGear(gear: "g", color: "c", hole: "h"),
+   gasMeterGear(gear: "g", color: "c", hole: "h"),
+   gasMeterGear(gear: "g", color: "c", hole: "h"),
+   gasMeterGear(gear: "g", color: "c", hole: "h"),
+   gasMeterGear(gear: "g", color: "c", hole: "h"),
+   gasMeterGear(gear: "g", color: "c", hole: "h"),
+   gasMeterGear(gear: "g", color: "c", hole: "h"),
+   gasMeterGear(gear: "g", color: "c", hole: "h"),
+   gasMeterGear(gear: "g", color: "c", hole: "h"),
+   gasMeterGear(gear: "g", color: "c", hole: "h"),
+   gasMeterGear(gear: "g", color: "c", hole: "h"),
+   gasMeterGear(gear: "g", color: "c", hole: "h"),
+   gasMeterGear(gear: "g", color: "c", hole: "h"),
+   gasMeterGear(gear: "g", color: "c", hole: "h"),
+   gasMeterGear(gear: "g", color: "c", hole: "h"),
+   gasMeterGear(gear: "g", color: "c", hole: "h"),
+   gasMeterGear(gear: "g", color: "c", hole: "h"),
+   gasMeterGear(gear: "g", color: "c", hole: "h"),
+   gasMeterGear(gear: "g", color: "c", hole: "h"),
+   gasMeterGear(gear: "g", color: "c", hole: "h"),
+   gasMeterGear(gear: "g", color: "c", hole: "h"),
+   gasMeterGear(gear: "g", color: "c", hole: "h"),
+   gasMeterGear(gear: "g", color: "c", hole: "h"),
+   gasMeterGear(gear: "g", color: "c", hole: "h"),
+
+ ];
 
 //  print(currentFilm);
  // print(currentFilm['title']);
 var json = {
   'user': ['Lily', 13]
 };
+
+class gasMeterGear {
+  gasMeterGear({
+  required this.gear,
+    required this.color,
+    required this.hole
+  });
+
+  String gear = "x1";
+  String color = "x2";
+  String hole = "x3";
+}

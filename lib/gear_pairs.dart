@@ -30,7 +30,8 @@ class _GearPairsState extends State<GearPairs> {
 
     });
   }
-  //List<String> g = gears[0];
+
+  //gasMeterGear g = gears[0];
 
   @override
   Widget build(BuildContext context) {
@@ -48,8 +49,9 @@ class _GearPairsState extends State<GearPairs> {
       ),
       body:
         Column(
-          children:
-          Text(gears[0]["csk"] as String),
+          children: [
+            Text( " ize : " + gears[0].gear  ),
+          ]
 
         )
       /*Scrollbar( child:
