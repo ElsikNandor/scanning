@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';
+import 'package:flutter/material.dart';
 
 //var gears ={ {"32/40", "white", "1"}, {"11", "kk", "2"} };
   Map<String, dynamic> filmStarWars = {"title": "Star Wars",
@@ -80,4 +81,32 @@ class gasMeterGear {
   String gear = "x1";
   String color = "x2";
   String hole = "x3";
+}
+
+class GearsColor {
+     GearsColor({
+        required this.color,
+    });
+
+    String color = "";
+
+    Color gearcolor = Colors.white;
+
+    Color getGearColor()
+    {
+      switch(color) {
+        case 'white' :
+          gearcolor = Colors.white;
+          break;
+        case 'red' :
+          gearcolor = Colors.red;
+          break;
+        case 'brown' :
+          gearcolor = Colors.brown;
+          break;
+      }
+    print(gearcolor);
+      return gearcolor;
+    }
+
 }

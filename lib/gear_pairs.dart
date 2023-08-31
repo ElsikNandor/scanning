@@ -4,6 +4,7 @@ import 'dart:async';
 import 'screenargument.dart';
 import 'myclasses.dart';
 import 'gears_map.dart';
+import 'package:flutter/foundation.dart';
 
 final _formKey = GlobalKey<FormState>();
 String argString = "Username";
@@ -74,6 +75,12 @@ class _GearPairsState extends State<GearPairs> {
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(130.0)
               ),
+                side: const BorderSide(
+                  width: 5.0,
+                  color: Colors.black,
+                ),
+              primary: Color( int.parse(gears[index].color, radix: 16) ),
+              onPrimary: gears[index].color == 'ff000000' ? Color(0xffffffff) : Color(0xff000000)
             ),
             onPressed: () {
               //myReset();
