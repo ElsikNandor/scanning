@@ -14,8 +14,8 @@ import 'package:path_provider/path_provider.dart';
     "year": 1983};
 
 
-List<gasMeterGear> gears = [gasMeterGear(gear: "32/40", color: "white", hole: "1"),
-];
+//List<gasMeterGear> gears = [gasMeterGear(gear: "32/40", color: "white", hole: "1"),
+//];
 
 class fileManip{
 

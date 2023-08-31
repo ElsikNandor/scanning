@@ -8,8 +8,7 @@ import 'gears_map.dart';
 final _formKey = GlobalKey<FormState>();
 String argString = "Username";
 String meterType = "";
-fileManip fmanip = new fileManip();
-List gear = [];
+
 class GearPairs extends StatefulWidget {
   const GearPairs({Key? key}) : super(key: key);
 
@@ -18,21 +17,27 @@ class GearPairs extends StatefulWidget {
 }
 
 class _GearPairsState extends State<GearPairs> {
-  String _data = "";
-  var gearsdata = fmanip.loadItronGears();
+  fileManip fmanip = new fileManip();
+  List<gasMeterGear> gears = [];
   void initState() {
     super.initState();
-     setState(() {
-      loadGearList();
+    //gears = loadGearList();
+    loadGearList().then((value){
+      setState(() {
+        gears = value;
+      });
+    });
+    setState(() {
+
         //gears = gearsdata;
     });
   }
 
-  Future<void> loadGearList() async {
-
-    gears = await fmanip.loadItronGears();
+  Future<List<gasMeterGear>> loadGearList() async {
+    final gear = await fmanip.loadItronGears();
     print("f" + gears.length.toString());
-}
+    return gear;
+  }
   //gasMeterGear g = gears[0];
 
   @override
@@ -41,10 +46,6 @@ class _GearPairsState extends State<GearPairs> {
         .of(context)!
         .settings
         .arguments as ScreenArguments;
-    int metersCount = _data
-        .split(",")
-        .length
-        .toInt();
     argString = args.message;
     final formkey = GlobalKey<FormState>();
     //final ButtonStyle style = TextButton.styleFrom(textStyle:  Theme.of(context).colorScheme.onPrimary,);
@@ -55,7 +56,9 @@ class _GearPairsState extends State<GearPairs> {
             myMenu(username: argString.split(";")[0])
           ]
       ),
-      body: Scrollbar(child:
+      body: //Text(gears.length.toString())
+      //Text(gears[0].color + gears[1].color + gears[2].color + gears[3].color),
+      Scrollbar(child:
       GridView.count(
         primary: false,
         padding: const EdgeInsets.all(30),
