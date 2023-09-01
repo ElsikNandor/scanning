@@ -98,7 +98,7 @@ class CounterStorage  {
 
   String filename = "";
   String adroidDir = "/storage/emulated/0/Documents";
-  String winDir = "c:/srtc";
+  String winDir = "c:/src";
 
   Future<String> getFileName() async {
     return await this.filename;

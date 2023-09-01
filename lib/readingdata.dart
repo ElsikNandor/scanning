@@ -98,6 +98,8 @@ class _readingDataState extends State<readingData> {
           myListElements(title: "Gyártási Év:", content: argString.split(";")[3]),
           SizedBox(height: 5,),
           myListElements(title: "Számlálóállás:", content: argString.split(";")[4]),
+          SizedBox(height: 5,),
+          myListElements(title: "Cserekerék:", content: argString.split(";")[5]),
         ],
       ),
                 Column(
@@ -139,8 +141,8 @@ class _readingDataState extends State<readingData> {
                 ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(content: Text(saveStatus +" " + storage.filename)));
               //});
-              //Navigator.pushReplacementNamed(context, "/constnum",
-                //  arguments: ScreenArguments(argString.split(";")[0], argString.split(";")[0]));
+              Navigator.pushReplacementNamed(context, "/constnum",
+                  arguments: ScreenArguments(argString.split(";")[0], argString.split(";")[0]));
             },
             label: Text("Jó"),
           ),
@@ -156,7 +158,7 @@ class _readingDataState extends State<readingData> {
                     ),
                     onPressed: () {
                       //myReset();
-                      storage.filename = "meterdata_waster_" ;
+                      storage.filename = "meterdata_notgood_" ;
                       //setState(() {
                       try{
                         storage.writeMeterData(argString);
@@ -173,8 +175,8 @@ class _readingDataState extends State<readingData> {
                       }
                       ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(content: Text(saveStatus +" " + storage.filename)));
-                      //Navigator.pushReplacementNamed(context, "/constnum",
-                      //  arguments: ScreenArguments(argString.split(";")[0], argString.split(";")[0]));
+                      Navigator.pushReplacementNamed(context, "/constnum",
+                        arguments: ScreenArguments(argString.split(";")[0], argString.split(";")[0]));
                     },
                     icon: Icon( Icons.restore_from_trash,
                       size: 24,

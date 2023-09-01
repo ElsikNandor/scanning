@@ -5,6 +5,7 @@ import 'screenargument.dart';
 import 'myclasses.dart';
 import 'gears_map.dart';
 import 'package:flutter/foundation.dart';
+import 'readingdata.dart';
 
 final _formKey = GlobalKey<FormState>();
 String argString = "Username";
@@ -48,6 +49,8 @@ class _GearPairsState extends State<GearPairs> {
         .settings
         .arguments as ScreenArguments;
     argString = args.message;
+    String userN = argString.split(";")[0];
+    int checkedGear = 0;
     final formkey = GlobalKey<FormState>();
     //final ButtonStyle style = TextButton.styleFrom(textStyle:  Theme.of(context).colorScheme.onPrimary,);
     return Scaffold(
@@ -65,9 +68,10 @@ class _GearPairsState extends State<GearPairs> {
         padding: const EdgeInsets.all(30),
         mainAxisSpacing: 30,
         crossAxisSpacing: 30,
-        crossAxisCount: 5,
+        crossAxisCount: 8,
         children:
         List.generate(gears.length, (index) {
+          checkedGear = index;
           return ElevatedButton(
             style: ElevatedButton.styleFrom(
               minimumSize: Size(20, 20),
@@ -84,11 +88,13 @@ class _GearPairsState extends State<GearPairs> {
             ),
             onPressed: () {
               //myReset();
-              //Navigator.pushReplacementNamed(context, path,
-              //  arguments: ScreenArguments(user, data));
+
+              Navigator.pushReplacementNamed(context, "/readingData",
+                  arguments: ScreenArguments(userN, argString+";"+gears[index].gear));
+                  //arguments: ScreenArguments(user, gears[0].gear.toString()));
             },
-            child: Text(index.toString() + gears[index].gear + " " + gears[index].color + " " +
-                gears[index].hole),
+            child: Text(gears[index].gear + "\n" +
+                gears[index].hole + " lyukú"),
           );
         }),
       ),
