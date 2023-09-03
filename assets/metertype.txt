@@ -1,1 +1,1 @@
-actaris,itron,elster,metrix
+Actaris,Itron,Elster,Fiorentini

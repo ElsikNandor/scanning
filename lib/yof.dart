@@ -4,7 +4,6 @@ import 'dart:async';
 import 'screenargument.dart';
 import 'myclasses.dart';
 
-final _formKey = GlobalKey<FormState>();
 String argString = "Username";
 String meterType = "";
 class yearOfManufacture extends StatefulWidget {
@@ -36,11 +35,9 @@ class _yearOfManufactureState extends State<yearOfManufacture> {
     final args = ModalRoute.of(context)!.settings.arguments as ScreenArguments;
     int metersCount = _data.split(",").length.toInt();
     argString = args.message;
-    final formkey = GlobalKey<FormState>();
-    //final ButtonStyle style = TextButton.styleFrom(textStyle:  Theme.of(context).colorScheme.onPrimary,);
     return Scaffold(
       appBar: AppBar(
-          title: Text(argString.split(";")[0]),
+          title: Text("Gyártási év kiválasztása"),
           actions: <Widget>[
             myMenu(username: argString.split(";")[0])
           ]

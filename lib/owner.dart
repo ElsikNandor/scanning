@@ -7,17 +7,17 @@ import 'myclasses.dart';
 final _formKey = GlobalKey<FormState>();
 String argString = "Username";
 String meterType = "";
-class mType extends StatefulWidget {
-  const mType({Key? key}) : super(key: key);
+class mOwner extends StatefulWidget {
+  const mOwner({Key? key}) : super(key: key);
 
   @override
-  State<mType> createState() => _mTypeState();
+  State<mOwner> createState() => _mOwnerState();
 }
 
-class _mTypeState extends State<mType> {
+class _mOwnerState extends State<mOwner> {
   String _data = "";
   Future<void> _loadData() async {
-    final loadedData = await rootBundle.loadString('assets/metertype.txt');
+    final loadedData = await rootBundle.loadString('assets/owners.txt');
     setState(() {
       _data = loadedData;
     });
@@ -38,10 +38,10 @@ class _mTypeState extends State<mType> {
     argString = args.message;
     return Scaffold(
       appBar: AppBar(
-        title: Text("Gázmérőtípus kiválasztása"),
-        actions: <Widget>[
-        myMenu(username: argString.split(";")[0])
-        ]
+          title: Text("Megrendelő kiválasztása"),
+          actions: <Widget>[
+            myMenu(username: argString.split(";")[0])
+          ]
       ),
       body: Scrollbar( child:
       GridView.count(
@@ -53,8 +53,8 @@ class _mTypeState extends State<mType> {
         children:
         List.generate(metersCount, (index) {
           return ItemWidget(text:  _data.split(",")[index],
-            path: '/yof',
-            data: argString+';'+_data.split(",")[index], user: argString.split(";")[0]
+              path: '/constnum',
+              data: argString+';'+_data.split(",")[index], user: argString.split(";")[0]
           );
         }),
       ),
@@ -63,21 +63,6 @@ class _mTypeState extends State<mType> {
   }
 }
 
-Widget LogoutButton(BuildContext context) {
-  return Center(
-      child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          minimumSize: Size(150, 40),
-        ),
-        onPressed: () {
-          //myReset();
-          Navigator.pushReplacementNamed(context, '/');
-        },
-        child: Text("Logout"),
-      )
-  );
-
-}
 
 class constInputForm extends StatefulWidget {
   const constInputForm({super.key});
@@ -88,7 +73,7 @@ class constInputForm extends StatefulWidget {
 }
 
 class constInputFormState extends State<constInputForm> {
-   @override
+  @override
   Widget build(BuildContext context) {
     double itmp = 0;
     // Build a Form widget using the _formKey created above.
@@ -105,8 +90,10 @@ class constInputFormState extends State<constInputForm> {
             // The validator receives the text that the user has entered.
             validator: (value) {
               if (value == null || value.isEmpty) {
+                //myReset();
                 return 'A mező nem lehet üres!';
               }
+
               meterType = value;
               return null;
             },

@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'dart:async';
 import 'screenargument.dart';
 import 'myclasses.dart';
-import 'package:path_provider/path_provider.dart';
 import 'dart:io';
 
 String argString = "Username";
@@ -41,7 +40,6 @@ class _readingDataState extends State<readingData> {
     argString = args.message;
     final CounterStorage storage = CounterStorage();
     String saveStatus = "";
-    //final ButtonStyle style = TextButton.styleFrom(textStyle:  Theme.of(context).colorScheme.onPrimary,);
     return Scaffold(
       appBar: AppBar(
         title: Text(argString.split(";")[0] + " - Összegzés: "),
@@ -57,58 +55,26 @@ class _readingDataState extends State<readingData> {
               children: [
                 Column(
         crossAxisAlignment: CrossAxisAlignment.center,
-        //mainAxisAlignment:const  MainAxisAlignment.center,
         children: [
-            Text(
-              argString
-           ),
-          SizedBox(height: 20,),
-          Container(
-            padding: EdgeInsets.all(0.0),
-            alignment: Alignment.centerLeft,
-            width: 500,
-            height: 50,
-            decoration: BoxDecoration(
-              color: Colors.blueAccent,
-              border: Border.all(width: 1,color: Colors.black,),
-              borderRadius: BorderRadius.all(Radius.circular(5)),
-            ),
-            child: Text(
-              style: TextStyle( color: Colors.white, fontWeight: FontWeight.bold),
-                "Gyártási szám: " + argString.split(";")[1]
-            ),
-          ),
+
+          SizedBox(height: 50,),
+          myListElements(title: "Megrendelő:", content: argString.split(";")[1]),
           SizedBox(height: 5,),
-          Container(
-            padding: EdgeInsets.all(0.0),
-            alignment: Alignment.centerLeft,
-            width: 500,
-            height: 50,
-            decoration: BoxDecoration(
-              color: Colors.blueAccent,
-              border: Border.all(width: 1,color: Colors.black,),
-              borderRadius: BorderRadius.all(Radius.circular(5)),
-            ),
-            child: Text(
-                style: TextStyle( color: Colors.white, fontWeight: FontWeight.bold),
-                "Gyártó: "+ argString.split(";")[2]
-            ),
-          ),
+          myListElements(title: "Gyártási szám:", content: argString.split(";")[2]),
+          SizedBox(height: 5,),
+          myListElements(title: "Gyártó:", content: argString.split(";")[3]),
            SizedBox(height: 5,),
-          myListElements(title: "Gyártási Év:", content: argString.split(";")[3]),
+          myListElements(title: "Gyártási Év:", content: argString.split(";")[4]),
           SizedBox(height: 5,),
-          myListElements(title: "Számlálóállás:", content: argString.split(";")[4]),
+          myListElements(title: "Számlálóállás:", content: argString.split(";")[5]),
           SizedBox(height: 5,),
-          myListElements(title: "Cserekerék:", content: argString.split(";")[5]),
+          myListElements(title: "Cserekerék:", content: argString.split(";")[6]),
         ],
       ),
                 Column(
-                  //width: 120,
-                  //height: 200,
-                  //child:
                 children: [
                   SizedBox(
-                    height: 20,
+                    height: 50,
                   ),
           ElevatedButton.icon(
             style: ElevatedButton.styleFrom(
@@ -142,12 +108,12 @@ class _readingDataState extends State<readingData> {
                     SnackBar(content: Text(saveStatus +" " + storage.filename)));
               //});
               Navigator.pushReplacementNamed(context, "/constnum",
-                  arguments: ScreenArguments(argString.split(";")[0], argString.split(";")[0]));
+                  arguments: ScreenArguments(argString.split(";")[0], argString.split(";")[0]+";"+argString.split(";")[1]));
             },
             label: Text("Jó"),
           ),
                   SizedBox(
-                    height: 20,
+                    height: 80,
                   ),
                   ElevatedButton.icon(
                     style: ElevatedButton.styleFrom(
@@ -157,9 +123,7 @@ class _readingDataState extends State<readingData> {
                       
                     ),
                     onPressed: () {
-                      //myReset();
                       storage.filename = "meterdata_notgood_" ;
-                      //setState(() {
                       try{
                         storage.writeMeterData(argString);
                         setState(() {
@@ -174,9 +138,9 @@ class _readingDataState extends State<readingData> {
 
                       }
                       ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text(saveStatus +" " + storage.filename)));
+                          SnackBar(content: Text(saveStatus)));
                       Navigator.pushReplacementNamed(context, "/constnum",
-                        arguments: ScreenArguments(argString.split(";")[0], argString.split(";")[0]));
+                        arguments: ScreenArguments(argString.split(";")[0], argString.split(";")[0]+";"+argString.split(";")[1]));
                     },
                     icon: Icon( Icons.restore_from_trash,
                       size: 24,

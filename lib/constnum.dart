@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart' show rootBundle;
-import 'dart:async';
 import 'screenargument.dart';
-import 'mtype.dart';
 import 'myclasses.dart';
 
 final _formKey = GlobalKey<FormState>();
@@ -16,9 +13,6 @@ class ConstNum extends StatefulWidget {
 }
 
 class _ConstNumState extends State<ConstNum> {
-  String _data = "";
-  //Map MapString;
-
   void initState() {
     super.initState();
     setState(() {
@@ -30,11 +24,9 @@ class _ConstNumState extends State<ConstNum> {
   Widget build(BuildContext context) {
     final args = ModalRoute.of(context)!.settings.arguments as ScreenArguments;
     userName = args.message;
-    final formkey = GlobalKey<FormState>();
-    //final ButtonStyle style = TextButton.styleFrom(textStyle:  Theme.of(context).colorScheme.onPrimary,);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Gyszbev '+ userName),
+        title: Text("Gyátrási szám beolvasás"),
         actions: <Widget>[
           myMenu( username: userName,),]
       ),
@@ -49,10 +41,8 @@ class _ConstNumState extends State<ConstNum> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             SizedBox(
-              height:10,
+              height:50,
             ),
-          Text(
-          "Select: " + userName ),
         constInputForm(),
         SizedBox(
           height:2,
@@ -72,14 +62,8 @@ class _ConstNumState extends State<ConstNum> {
                       if (_formKey.currentState!.validate()) {
                         Navigator.pushReplacementNamed(context, '/mtype',
                             arguments: ScreenArguments(userName, userName+";"+meterNumber) );
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('Tovább')),);
                       }
                     });
-
-                    //calculation();
-
-
                   },
                   child: Text("Tovább"),
                 ),
@@ -93,14 +77,12 @@ class _ConstNumState extends State<ConstNum> {
 }
 
 Widget LogoutButton(BuildContext context) {
-  //final args = ModalRoute.of(context)!.settings.arguments as ScreenArguments;
   return Center(
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           minimumSize: Size(150, 40),
         ),
         onPressed: () {
-          //myReset();
           Navigator.pushReplacementNamed(context, '/');
         },
         child: Text("Logout"),
@@ -108,12 +90,6 @@ Widget LogoutButton(BuildContext context) {
   );
 
 
-  /*Card(
-      child: SizedBox(
-        height: 100,
-        child: Center(child: Text(text)),
-      ),
-    );*/
 }
 
 class constInputForm extends StatefulWidget {

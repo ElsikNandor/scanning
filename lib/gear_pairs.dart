@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart' show rootBundle;
 import 'dart:async';
 import 'screenargument.dart';
 import 'myclasses.dart';
 import 'gears_map.dart';
 import 'package:flutter/foundation.dart';
-import 'readingdata.dart';
 
-final _formKey = GlobalKey<FormState>();
 String argString = "Username";
 String meterType = "";
 
@@ -23,15 +20,12 @@ class _GearPairsState extends State<GearPairs> {
   List<gasMeterGear> gears = [];
   void initState() {
     super.initState();
-    //gears = loadGearList();
     loadGearList().then((value){
       setState(() {
         gears = value;
       });
     });
     setState(() {
-
-        //gears = gearsdata;
     });
   }
 
@@ -40,7 +34,6 @@ class _GearPairsState extends State<GearPairs> {
     print("f" + gears.length.toString());
     return gear;
   }
-  //gasMeterGear g = gears[0];
 
   @override
   Widget build(BuildContext context) {
@@ -50,18 +43,15 @@ class _GearPairsState extends State<GearPairs> {
         .arguments as ScreenArguments;
     argString = args.message;
     String userN = argString.split(";")[0];
-    int checkedGear = 0;
     final formkey = GlobalKey<FormState>();
-    //final ButtonStyle style = TextButton.styleFrom(textStyle:  Theme.of(context).colorScheme.onPrimary,);
     return Scaffold(
       appBar: AppBar(
-          title: Text(argString.split(";")[0]),
+          title: Text("Cserekerék kiválasztása"),
           actions: <Widget>[
             myMenu(username: argString.split(";")[0])
           ]
       ),
-      body: //Text(gears.length.toString())
-      //Text(gears[0].color + gears[1].color + gears[2].color + gears[3].color),
+      body:
       Scrollbar(child:
       GridView.count(
         primary: false,
@@ -71,7 +61,6 @@ class _GearPairsState extends State<GearPairs> {
         crossAxisCount: 8,
         children:
         List.generate(gears.length, (index) {
-          checkedGear = index;
           return ElevatedButton(
             style: ElevatedButton.styleFrom(
               minimumSize: Size(20, 20),
@@ -84,44 +73,30 @@ class _GearPairsState extends State<GearPairs> {
                   color: Colors.black,
                 ),
               primary: Color( int.parse(gears[index].color, radix: 16) ),
-              onPrimary: gears[index].color == 'ff000000' ? Color(0xffffffff) : Color(0xff000000)
+              onPrimary: int.parse(gears[index].color, radix: 16) <= int.parse("ff713912", radix: 16) ? Color(0xffffffff) : Color(0xff000000)
             ),
             onPressed: () {
-              //myReset();
-
               Navigator.pushReplacementNamed(context, "/readingData",
                   arguments: ScreenArguments(userN, argString+";"+gears[index].gear));
-                  //arguments: ScreenArguments(user, gears[0].gear.toString()));
             },
-            child: Text(gears[index].gear + "\n" +
-                gears[index].hole + " lyukú"),
+            child: Column(
+              children: [
+                SizedBox(
+                  height: 40,
+                ),
+                Text(gears[index].gear),
+                SizedBox(
+                  height: 10,
+                ),
+                Text(int.parse(gears[index].hole) == 1 ? "o" : "o     o")
+              ],
+            )
+
           );
         }),
       ),
       ),
     );
   }
-        // Column(
-        //   children: [
-        //     Text( " ize : " + gears[1].color  ),
-        //   ]
-        //
-        // )
-      /*Scrollbar( child:
-      GridView.count(
-        primary: false,
-        padding: const EdgeInsets.all(50),
-        mainAxisSpacing: 20,
-        crossAxisSpacing: 20,
-        crossAxisCount: 5,
-        children:
-        List.generate(gears.length, (index) {
-          var g = gears[0];
-          return ItemWidget(text: index.toString(),
-              path: '/countpos',
-              data: argString+';'+_data.split(",")[index], user: argString.split(";")[0]
-          );
-        }),
-      ),
-      ),*/
+
 }

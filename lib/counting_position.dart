@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart' show rootBundle;
-import 'dart:async';
 import 'screenargument.dart';
-import 'mtype.dart';
 import 'myclasses.dart';
 
 final _formKey = GlobalKey<FormState>();
@@ -16,8 +13,6 @@ class CountPos extends StatefulWidget {
 }
 
 class _CountPosState extends State<CountPos> {
-  String _data = "";
-  //Map MapString;
 
   void initState() {
     super.initState();
@@ -30,11 +25,9 @@ class _CountPosState extends State<CountPos> {
   Widget build(BuildContext context) {
     final args = ModalRoute.of(context)!.settings.arguments as ScreenArguments;
     userName = args.message;
-    final formkey = GlobalKey<FormState>();
-    //final ButtonStyle style = TextButton.styleFrom(textStyle:  Theme.of(context).colorScheme.onPrimary,);
     return Scaffold(
         appBar: AppBar(
-            title: Text('Számláló állása '+ userName),
+            title: Text('Számláló állás beírása '),
             actions: <Widget>[
               myMenu( username: userName,),]
         ),
@@ -49,10 +42,8 @@ class _CountPosState extends State<CountPos> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           SizedBox(
-                            height:10,
+                            height:50,
                           ),
-                          Text(
-                              "Select: " + userName ),
                           constInputForm(),
                           SizedBox(
                             height:2,
@@ -72,14 +63,8 @@ class _CountPosState extends State<CountPos> {
                                   if (_formKey.currentState!.validate()) {
                                     Navigator.pushReplacementNamed(context, '/gearpairs',
                                         arguments: ScreenArguments(userName, userName+";"+meterNumber) );
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(content: Text('Tovább')),);
                                   }
                                 });
-
-                                //calculation();
-
-
                               },
                               child: Text("Tovább"),
                             ),
@@ -93,27 +78,17 @@ class _CountPosState extends State<CountPos> {
 }
 
 Widget LogoutButton(BuildContext context) {
-  //final args = ModalRoute.of(context)!.settings.arguments as ScreenArguments;
   return Center(
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           minimumSize: Size(150, 40),
         ),
         onPressed: () {
-          //myReset();
           Navigator.pushReplacementNamed(context, '/');
         },
         child: Text("Logout"),
       )
   );
-
-
-  /*Card(
-      child: SizedBox(
-        height: 100,
-        child: Center(child: Text(text)),
-      ),
-    );*/
 }
 
 class constInputForm extends StatefulWidget {
@@ -132,13 +107,11 @@ class constInputFormState extends State<constInputForm> {
     return Form(
       key: _formKey,
       child: //Column(
-      //   crossAxisAlignment: CrossAxisAlignment.start,
-      //   children: [
       TextFormField(
         autofocus: true,
         keyboardType: TextInputType.number,
         decoration: InputDecoration(
-          labelText: 'Gyártási szám',
+          labelText: 'Számlálóállás',
 
           border: OutlineInputBorder(),
         ),
