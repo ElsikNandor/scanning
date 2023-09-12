@@ -6,7 +6,72 @@ import 'package:path_provider/path_provider.dart';
 import 'dart:async';
 //import 'package:permission_handler/permission_handler.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:onscreen_num_keyboard/onscreen_num_keyboard.dart';
+
 String _data = "";
+
+class winNumPad extends StatefulWidget {
+  const winNumPad({
+    super.key,
+    required this.constNumText,
+    required this.controller,
+  });
+
+  final String constNumText;
+  final TextEditingController controller;
+
+  @override
+  State<winNumPad> createState() => _winNumPad(constNumText: constNumText, controller: controller,);
+}
+
+class _winNumPad extends State<winNumPad>{
+   _winNumPad({
+    required this.constNumText,
+    required this.controller,
+  });
+
+  String constNumText;
+  final TextEditingController controller;
+
+   onKeyboardTap(String value) {
+     setState(() {
+       constNumText = constNumText + value;
+       controller.text = constNumText;
+     });
+   }
+
+  @override
+  Widget build(BuildContext context){
+    return
+      NumericKeyboard(
+          onKeyboardTap: onKeyboardTap,
+          textStyle: const TextStyle(
+            color: Colors.black,
+            fontSize: 28,
+            //backgroundColor: Colors.blueAccent,
+          ),
+          rightButtonFn: () {
+            if (constNumText.isEmpty) return;
+            setState(() {
+              constNumText = constNumText.substring(0, constNumText.length - 1);
+              controller.text = constNumText;
+            });
+          },
+          rightButtonLongPressFn: () {
+            if (constNumText.isEmpty) return;
+            setState(() {
+              constNumText = '';
+              controller.text = constNumText;
+            });
+          },
+          rightIcon: const Icon(
+            Icons.backspace_outlined,
+            color: Colors.blueGrey,
+          ),
+          mainAxisAlignment: MainAxisAlignment.spaceBetween);
+  }
+}
+
 class ItemWidget extends StatelessWidget {
   const ItemWidget({
     super.key,

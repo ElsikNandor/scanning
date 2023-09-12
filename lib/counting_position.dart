@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'screenargument.dart';
 import 'myclasses.dart';
-
+import 'package:onscreen_num_keyboard/onscreen_num_keyboard.dart';
 final _formKey = GlobalKey<FormState>();
 String userName = "Username";
 String meterNumber = "";
+String constNumText = "";
+TextEditingController _controller = new TextEditingController();
 class CountPos extends StatefulWidget {
   const CountPos({Key? key}) : super(key: key);
 
@@ -17,9 +19,17 @@ class _CountPosState extends State<CountPos> {
   void initState() {
     super.initState();
     setState(() {
+      constNumText = "";
+      _controller.text = "";
     });
   }
 
+  // onKeyboardTap(String value) {
+  //   setState(() {
+  //     constNumText = constNumText + value;
+  //     _controller.text = constNumText;
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -69,6 +79,33 @@ class _CountPosState extends State<CountPos> {
                               child: Text("Tovább"),
                             ),
                           ),
+                          winNumPad(constNumText: constNumText, controller: _controller)
+                          // NumericKeyboard(
+                          //     onKeyboardTap: onKeyboardTap,
+                          //     textStyle: const TextStyle(
+                          //       color: Colors.black,
+                          //       fontSize: 28,
+                          //     ),
+                          //     rightButtonFn: () {
+                          //       if (constNumText.isEmpty) return;
+                          //       setState(() {
+                          //         constNumText = constNumText.substring(0, constNumText.length - 1);
+                          //         _controller.text = constNumText;
+                          //       });
+                          //     },
+                          //     rightButtonLongPressFn: () {
+                          //       if (constNumText.isEmpty) return;
+                          //       setState(() {
+                          //         constNumText = '';
+                          //         _controller.text = constNumText;
+                          //       });
+                          //     },
+                          //     rightIcon: const Icon(
+                          //       Icons.backspace_outlined,
+                          //       color: Colors.blueGrey,
+                          //     ),
+                          //     mainAxisAlignment: MainAxisAlignment.spaceBetween),
+
                         ])
                 )
             )
@@ -108,6 +145,7 @@ class constInputFormState extends State<constInputForm> {
       key: _formKey,
       child: //Column(
       TextFormField(
+        controller: _controller,
         autofocus: true,
         keyboardType: TextInputType.number,
         decoration: InputDecoration(

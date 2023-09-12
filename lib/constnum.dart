@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'screenargument.dart';
 import 'myclasses.dart';
+import 'package:onscreen_num_keyboard/onscreen_num_keyboard.dart';
+
 
 final _formKey = GlobalKey<FormState>();
 String userName = "Username";
 String meterNumber = "";
+String constNumText = "";
+TextEditingController _controller = new TextEditingController();
 class ConstNum extends StatefulWidget {
   const ConstNum({Key? key}) : super(key: key);
 
@@ -16,8 +21,18 @@ class _ConstNumState extends State<ConstNum> {
   void initState() {
     super.initState();
     setState(() {
+      constNumText = "";
+      _controller.text = "";
     });
   }
+  String text = "";
+
+  // onKeyboardTap(String value) {
+  //   setState(() {
+  //     constNumText = constNumText + value;
+  //     _controller.text = constNumText;
+  //   });
+  // }
 
 
   @override
@@ -68,6 +83,34 @@ class _ConstNumState extends State<ConstNum> {
                   child: Text("Tovább"),
                 ),
               ),
+
+            winNumPad(constNumText: constNumText, controller: _controller)
+            // NumericKeyboard(
+            //     onKeyboardTap: onKeyboardTap,
+            //     textStyle: const TextStyle(
+            //       color: Colors.black,
+            //       fontSize: 28,
+            //     ),
+            //     rightButtonFn: () {
+            //       if (constNumText.isEmpty) return;
+            //       setState(() {
+            //         constNumText = constNumText.substring(0, constNumText.length - 1);
+            //         _controller.text = constNumText;
+            //       });
+            //     },
+            //     rightButtonLongPressFn: () {
+            //       if (constNumText.isEmpty) return;
+            //       setState(() {
+            //         constNumText = '';
+            //         _controller.text = constNumText;
+            //       });
+            //     },
+            //     rightIcon: const Icon(
+            //       Icons.backspace_outlined,
+            //       color: Colors.blueGrey,
+            //     ),
+            //     mainAxisAlignment: MainAxisAlignment.spaceBetween),
+
       ])
         )
         )
@@ -111,8 +154,10 @@ class constInputFormState extends State<constInputForm> {
       //   crossAxisAlignment: CrossAxisAlignment.start,
       //   children: [
           TextFormField(
+            controller: _controller,
             autofocus: true,
             keyboardType: TextInputType.number,
+            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
             decoration: InputDecoration(
               labelText: 'Gyártási szám',
 
