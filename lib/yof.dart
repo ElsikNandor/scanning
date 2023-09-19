@@ -48,7 +48,7 @@ class _yearOfManufactureState extends State<yearOfManufacture> {
         padding: const EdgeInsets.all(50),
         mainAxisSpacing: 20,
         crossAxisSpacing: 20,
-        crossAxisCount: 5,
+        crossAxisCount: 7,
         children:
         List.generate(metersCount, (index) {
           return ItemWidget(text:  _data.split(",")[index],

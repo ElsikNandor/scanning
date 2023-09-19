@@ -11,6 +11,8 @@ import 'counting_position.dart';
 import 'gear_pairs.dart';
 import 'gears_map.dart';
 import 'owner.dart';
+import 'package:window_size/window_size.dart';
+import 'dart:io';
 
 fileManip fmanip = new fileManip();
 
@@ -18,6 +20,7 @@ void main() {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.landscapeLeft, DeviceOrientation.landscapeRight]);
+
   runApp(const MyApp());
 }
 
@@ -28,6 +31,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Application',
       theme: ThemeData(
         primarySwatch: Colors.blue,
@@ -59,6 +63,12 @@ class _HomePageState extends State<HomePage> {
   String hhh = "---";
   String path = "dirs";
 
+  Future<void> setTitlePlatform() async{
+    if (Platform.isWindows)
+    {
+      setWindowTitle("Adatrögzítés");
+    }
+  }
   Future<void> _loadData() async {
     final loadedData = await rootBundle.loadString('assets/data.txt');
     setState(() {
@@ -108,6 +118,7 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     requestPermission();
     _loadData();
+    setTitlePlatform();
       setState(() {
 
        });

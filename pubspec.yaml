@@ -38,10 +38,19 @@ dependencies:
   permission_handler: ^10.4.3
   onscreen_num_keyboard: ^1.0.4
 
+  window_size:
+    git:
+      url: https://github.com/google/flutter-desktop-embedding.git
+      path: plugins/window_size
+      ref: 5c51870ced62a00e809ba4b81a846a052d241c9f
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
+  window_size:
+    git:
+      url: https://github.com/google/flutter-desktop-embedding.git
+      path: plugins/window_size
+      ref: 5c51870ced62a00e809ba4b81a846a052d241c9f
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
   # activated in the `analysis_options.yaml` file located at the root of your

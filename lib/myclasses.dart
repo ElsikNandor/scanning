@@ -91,8 +91,8 @@ class ItemWidget extends StatelessWidget {
     return
       ElevatedButton(
         style: ElevatedButton.styleFrom(
-          minimumSize: Size(50, 50),
-          maximumSize: Size(50, 50),
+          minimumSize: Size(20, 20),
+          maximumSize: Size(30, 30),
         ),
         onPressed: () {
           //myReset();
