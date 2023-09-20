@@ -38,7 +38,8 @@ class _mOwnerState extends State<mOwner> {
     argString = args.message;
     return Scaffold(
       appBar: AppBar(
-          title: Text("Megrendelő kiválasztása"),
+          title: Text("Megrendelő kiválasztása | "
+              + "Adatrögzítő: " + args.message.split(";")[0]),
           actions: <Widget>[
             myMenu(username: argString.split(";")[0])
           ]

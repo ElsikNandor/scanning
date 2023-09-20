@@ -38,7 +38,9 @@ class _mTypeState extends State<mType> {
     argString = args.message;
     return Scaffold(
       appBar: AppBar(
-        title: Text("Gázmérőtípus kiválasztása"),
+        title: Text("Gyártó kiválasztása | "
+            + "Adatrögzítő: " + args.message.split(";")[0]
+            + " | Megrendelő: " + args.message.split(";")[1]),
         actions: <Widget>[
         myMenu(username: argString.split(";")[0])
         ]

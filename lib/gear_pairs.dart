@@ -46,7 +46,9 @@ class _GearPairsState extends State<GearPairs> {
     final formkey = GlobalKey<FormState>();
     return Scaffold(
       appBar: AppBar(
-          title: Text("Cserekerék kiválasztása"),
+          title: Text("Cserekerék kiválasztása | "
+              + "Adatrögzítő: " + args.message.split(";")[0]
+              + " | Megrendelő: " + args.message.split(";")[1]),
           actions: <Widget>[
             myMenu(username: argString.split(";")[0])
           ]

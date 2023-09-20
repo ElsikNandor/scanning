@@ -42,7 +42,9 @@ class _readingDataState extends State<readingData> {
     String saveStatus = "";
     return Scaffold(
       appBar: AppBar(
-        title: Text(argString.split(";")[0] + " - Összegzés: "),
+        title: Text("Összegzés: | "
+            + "Adatrögzítő: " + args.message.split(";")[0]
+            + " | Megrendelő: " + args.message.split(";")[1]),
         actions: <Widget>[
           myMenu(username: argString.split(";")[0],)
         ]

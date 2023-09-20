@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:scanning/readingdata.dart';
 import 'screenargument.dart';
 import 'myclasses.dart';
 import 'package:onscreen_num_keyboard/onscreen_num_keyboard.dart';
@@ -41,7 +42,9 @@ class _ConstNumState extends State<ConstNum> {
     userName = args.message;
     return Scaffold(
       appBar: AppBar(
-        title: Text("Gyátrási szám beolvasás"),
+        title: Text("Gyátrási szám beolvasása | "
+            + "Adatrögzítő: " + args.message.split(";")[0]
+            + " | Megrendelő: " + args.message.split(";")[1]),
         actions: <Widget>[
           myMenu( username: userName,),]
       ),
@@ -49,9 +52,9 @@ class _ConstNumState extends State<ConstNum> {
           child:
          Center(
         child:
-        SizedBox(
-          width: 500,
-          child:
+      SizedBox(
+      width: 500,
+      child:
       Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
@@ -112,9 +115,11 @@ class _ConstNumState extends State<ConstNum> {
             //     mainAxisAlignment: MainAxisAlignment.spaceBetween),
 
       ])
+            ),
+
         )
         )
-        )
+
     );
   }
 }

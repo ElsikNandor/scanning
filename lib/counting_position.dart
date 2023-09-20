@@ -37,7 +37,9 @@ class _CountPosState extends State<CountPos> {
     userName = args.message;
     return Scaffold(
         appBar: AppBar(
-            title: Text('Számláló állás beírása '),
+            title: Text("Számláló állás beírása | "
+                + "Adatrögzítő: " + args.message.split(";")[0]
+                + " | Megrendelő: " + args.message.split(";")[1]),
             actions: <Widget>[
               myMenu( username: userName,),]
         ),

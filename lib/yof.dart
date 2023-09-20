@@ -37,7 +37,9 @@ class _yearOfManufactureState extends State<yearOfManufacture> {
     argString = args.message;
     return Scaffold(
       appBar: AppBar(
-          title: Text("Gyártási év kiválasztása"),
+          title: Text("Gyártási év kiválasztása | "
+              + "Adatrögzítő: " + args.message.split(";")[0]
+              + " | Megrendelő: " + args.message.split(";")[1]),
           actions: <Widget>[
             myMenu(username: argString.split(";")[0])
           ]
