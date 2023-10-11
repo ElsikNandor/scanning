@@ -25,6 +25,7 @@ class _readingDataState extends State<readingData> {
   }
 
   void initState() {
+    SystemChannels.textInput.invokeMethod('TextInput.hide');
     super.initState();
     _loadData();
     setState(() {

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:scanning/readingdata.dart';
+//import 'package:scanning/readingdata.dart';
 import 'screenargument.dart';
 import 'myclasses.dart';
-import 'package:onscreen_num_keyboard/onscreen_num_keyboard.dart';
+//import 'package:onscreen_num_keyboard/onscreen_num_keyboard.dart';
 
 
 final _formKey = GlobalKey<FormState>();

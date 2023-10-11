@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart' show rootBundle;
+import 'package:flutter/services.dart' show SystemChannels, rootBundle;
 import 'dart:async';
 import 'screenargument.dart';
 import 'myclasses.dart';
@@ -23,6 +23,7 @@ class _mTypeState extends State<mType> {
     });
   }
   void initState() {
+    SystemChannels.textInput.invokeMethod('TextInput.hide');
     super.initState();
     _loadData();
     setState(() {

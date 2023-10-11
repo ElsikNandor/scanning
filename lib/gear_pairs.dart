@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'dart:async';
 import 'screenargument.dart';
 import 'myclasses.dart';
@@ -19,6 +20,7 @@ class _GearPairsState extends State<GearPairs> {
   fileManip fmanip = new fileManip();
   List<gasMeterGear> gears = [];
   void initState() {
+    SystemChannels.textInput.invokeMethod('TextInput.hide');
     super.initState();
     loadGearList().then((value){
       setState(() {

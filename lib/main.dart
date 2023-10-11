@@ -115,6 +115,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   void initState() {
+    SystemChannels.textInput.invokeMethod('TextInput.hide');
     super.initState();
     requestPermission();
     _loadData();
