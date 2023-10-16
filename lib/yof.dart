@@ -42,7 +42,7 @@ class _yearOfManufactureState extends State<yearOfManufacture> {
               + "Adatrögzítő: " + args.message.split(";")[0]
               + " | Megrendelő: " + args.message.split(";")[1]),
           actions: <Widget>[
-            myMenu(username: argString.split(";")[0])
+            myMenu(username: argString.split(";")[0], mlogin : 0)
           ]
       ),
       body: Scrollbar( child:

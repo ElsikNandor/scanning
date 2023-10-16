@@ -47,7 +47,7 @@ class _readingDataState extends State<readingData> {
             + "Adatrögzítő: " + args.message.split(";")[0]
             + " | Megrendelő: " + args.message.split(";")[1]),
         actions: <Widget>[
-          myMenu(username: argString.split(";")[0],)
+          myMenu(username: argString.split(";")[0], mlogin: 0,)
         ]
       ),
       body:Center(

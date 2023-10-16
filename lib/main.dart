@@ -132,9 +132,10 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Adatrögzítő választó"),
-        actions: [myMenu(username : "")],
+        actions: [myMenu(username : "", mlogin: 1,)],
       ),
-      body: Scrollbar( child:
+      body:
+      Scrollbar( child:
         GridView.count(
             primary: false,
         padding: const EdgeInsets.all(50),
@@ -147,10 +148,9 @@ class _HomePageState extends State<HomePage> {
         path: '/owners',
       data: _data.split(",")[index], user: _data.split(",")[index]
     );
-
     }),
       ),
-      ),
+          ),
      );
   }
 }

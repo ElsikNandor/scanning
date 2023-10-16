@@ -41,7 +41,7 @@ class _CountPosState extends State<CountPos> {
                 + "Adatrögzítő: " + args.message.split(";")[0]
                 + " | Megrendelő: " + args.message.split(";")[1]),
             actions: <Widget>[
-              myMenu( username: userName,),]
+              myMenu( username: userName, mlogin: 0,),]
         ),
         body: SingleChildScrollView(
             child:

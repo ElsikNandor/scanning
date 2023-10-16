@@ -107,9 +107,11 @@ class ItemWidget extends StatelessWidget {
 class myMenu extends StatelessWidget {
    myMenu({
     super.key,
-    required this.username
+    required this.username,
+    required this.mlogin,
   });
   var username = '';
+  var mlogin = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -122,9 +124,14 @@ class myMenu extends StatelessWidget {
           }
         else if( value == "/back")
           {
-            Navigator.pushReplacementNamed(context, "/constnum",
-              arguments: ScreenArguments(username, username)
-            );
+            if( this.mlogin == 1 ) {
+              Navigator.pushReplacementNamed(context, "/");
+            }
+            else {
+              Navigator.pushReplacementNamed(context, "/constnum",
+                  arguments: ScreenArguments(username, username)
+              );
+            }
           }
         else if( value == "quit")
         {
