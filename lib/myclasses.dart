@@ -35,7 +35,7 @@ class _winNumPad extends State<winNumPad>{
 
    onKeyboardTap(String value) {
      setState(() {
-       constNumText = constNumText + value;
+       constNumText = controller.text + value;
        controller.text = constNumText;
      });
    }

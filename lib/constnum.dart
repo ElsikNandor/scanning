@@ -162,7 +162,7 @@ class constInputFormState extends State<constInputForm> {
             controller: _controller,
             autofocus: true,
             keyboardType: TextInputType.number,
-            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+            //inputFormatters: [FilteringTextInputFormatter.digitsOnly],
             decoration: InputDecoration(
               labelText: 'Gyártási szám',
 
@@ -175,12 +175,12 @@ class constInputFormState extends State<constInputForm> {
                 return 'A mező nem lehet üres!';
               }
 
-              try {
+           /*   try {
                 itmp = double.parse(value);
               } catch(_) {
                 //myReset();
                 return 'A mező csak számokat tartalmazhat!';
-              }
+              }*/
               meterNumber = value;
               return null;
             },

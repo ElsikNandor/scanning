@@ -162,12 +162,12 @@ class constInputFormState extends State<constInputForm> {
             return 'A mező nem lehet üres!';
           }
 
-          try {
+       /*  try {
             itmp = double.parse(value);
           } catch(_) {
             //myReset();
             return 'A mező csak számokat tartalmazhat!';
-          }
+          }*/
           meterNumber = value;
           return null;
         },
