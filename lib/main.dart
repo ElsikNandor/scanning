@@ -129,28 +129,66 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     int nameCount = _data.split(",").length.toInt();
+    double boxWith = MediaQuery.of(context).size.width-400;
     return Scaffold(
       appBar: AppBar(
         title: Text("Adatrögzítő választó"),
         actions: [myMenu(username : "", mlogin: 1,)],
       ),
       body:
-      Scrollbar( child:
-        GridView.count(
-            primary: false,
-        padding: const EdgeInsets.all(50),
-        mainAxisSpacing: 20,
-    crossAxisSpacing: 20,
-    crossAxisCount: 5,
-     children:
-    List.generate(nameCount, (index) {
-    return ItemWidget(text:  _data.split(",")[index],
-        path: '/owners',
-      data: _data.split(",")[index], user: _data.split(",")[index]
-    );
-    }),
-      ),
-          ),
+          Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.max,
+            children:
+              [
+              SizedBox(
+              height: 80,
+              child: Image.asset('assets/logo.jpg'),
+              /*Container(
+                margin: const EdgeInsets.all(15.0),
+                padding: const EdgeInsets.all(3.0),
+                decoration: BoxDecoration(
+                    border: Border.all(color: Colors.blueAccent)
+                ),
+                child: Text('My Awesome Border'),
+              )*/
+              ),
+                SizedBox(
+                  height: boxWith/4,
+                  width: boxWith,
+                 child:
+                  GridView.builder(
+                  primary: false,
+                  padding: const EdgeInsets.all(10),
+                  //mainAxisSpacing: 20,
+                  //crossAxisSpacing: 20,
+                  //crossAxisCount: 4,
+                  //children:
+                  //List.generate(nameCount, (index) {
+                    itemCount: nameCount,
+                  itemBuilder: (context, index) =>
+                     Container(
+                       height: 130,
+                      //width: 130,
+                      child:  ItemWidget(text:  _data.split(",")[index],
+                          path: '/owners',
+                          data: _data.split(",")[index], user: _data.split(",")[index]
+                      )
+                     ),
+                    gridDelegate:  SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 4,//_crossAxisCount,
+                      crossAxisSpacing: 20,//_crossAxisSpacing,
+                      //mainAxisSpacing: 50,//_mainAxisSpacing,
+                      //childAspectRatio: 10,//_aspectRatio,
+                      mainAxisExtent: (boxWith)/nameCount,
+
+                    ),
+                  //}),
+                )
+                ),
+              ]
+          )
      );
   }
 }
