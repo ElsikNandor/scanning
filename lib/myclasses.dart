@@ -79,12 +79,14 @@ class ItemWidget extends StatelessWidget {
     required this.path,
     required this.data,
     required this.user,
+    required this.lastSavedNum
   });
 
   final String text;
   final String path;
   final String data;
   final String user;
+  final String lastSavedNum;
   @override
   Widget build(BuildContext context) {
     //final args = ModalRoute.of(context)!.settings.arguments as ScreenArguments;
@@ -98,7 +100,7 @@ class ItemWidget extends StatelessWidget {
         onPressed: () {
           //myReset();
           Navigator.pushReplacementNamed(context, path,
-              arguments: ScreenArguments(user, data));
+              arguments: ScreenArguments(user, data, lastSavedNum));
         },
         child: Text(text),
       );
@@ -130,7 +132,7 @@ class myMenu extends StatelessWidget {
             }
             else {
               Navigator.pushReplacementNamed(context, "/constnum",
-                  arguments: ScreenArguments(username, username)
+                  arguments: ScreenArguments(username, username, "")
               );
             }
           }
@@ -248,6 +250,25 @@ class CounterStorage  {
       print("nincs!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
       return 0;
     }
+  }
+
+  Future<String> readSavedFile() async {
+    //final file = await _localFile;
+    //try {
+      final file = await _localFile;
+
+      // Read the file
+      final contents = await file.readAsString();
+
+      return "content" + contents;
+
+    /*} catch (e) {
+      print("nincs!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
+      print(file);
+
+      return "-";
+    }*/
+
   }
 
   Future<int> writeMeterData(String meterdata) async {

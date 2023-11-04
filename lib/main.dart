@@ -173,7 +173,8 @@ class _HomePageState extends State<HomePage> {
                       //width: 130,
                       child:  ItemWidget(text:  _data.split(",")[index],
                           path: '/owners',
-                          data: _data.split(",")[index], user: _data.split(",")[index]
+                          data: _data.split(",")[index], user: _data.split(",")[index],
+                        lastSavedNum: "",
                       )
                      ),
                     gridDelegate:  SliverGridDelegateWithFixedCrossAxisCount(

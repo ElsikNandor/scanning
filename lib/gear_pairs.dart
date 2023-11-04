@@ -33,7 +33,7 @@ class _GearPairsState extends State<GearPairs> {
 
   Future<List<gasMeterGear>> loadGearList() async {
     final gear = await fmanip.loadItronGears();
-    print("f" + gears.length.toString());
+   // print("f" + gears.length.toString());
     return gear;
   }
 
@@ -81,7 +81,7 @@ class _GearPairsState extends State<GearPairs> {
             ),
             onPressed: () {
               Navigator.pushReplacementNamed(context, "/readingData",
-                  arguments: ScreenArguments(userN, argString+";"+gears[index].gear));
+                  arguments: ScreenArguments(userN, argString+";"+gears[index].gear, ""));
             },
             child: Column(
               children: [

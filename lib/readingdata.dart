@@ -41,6 +41,7 @@ class _readingDataState extends State<readingData> {
     argString = args.message;
     final CounterStorage storage = CounterStorage();
     String saveStatus = "";
+    String saveText = "Sikeres mentés: ";
     return Scaffold(
       appBar: AppBar(
         title: Text("Összegzés: | "
@@ -108,10 +109,14 @@ class _readingDataState extends State<readingData> {
 
                 }
                 ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text(saveStatus +" " + storage.filename)));
+                    SnackBar(content: Text(saveText + "Jó mérők listájába."))); //Text(saveStatus +" " + storage.filename)
               //});
               Navigator.pushReplacementNamed(context, "/constnum",
-                  arguments: ScreenArguments(argString.split(";")[0], argString.split(";")[0]+";"+argString.split(";")[1]));
+                  arguments: ScreenArguments(argString.split(";")[0],
+                      argString.split(";")[0]+";"+argString.split(";")[1],
+                      argString.split(";")[2]+";"+"jó"
+                  )
+              );
             },
             label: Text("Jó"),
           ),
@@ -141,9 +146,10 @@ class _readingDataState extends State<readingData> {
 
                       }
                       ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text(saveStatus)));
+                          SnackBar(content: Text(saveText + "Selejt mérők listájába."))); //Text(saveStatus +" " + storage.filename)
                       Navigator.pushReplacementNamed(context, "/constnum",
-                        arguments: ScreenArguments(argString.split(";")[0], argString.split(";")[0]+";"+argString.split(";")[1]));
+                        arguments: ScreenArguments(argString.split(";")[0], argString.split(";")[0]+";"+argString.split(";")[1],
+                            argString.split(";")[2]+";"+"selejt") );
                     },
                     icon: Icon( Icons.restore_from_trash,
                       size: 24,

@@ -56,7 +56,8 @@ class _mOwnerState extends State<mOwner> {
         List.generate(metersCount, (index) {
           return ItemWidget(text:  _data.split(",")[index],
               path: '/constnum',
-              data: argString+';'+_data.split(",")[index], user: argString.split(";")[0]
+              data: argString+';'+_data.split(",")[index], user: argString.split(";")[0],
+              lastSavedNum: "-;-",
           );
         }),
       ),

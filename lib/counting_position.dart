@@ -74,7 +74,7 @@ class _CountPosState extends State<CountPos> {
                                 setState(() {
                                   if (_formKey.currentState!.validate()) {
                                     Navigator.pushReplacementNamed(context, '/gearpairs',
-                                        arguments: ScreenArguments(userName, userName+";"+meterNumber) );
+                                        arguments: ScreenArguments(userName, userName+";"+meterNumber, "") );
                                   }
                                 });
                               },
