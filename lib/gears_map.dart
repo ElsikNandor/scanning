@@ -27,9 +27,9 @@ class fileManip{
       return contents;
     }
 
-  Future<String> readMetrixGears() async {
+  Future<String> readMetrixGears(String count) async {
 
-    final contents = await rootBundle.loadString('assets/itron_gears.txt');
+    final contents = await rootBundle.loadString('assets/metrix_gears_'+count+'.txt');
 
     return contents;
   }
@@ -54,6 +54,28 @@ class fileManip{
     print(gears[3].color);
     return gears;
   }
+
+  Future<List<gasMeterGear>> loadMetrixGears(String fcount) async{
+    List<gasMeterGear> gears = [];
+    //gasMeterGear(gear: "32/40", color: "white", hole: "1"),
+    //];
+    String data = "";
+    String readedGears = await readMetrixGears(fcount);
+    //readedGears = readedGears;
+    int count = readedGears.split(";").length.toInt();
+    print("count: $count");
+    for( var i = 0; i < count; i++ )
+    {
+      // for( var j = 0; j < 2; i++ ) {
+      data = readedGears.split(";")[i];
+      if( i > 0 ) data = data.substring(2);
+      gears.add(gasMeterGear(gear: data.split(",")[0], color: data.split(",")[1], hole: data.split(",")[2]));
+      // }
+    }
+    print(gears[0].color);
+    return gears;
+  }
+
 
   Future<String> _loadData() async {
     final String loadedData = await rootBundle.loadString('assets/data.txt');

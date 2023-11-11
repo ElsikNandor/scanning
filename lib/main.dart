@@ -9,6 +9,9 @@ import 'myclasses.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'counting_position.dart';
 import 'gear_pairs.dart';
+import 'gear_pairs_metrix_1.dart';
+import 'gear_pairs_metrix_2.dart';
+import 'gear_pairs_metrix_3.dart';
 import 'gears_map.dart';
 import 'owner.dart';
 import 'package:window_size/window_size.dart';
@@ -45,6 +48,9 @@ class MyApp extends StatelessWidget {
         '/yof' :  (context) => const yearOfManufacture(),
         '/countpos' : (context) => const CountPos(),
         '/gearpairs' : (context) => const GearPairs(),
+        '/gearpairs_metrix1' : (context) => const GearPairsMetrix1(),
+        '/gearpairs_metrix2' : (context) => const GearPairsMetrix2(),
+        '/gearpairs_metrix3' : (context) => const GearPairsMetrix3(),
         '/owners' : (context) => const mOwner(),
       },
     );
