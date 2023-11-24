@@ -52,7 +52,7 @@ class _GearPairsMetrix2State extends State<GearPairsMetrix2> {
               + "Adatrögzítő: " + args.message.split(";")[0]
               + " | Megrendelő: " + args.message.split(";")[1]),
           actions: <Widget>[
-            myMenu(username: argString.split(";")[0], mlogin: 0)
+            myMenu(username: argString.split(";")[0], message: argString, mlogin: 0)
           ]
       ),
       body:

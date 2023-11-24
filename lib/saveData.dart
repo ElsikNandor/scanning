@@ -60,7 +60,7 @@ class _saveDataState extends State<saveData> {
         appBar: AppBar(
             title: Text(argString.split(";")[0] + " - Összegzés: "),
             actions: <Widget>[
-              myMenu(username: argString.split(";")[0], mlogin: 0)
+              myMenu(username: argString.split(";")[0], message: argString, mlogin: 0)
             ]
         ),
         body: Center(child: Text("ws")

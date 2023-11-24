@@ -42,7 +42,7 @@ class _yearOfManufactureState extends State<yearOfManufacture> {
               + "Adatrögzítő: " + args.message.split(";")[0]
               + " | Megrendelő: " + args.message.split(";")[1]),
           actions: <Widget>[
-            myMenu(username: argString.split(";")[0], mlogin : 0)
+            myMenu(username: argString.split(";")[0], message: argString, mlogin : 0)
           ]
       ),
       body: Scrollbar( child:
@@ -57,7 +57,7 @@ class _yearOfManufactureState extends State<yearOfManufacture> {
           return ItemWidget(text:  _data.split(",")[index],
               path: '/countpos',
               data: argString+';'+_data.split(",")[index], user: argString.split(";")[0],
-            lastSavedNum: "-",
+            lastSavedNum: "-;-",
           );
         }),
       ),

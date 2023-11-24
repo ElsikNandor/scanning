@@ -111,10 +111,13 @@ class myMenu extends StatelessWidget {
    myMenu({
     super.key,
     required this.username,
+     required this.message,
     required this.mlogin,
   });
   var username = '';
+  var message = '';
   var mlogin = 0;
+
 
   @override
   Widget build(BuildContext context) {
@@ -132,7 +135,7 @@ class myMenu extends StatelessWidget {
             }
             else {
               Navigator.pushReplacementNamed(context, "/constnum",
-                  arguments: ScreenArguments(username, username, "")
+                  arguments: ScreenArguments(username, message, "-;-")
               );
             }
           }

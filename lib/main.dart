@@ -139,7 +139,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Adatrögzítő választó"),
-        actions: [myMenu(username : "", mlogin: 1,)],
+        actions: [myMenu(username : "", message: "", mlogin: 1,)],
       ),
       body:
           Column(

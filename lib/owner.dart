@@ -42,7 +42,7 @@ class _mOwnerState extends State<mOwner> {
           title: Text("Megrendelő kiválasztása | "
               + "Adatrögzítő: " + args.message.split(";")[0]),
           actions: <Widget>[
-            myMenu(username: argString.split(";")[0], mlogin: 1)
+            myMenu(username: argString.split(";")[0], message: argString, mlogin: 1)
           ]
       ),
       body: Scrollbar( child:

@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:scanning/readingdata.dart';
 import 'screenargument.dart';
 import 'myclasses.dart';
+import 'package:intl/intl.dart';
 
 final _formKey = GlobalKey<FormState>();
 String userName = "Username";
@@ -42,13 +43,15 @@ class _ConstNumState extends State<ConstNum> {
    // final args = ModalRoute.of(context)!.settings.arguments as SAreadingData;
     userName = args.message;
     lastSavedNum = args.lastSavedNum;
+    DateTime now = DateTime.now();
+    String formattedDate = DateFormat('yyyy MMMM dd').format(now);
     return Scaffold(
       appBar: AppBar(
         title: Text("Gyátrási szám beolvasása | "
             + "Adatrögzítő: " + args.message.split(";")[0]
             + " | Megrendelő: " + args.message.split(";")[1]),
         actions: <Widget>[
-          myMenu( username: userName, mlogin: 0),]
+          myMenu( username: userName, message: args.message, mlogin: 0),]
       ),
         body:Center(
           child:
@@ -188,9 +191,9 @@ class _ConstNumState extends State<ConstNum> {
   Column(
     children: [
        SizedBox(
-         width: 100,
+         width: 140,
         //width: (MediaQuery.of(context).size.width-200)/3-50,
-         child: Text("jobb szél"),
+         child: Text(formattedDate),
       )
     ],
   )
