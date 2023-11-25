@@ -128,7 +128,7 @@ class _GearPairsMetrix2State extends State<GearPairsMetrix2> {
                 SizedBox(
                   height: 10,
                 ),
-                Text(int.parse(gears[index].hole) == 1 ? "o" : "o     o")
+                Text(int.parse(gears[index].hole) == 1 ? "z3" : "o     o")
               ],
             )
 
