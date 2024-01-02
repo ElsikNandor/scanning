@@ -30,8 +30,7 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
-  @override
+   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -105,11 +104,8 @@ class _HomePageState extends State<HomePage> {
         //hhh += " req granted";
         setState(() {
           _permissionStatus = permissionStatus;
-          //hhh = _permissionStatus.toString();
         });
       }
-
-      //openAppSettings();
     }
     else{
       setState(() {
@@ -151,31 +147,19 @@ class _HomePageState extends State<HomePage> {
               SizedBox(
               height: 80,
               child: Image.asset('assets/logo.jpg'),
-              /*Container(
-                margin: const EdgeInsets.all(15.0),
-                padding: const EdgeInsets.all(3.0),
-                decoration: BoxDecoration(
-                    border: Border.all(color: Colors.blueAccent)
-                ),
-                child: Text('My Awesome Border'),
-              )*/
               ),
                 SizedBox(
-                  height: boxWith/4,
-                  width: boxWith,
+                  height: 500,
+                  width: nameCount < 5 ? boxWith/2 : boxWith,
                  child:
                   GridView.builder(
                   primary: false,
                   padding: const EdgeInsets.all(10),
-                  //mainAxisSpacing: 20,
-                  //crossAxisSpacing: 20,
-                  //crossAxisCount: 4,
-                  //children:
-                  //List.generate(nameCount, (index) {
+
                     itemCount: nameCount,
                   itemBuilder: (context, index) =>
                      Container(
-                       height: 130,
+                       height: 10,
                       //width: 130,
                       child:  ItemWidget(text:  _data.split(",")[index],
                           path: '/owners',
@@ -184,11 +168,11 @@ class _HomePageState extends State<HomePage> {
                       )
                      ),
                     gridDelegate:  SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 4,//_crossAxisCount,
+                      crossAxisCount: nameCount < 5 ? nameCount : 5,//_crossAxisCount,
                       crossAxisSpacing: 20,//_crossAxisSpacing,
-                      //mainAxisSpacing: 50,//_mainAxisSpacing,
-                      //childAspectRatio: 10,//_aspectRatio,
-                      mainAxisExtent: (boxWith)/nameCount,
+                      mainAxisSpacing: 50,//_mainAxisSpacing,
+                      childAspectRatio: 10,//_aspectRatio,
+                      mainAxisExtent: nameCount < 5 ? (boxWith)/(nameCount*2) : (boxWith)/(nameCount),
 
                     ),
                   //}),

@@ -73,7 +73,10 @@ class _CountPosState extends State<CountPos> {
                               onPressed: () {
                                 setState(() {
                                   if (_formKey.currentState!.validate()) {
-                                    if( args.message.split(";")[3] == "Metrix")
+                                    Navigator.pushReplacementNamed(context, '/yof',
+                                        arguments: ScreenArguments(userName, userName+";"+meterNumber, "") );
+
+                                    /* if( args.message.split(";")[3] == "Metrix")
                                       {
                                         Navigator.pushReplacementNamed(context, '/gearpairs_metrix1',
                                             arguments: ScreenArguments(userName, userName+";"+meterNumber, "") );
@@ -83,7 +86,7 @@ class _CountPosState extends State<CountPos> {
                                         Navigator.pushReplacementNamed(context, '/gearpairs',
                                             arguments: ScreenArguments(userName, userName+";"+meterNumber, "") );
                                       }
-
+*/
                                   }
                                 });
                               },
@@ -91,31 +94,7 @@ class _CountPosState extends State<CountPos> {
                             ),
                           ),
                           winNumPad(constNumText: constNumText, controller: _controller)
-                          // NumericKeyboard(
-                          //     onKeyboardTap: onKeyboardTap,
-                          //     textStyle: const TextStyle(
-                          //       color: Colors.black,
-                          //       fontSize: 28,
-                          //     ),
-                          //     rightButtonFn: () {
-                          //       if (constNumText.isEmpty) return;
-                          //       setState(() {
-                          //         constNumText = constNumText.substring(0, constNumText.length - 1);
-                          //         _controller.text = constNumText;
-                          //       });
-                          //     },
-                          //     rightButtonLongPressFn: () {
-                          //       if (constNumText.isEmpty) return;
-                          //       setState(() {
-                          //         constNumText = '';
-                          //         _controller.text = constNumText;
-                          //       });
-                          //     },
-                          //     rightIcon: const Icon(
-                          //       Icons.backspace_outlined,
-                          //       color: Colors.blueGrey,
-                          //     ),
-                          //     mainAxisAlignment: MainAxisAlignment.spaceBetween),
+
 
                         ])
                 )

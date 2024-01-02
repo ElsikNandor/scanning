@@ -29,13 +29,6 @@ class _ConstNumState extends State<ConstNum> {
   }
   String text = "";
 
-  // onKeyboardTap(String value) {
-  //   setState(() {
-  //     constNumText = constNumText + value;
-  //     _controller.text = constNumText;
-  //   });
-  // }
-
 
   @override
   Widget build(BuildContext context) {
@@ -115,7 +108,7 @@ class _ConstNumState extends State<ConstNum> {
                      onPressed: () {
                        setState(() {
                          if (_formKey.currentState!.validate()) {
-                           Navigator.pushReplacementNamed(context, '/mtype',
+                           Navigator.pushReplacementNamed(context, '/countpos',
                                arguments: ScreenArguments(userName, args.message.split(";")[0]+";"+args.message.split(";")[1]+";"+meterNumber, "") );
                          }
                        });
@@ -126,65 +119,7 @@ class _ConstNumState extends State<ConstNum> {
 
                ],
              ),
-              //height:50,
 
-            /*SizedBox(
-              height:50,
-            ),*/
-
-        //SizedBox(
-         // height:2,
-        //),
-        /*      SizedBox(
-                width: 110,
-                height: 50,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      onPrimary: Theme.of(context).colorScheme.onPrimary,
-                      primary: Theme.of(context).colorScheme.primary,
-                      minimumSize: Size(150,100),
-                      )
-                      .copyWith(elevation: ButtonStyleButton.allOrNull(0.0)
-                  ),
-                    onPressed: () {
-                    setState(() {
-                      if (_formKey.currentState!.validate()) {
-                        Navigator.pushReplacementNamed(context, '/mtype',
-                            arguments: ScreenArguments(userName, args.message.split(";")[0]+";"+args.message.split(";")[1]+";"+meterNumber) );
-                      }
-                    });
-                  },
-                  child: Text("Tovább"),
-                ),
-              ),*/
-
-
-
-            // NumericKeyboard(
-            //     onKeyboardTap: onKeyboardTap,
-            //     textStyle: const TextStyle(
-            //       color: Colors.black,
-            //       fontSize: 28,
-            //     ),
-            //     rightButtonFn: () {
-            //       if (constNumText.isEmpty) return;
-            //       setState(() {
-            //         constNumText = constNumText.substring(0, constNumText.length - 1);
-            //         _controller.text = constNumText;
-            //       });
-            //     },
-            //     rightButtonLongPressFn: () {
-            //       if (constNumText.isEmpty) return;
-            //       setState(() {
-            //         constNumText = '';
-            //         _controller.text = constNumText;
-            //       });
-            //     },
-            //     rightIcon: const Icon(
-            //       Icons.backspace_outlined,
-            //       color: Colors.blueGrey,
-            //     ),
-            //     mainAxisAlignment: MainAxisAlignment.spaceBetween),
             SizedBox(
               width: 10,
             ),

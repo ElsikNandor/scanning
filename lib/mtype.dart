@@ -56,7 +56,8 @@ class _mTypeState extends State<mType> {
         children:
         List.generate(metersCount, (index) {
           return ItemWidget(text:  _data.split(",")[index],
-            path: '/yof',
+            path: _data.split(",")[index] == "Metrix" ? '/gearpairs_metrix1' : '/gearpairs',
+            //'/countpos',
             data: argString+';'+_data.split(",")[index], user: argString.split(";")[0],
             lastSavedNum: "-;-",
           );
@@ -66,6 +67,16 @@ class _mTypeState extends State<mType> {
     );
   }
 }
+/*if( args.message.split(";")[3] == "Metrix")
+{
+Navigator.pushReplacementNamed(context, '/gearpairs_metrix1',
+arguments: ScreenArguments(userName, userName+";"+meterNumber, "") );
+}
+else
+{
+Navigator.pushReplacementNamed(context, '/gearpairs',
+arguments: ScreenArguments(userName, userName+";"+meterNumber, "") );
+}*/
 
 Widget LogoutButton(BuildContext context) {
   return Center(

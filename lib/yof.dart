@@ -55,7 +55,7 @@ class _yearOfManufactureState extends State<yearOfManufacture> {
         children:
         List.generate(metersCount, (index) {
           return ItemWidget(text:  _data.split(",")[index],
-              path: '/countpos',
+              path: '/mtype',
               data: argString+';'+_data.split(",")[index], user: argString.split(";")[0],
             lastSavedNum: "-;-",
           );

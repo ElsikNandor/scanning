@@ -1,11 +1,8 @@
-//import 'dart:html';
 import 'package:flutter/material.dart';
 import 'screenargument.dart';
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 import 'dart:async';
-//import 'package:permission_handler/permission_handler.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:onscreen_num_keyboard/onscreen_num_keyboard.dart';
 
 String _data = "";
@@ -164,15 +161,9 @@ class myMenu extends StatelessWidget {
       );
   }
 }
-/*class cStorage extends StatefulWidget {
-  const cStorage({Key? key}) : super(key: key);
 
-  @override
-  State<cStorage> createState() => _CounterStorage();
-}
-*/
 class CounterStorage  {
- // const CounterStorage({required this.filename});
+
 
   String filename = "";
   String adroidDir = "/storage/emulated/0/Documents";
@@ -189,15 +180,6 @@ class CounterStorage  {
 
   Future<String> get _localPath async {
 
-    // if (await Permission.manageExternalStorage.isPermanentlyDenied) {
-    //   openAppSettings();
-    // }
-
-    //final directory = await getExternalStorageDirectory();
-    //final directory = await getExternalStorageDirectory();
-    //await getExternalStorageDirectory();
-    //Directory("/assets/assets/");
-    //final directory = await Directory("/datas/");
 
     if( Platform.isAndroid == true){
       final directory = await Directory(this.adroidDir);
@@ -212,21 +194,15 @@ class CounterStorage  {
     else
       {
         //final directory = await Directory("./build/windows/runner/Release/datas/");
-          final directory = await Directory(this.winDir);
+          final directory = await Directory(this.winDir); // c:/src
           if ( !directory.existsSync() )
             {
               final directory = await Directory.current;
-              print("bub");
-              print(directory.path as String);
+              //print(directory.path as String);
               return directory.path;
             }
           return directory.path;
       }
-    //  if( Platform.isAndroid ){
-    //   final directory = await getApplicationDocumentsDirectory();
-    //   return directory.path;
-    // }
-
 
   }
 
@@ -250,14 +226,12 @@ class CounterStorage  {
       return int.parse(contents);
 
     } catch (e) {
-      print("nincs!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+      print("nincs!");
       return 0;
     }
   }
 
   Future<String> readSavedFile() async {
-    //final file = await _localFile;
-    //try {
       final file = await _localFile;
 
       // Read the file
@@ -265,12 +239,6 @@ class CounterStorage  {
 
       return "content" + contents;
 
-    /*} catch (e) {
-      print("nincs!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
-      print(file);
-
-      return "-";
-    }*/
 
   }
 
