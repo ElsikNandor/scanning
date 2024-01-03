@@ -64,15 +64,17 @@ class _readingDataState extends State<readingData> {
           SizedBox(height: 50,),
           myListElements(title: "Megrendelő:", content: argString.split(";")[1]),
           SizedBox(height: 5,),
-          myListElements(title: "Gyártási szám:", content: argString.split(";")[2]),
+          myListElements(title: "Megrendelésszám:", content: argString.split(";")[2]),
           SizedBox(height: 5,),
-          myListElements(title: "Gyártó:", content: argString.split(";")[5]),
+          myListElements(title: "Gyártási szám:", content: argString.split(";")[3]),
+          SizedBox(height: 5,),
+          myListElements(title: "Gyártó:", content: argString.split(";")[6]),
            SizedBox(height: 5,),
-          myListElements(title: "Gyártási Év:", content: argString.split(";")[4]),
+          myListElements(title: "Gyártási Év:", content: argString.split(";")[5]),
           SizedBox(height: 5,),
-          myListElements(title: "Számlálóállás:", content: argString.split(";")[3]),
+          myListElements(title: "Számlálóállás:", content: argString.split(";")[4]),
           SizedBox(height: 5,),
-          myListElements(title: "Cserekerék:", content: argString.split(";")[6]),
+          myListElements(title: "Cserekerék:", content: argString.split(";")[7]),
         ],
       ),
                 Column(
@@ -113,8 +115,8 @@ class _readingDataState extends State<readingData> {
               //});
               Navigator.pushReplacementNamed(context, "/constnum",
                   arguments: ScreenArguments(argString.split(";")[0],
-                      argString.split(";")[0]+";"+argString.split(";")[1],
-                      argString.split(";")[2]+";"+"jó"
+                      argString.split(";")[0]+";"+argString.split(";")[1]+";"+argString.split(";")[2],
+                      argString.split(";")[3]+";"+"jó"
                   )
               );
             },
@@ -131,9 +133,9 @@ class _readingDataState extends State<readingData> {
                       
                     ),
                     onPressed: () {
-                      storage.filename = "meterdata_notgood_" ;
+                      //storage.filename = "meterdata_notgood_" ;
                       try{
-                        storage.writeMeterData(argString);
+                        //storage.writeMeterData(argString);
                         setState(() {
                           saveStatus ="Sikeres mentés!";
                         });
@@ -146,10 +148,14 @@ class _readingDataState extends State<readingData> {
 
                       }
                       ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text(saveText + "Selejt mérők listájába."))); //Text(saveStatus +" " + storage.filename)
-                      Navigator.pushReplacementNamed(context, "/constnum",
-                        arguments: ScreenArguments(argString.split(";")[0], argString.split(";")[0]+";"+argString.split(";")[1],
-                            argString.split(";")[2]+";"+"selejt") );
+                          //SnackBar(content: Text(saveText + "Selejt mérők listájába.")));
+                      SnackBar(content: Text("Selejt mérő kiválasztva.")));//Text(saveStatus +" " + storage.filename)
+                      //Navigator.pushReplacementNamed(context, "/constnum",
+                      Navigator.pushReplacementNamed(context, "/notgood_meter",
+                        //arguments: ScreenArguments(argString.split(";")[0], argString.split(";")[0]+";"+argString.split(";")[1]+";"+argString.split(";")[2],
+                          //  argString.split(";")[3]+";"+"selejt") );
+                          arguments: ScreenArguments(argString.split(";")[0], argString,
+                              argString.split(";")[3]+";"+"selejt") );
                     },
                     icon: Icon( Icons.restore_from_trash,
                       size: 24,

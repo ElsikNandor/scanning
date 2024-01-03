@@ -104,6 +104,41 @@ class ItemWidget extends StatelessWidget {
   }
 }
 
+class ItemWidgetNotGoodMeter extends StatelessWidget {
+  const ItemWidgetNotGoodMeter({
+    super.key,
+    required this.text,
+    required this.path,
+    required this.data,
+    required this.user,
+    required this.lastSavedNum
+  });
+
+  final String text;
+  final String path;
+  final String data;
+  final String user;
+  final String lastSavedNum;
+  @override
+  Widget build(BuildContext context) {
+    //final args = ModalRoute.of(context)!.settings.arguments as ScreenArguments;
+    return
+      ElevatedButton(
+        style: ElevatedButton.styleFrom(
+
+          //minimumSize: Size(20, 20),
+          //maximumSize: Size(100, 100),
+        ),
+        onPressed: () {
+          //myReset();
+          Navigator.pushReplacementNamed(context, path,
+              arguments: ScreenArguments(user, data, lastSavedNum));
+        },
+        child: Text(text),
+      );
+  }
+}
+
 class myMenu extends StatelessWidget {
    myMenu({
     super.key,

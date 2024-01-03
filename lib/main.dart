@@ -14,6 +14,8 @@ import 'gear_pairs_metrix_2.dart';
 import 'gear_pairs_metrix_3.dart';
 import 'gears_map.dart';
 import 'owner.dart';
+import 'order_number.dart';
+import 'notgood_meter.dart';
 import 'package:window_size/window_size.dart';
 import 'dart:io';
 
@@ -51,6 +53,8 @@ class MyApp extends StatelessWidget {
         '/gearpairs_metrix2' : (context) => const GearPairsMetrix2(),
         '/gearpairs_metrix3' : (context) => const GearPairsMetrix3(),
         '/owners' : (context) => const mOwner(),
+        '/order_number' : (context) => const OrderNumber(),
+        '/notgood_meter' : (context) => const NotGoodMeter(),
       },
     );
   }

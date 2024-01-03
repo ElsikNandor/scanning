@@ -109,7 +109,8 @@ class _ConstNumState extends State<ConstNum> {
                        setState(() {
                          if (_formKey.currentState!.validate()) {
                            Navigator.pushReplacementNamed(context, '/countpos',
-                               arguments: ScreenArguments(userName, args.message.split(";")[0]+";"+args.message.split(";")[1]+";"+meterNumber, "") );
+                               arguments: ScreenArguments(userName, args.message.split(";")[0]+";"+args.message.split(";")[1]+";"
+                                   +args.message.split(";")[2]+";"+meterNumber, "") );
                          }
                        });
                      },
@@ -125,11 +126,16 @@ class _ConstNumState extends State<ConstNum> {
             ),
   Column(
     children: [
-       SizedBox(
+       /*SizedBox(
          width: 140,
         //width: (MediaQuery.of(context).size.width-200)/3-50,
          child: Text(formattedDate),
-      )
+      ),*/
+      SizedBox(
+          child: myListElements(title: "Megrendelésszám:\n", content: args.message.split(";")[2]),
+          //child: Text("Legutóbb bevitt gyári szám:\n" +args.message.split(";")[2]),
+          width: (MediaQuery.of(context).size.width-200)/3-200
+      ),
     ],
   )
 
