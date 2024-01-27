@@ -111,13 +111,14 @@ class _GearPairsMetrix2State extends State<GearPairsMetrix2> {
             onPressed: () {
                       Navigator.pushReplacementNamed(context, "/gearpairs_metrix3",
                           arguments: ScreenArguments(userN,
-                              args.message.split(";")[0]+";"+
+                              /*args.message.split(";")[0]+";"+
                                   args.message.split(";")[1]+";"+
                                   args.message.split(";")[2]+";"+
                                   args.message.split(";")[3]+";"+
                                   args.message.split(";")[4]+";"+
                                   args.message.split(";")[5]+";"+
-                                  args.message.split(";")[6]+"_"+gears[index].gear, ""));
+                                  args.message.split(";")[6]+"_"+*/
+                                  argString+";"+gears[index].gear, ""));
             },
             child: Column(
               children: [
