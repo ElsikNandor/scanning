@@ -17,6 +17,7 @@ import 'owner.dart';
 import 'order_number.dart';
 import 'notgood_meter.dart';
 import 'package:window_size/window_size.dart';
+import 'dataexport.dart';
 import 'dart:io';
 
 fileManip fmanip = new fileManip();
@@ -55,6 +56,7 @@ class MyApp extends StatelessWidget {
         '/owners' : (context) => const mOwner(),
         '/order_number' : (context) => const OrderNumber(),
         '/notgood_meter' : (context) => const NotGoodMeter(),
+        '/dataexport' : (context) => const dataExport(),
       },
     );
   }

@@ -171,6 +171,11 @@ class myMenu extends StatelessWidget {
               );
             }
           }
+        else if( value == "/dataexport")
+        {
+              Navigator.pushReplacementNamed(context, "/dataexport",
+                arguments: ScreenArguments(username, message, "-;-") );
+          }
         else if( value == "quit")
         {
           exit(0);
@@ -187,6 +192,10 @@ class myMenu extends StatelessWidget {
                 child: Text("Kijelentkezés"),
                 value: '/',
             ),
+           /* PopupMenuItem(
+                child: Text("Adat export"),
+                value: "/dataexport",
+            ),*/
             PopupMenuItem(
               child: Text("Bezár"),
               value: 'quit',
