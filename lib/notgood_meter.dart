@@ -67,9 +67,10 @@ class _NotGoodMeterState extends State<NotGoodMeter> {
 
               ),
               onPressed: () {
-                storage.filename = "meterdata_notgood_" ;
+                storage.filename = "meterdata_notgood_" + argString.split(";")[2] ;
                 argString += ";"+_data.split(",")[index];
                 try{
+                  argString += ";" +  DateToSave.get();
                   storage.writeMeterData(argString);
                   setState(() {
                     saveStatus ="Sikeres mentés!";

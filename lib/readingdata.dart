@@ -75,6 +75,8 @@ class _readingDataState extends State<readingData> {
           myListElements(title: "Számlálóállás:", content: argString.split(";")[4]),
           SizedBox(height: 5,),
           myListElements(title: "Cserekerék:", content: argString.split(";")[6] == "Metrix" ? argString.split(";")[7]+"_" + argString.split(";")[8]+"_" + argString.split(";")[9] : argString.split(";")[7]),
+          SizedBox(height: 5,),
+          myListElements(title: "Rögzítés időpontja:", content: DateToSave.get()),
         ],
       ),
                 Column(
@@ -95,9 +97,11 @@ class _readingDataState extends State<readingData> {
             ),
             onPressed: () {
               //myReset();
-                storage.filename = "meterdata_good_" ;
+                storage.filename = "meterdata_good_" + argString.split(";")[2];
               //setState(() {
                 try{
+                  argString += ";" + DateToSave.get();
+                      //"${today.year}-${today.month}-${today.day}_${today.hour}:${today.minute}:${today.second}";
                   storage.writeMeterData(argString);
                   setState(() {
                     saveStatus ="Sikeres mentés!";

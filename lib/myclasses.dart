@@ -6,6 +6,9 @@ import 'dart:async';
 import 'package:onscreen_num_keyboard/onscreen_num_keyboard.dart';
 
 String _data = "";
+DateTime today = DateTime.now();
+
+
 
 class winNumPad extends StatefulWidget {
   const winNumPad({
@@ -253,7 +256,7 @@ class CounterStorage  {
 
   Future<File> get _localFile async {
     DateTime today = DateTime.now();
-    String dateStr = "${today.year}_${today.month}_${today.day}";
+    String dateStr = "_";//"${today.year}_${today.month}_${today.day}";
      final path = await _localPath;
       final fn = this.filename;
       String allpath = "$path/"+"$fn"+"_"+"$dateStr"+".csv";
@@ -322,3 +325,18 @@ class CounterStorage  {
 
 }
 
+class DateToSave
+{
+  static get()
+  {
+    if( today.minute < 10) {
+      return "${today.year}-${today.month}-${today.day}_${today.hour}:0${today
+          .minute}:${today.second}";
+    }
+    else
+      {
+        return "${today.year}-${today.month}-${today.day}_${today.hour}:${today
+            .minute}:${today.second}";
+      }
+  }
+}
