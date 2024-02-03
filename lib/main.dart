@@ -39,8 +39,10 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Application',
       theme: ThemeData(
+        useMaterial3: false,
         primarySwatch: Colors.blue,
       ),
+
       initialRoute: '/',
       routes: {
         '/' : (context) => const HomePage(),

@@ -15,12 +15,20 @@ class readingData extends StatefulWidget {
 }
 
 class _readingDataState extends State<readingData> {
-  String _data = "";
+  //String _data = "";
   File fname = File("");
-  Future<void> _loadData() async {
+  /*Future<void> _loadData() async {
     final loadedData = await rootBundle.loadString('assets/metertype.txt');
     setState(() {
       _data = loadedData;
+    });
+  }
+*/
+ String saveDirName = "";
+  Future<void> _loadData() async {
+    final loadedData = await rootBundle.loadString('assets/savedirname.txt');
+    setState(() {
+      saveDirName = loadedData.split(";")[0]+":\\"+loadedData.split(";")[1];
     });
   }
 
@@ -37,16 +45,15 @@ class _readingDataState extends State<readingData> {
   @override
   Widget build(BuildContext context) {
     final args = ModalRoute.of(context)!.settings.arguments as ScreenArguments;
-    int metersCount = _data.split(",").length.toInt();
+    //int metersCount = _data.split(",").length.toInt();
     argString = args.message;
     final CounterStorage storage = CounterStorage();
+    storage.setSaveDirectory(saveDirName);
     String saveStatus = "";
     String saveText = "Sikeres mentés: ";
     return Scaffold(
       appBar: AppBar(
-        title: Text("Összegzés: | "
-            + "Adatrögzítő: " + args.message.split(";")[0]
-            + " | Megrendelő: " + args.message.split(";")[1]),
+        title: Text("Összegzés:"),
         actions: <Widget>[
           myMenu(username: argString.split(";")[0], message: argString, mlogin: 0,)
         ]

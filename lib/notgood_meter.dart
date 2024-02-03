@@ -15,17 +15,27 @@ class NotGoodMeter extends StatefulWidget {
 }
 
 class _NotGoodMeterState extends State<NotGoodMeter> {
-  String _data = "";
+String _data = "";
+String saveDirName = "";
   Future<void> _loadData() async {
     final loadedData = await rootBundle.loadString('assets/notgood_meter.txt');
     setState(() {
       _data = loadedData;
     });
   }
+
+  Future<void> _loadData_dn() async {
+    final loadedData = await rootBundle.loadString('assets/savedirname.txt');
+    setState(() {
+      saveDirName = loadedData.split(";")[0]+":\\"+loadedData.split(";")[1];
+    });
+  }
+
   void initState() {
     SystemChannels.textInput.invokeMethod('TextInput.hide');
     super.initState();
     _loadData();
+    _loadData_dn();
     setState(() {
 
     });
@@ -38,6 +48,7 @@ class _NotGoodMeterState extends State<NotGoodMeter> {
     int metersCount = _data.split(",").length.toInt();
     argString = args.message;
     final CounterStorage storage = CounterStorage();
+    storage.setSaveDirectory(saveDirName);
     String saveStatus = "";
     String saveText = "Sikeres mentés: ";
     return Scaffold(

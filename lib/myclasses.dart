@@ -214,7 +214,13 @@ class CounterStorage  {
 
   String filename = "";
   String adroidDir = "/storage/emulated/0/Documents";
-  String winDir = "c:/src";
+  String winDir = "C:/";//"X:/Elokeszito";//"c:/src";
+
+  Future<void> setSaveDirectory(String dirname) async{
+
+    this.winDir = dirname;
+
+  }
 
   Future<String> getFileName() async {
     return await this.filename;
