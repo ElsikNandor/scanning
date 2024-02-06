@@ -51,6 +51,9 @@ class _readingDataState extends State<readingData> {
     storage.setSaveDirectory(saveDirName);
     String saveStatus = "";
     String saveText = "Sikeres mentés: ";
+
+    String savedate = new DateToSave().get();
+
     return Scaffold(
       appBar: AppBar(
         title: Text("Összegzés:"),
@@ -83,7 +86,7 @@ class _readingDataState extends State<readingData> {
           SizedBox(height: 5,),
           myListElements(title: "Cserekerék:", content: argString.split(";")[6] == "Metrix" ? argString.split(";")[7]+"_" + argString.split(";")[8]+"_" + argString.split(";")[9] : argString.split(";")[7]),
           SizedBox(height: 5,),
-          myListElements(title: "Rögzítés időpontja:", content: DateToSave.get()),
+          myListElements(title: "Rögzítés időpontja:", content: savedate),
         ],
       ),
                 Column(
@@ -107,7 +110,7 @@ class _readingDataState extends State<readingData> {
                 storage.filename = "meterdata_good_" + argString.split(";")[2];
               //setState(() {
                 try{
-                  argString += ";" + DateToSave.get();
+                  argString += ";" + savedate;
                       //"${today.year}-${today.month}-${today.day}_${today.hour}:${today.minute}:${today.second}";
                   storage.writeMeterData(argString);
                   setState(() {

@@ -333,7 +333,7 @@ class CounterStorage  {
 
 class DateToSave
 {
-  static get()
+  String get()
   {
     if( today.minute < 10) {
       return "${today.year}-${today.month}-${today.day}_${today.hour}:0${today
