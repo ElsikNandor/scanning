@@ -3,6 +3,7 @@ import 'package:flutter/services.dart' show SystemChannels, rootBundle;
 import 'dart:async';
 import 'screenargument.dart';
 import 'myclasses.dart';
+import 'package:intl/intl.dart';
 
 final _formKey = GlobalKey<FormState>();
 String argString = "Username";
@@ -17,6 +18,7 @@ class NotGoodMeter extends StatefulWidget {
 class _NotGoodMeterState extends State<NotGoodMeter> {
 String _data = "";
 String saveDirName = "";
+String savedate = "";
   Future<void> _loadData() async {
     final loadedData = await rootBundle.loadString('assets/notgood_meter.txt');
     setState(() {
@@ -37,7 +39,7 @@ String saveDirName = "";
     _loadData();
     _loadData_dn();
     setState(() {
-
+      savedate = DateFormat('yyyy/MM/dd HH:mm:ss').format(DateTime.now());
     });
   }
 
@@ -81,7 +83,7 @@ String saveDirName = "";
                 storage.filename = "meterdata_notgood_" + argString.split(";")[2] ;
                 argString += ";"+_data.split(",")[index];
                 try{
-                  argString += ";" +  new DateToSave().get();
+                  argString += ";" +  savedate;
                   storage.writeMeterData(argString);
                   setState(() {
                     saveStatus ="Sikeres mentés!";

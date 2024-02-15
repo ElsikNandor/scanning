@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 import 'dart:async';
 import 'screenargument.dart';
 import 'myclasses.dart';
@@ -17,6 +18,7 @@ class readingData extends StatefulWidget {
 class _readingDataState extends State<readingData> {
   //String _data = "";
   File fname = File("");
+  String savedate = "";
   /*Future<void> _loadData() async {
     final loadedData = await rootBundle.loadString('assets/metertype.txt');
     setState(() {
@@ -37,7 +39,9 @@ class _readingDataState extends State<readingData> {
     super.initState();
     _loadData();
     setState(() {
-
+      savedate = DateFormat('yyyy/MM/dd HH:mm:ss').format(DateTime.now()); // DateToSave().get();
+      //Timer.periodic(Duration(seconds: 1), (Timer t) => savedate = DateToSave().get());
+      //super.initState();
     });
   }
 
@@ -52,11 +56,11 @@ class _readingDataState extends State<readingData> {
     String saveStatus = "";
     String saveText = "Sikeres mentés: ";
 
-    String savedate = new DateToSave().get();
+
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Összegzés:"),
+        title: Text("Összegzés: " + savedate ),
         actions: <Widget>[
           myMenu(username: argString.split(";")[0], message: argString, mlogin: 0,)
         ]
@@ -148,6 +152,7 @@ class _readingDataState extends State<readingData> {
                     ),
                     onPressed: () {
                       //storage.filename = "meterdata_notgood_" ;
+                      argString += ";" + savedate;
                       try{
                         //storage.writeMeterData(argString);
                         setState(() {
@@ -183,6 +188,11 @@ class _readingDataState extends State<readingData> {
       ),
     );
   }
+
+
+
+
+
 }
 
 class myListElements extends StatelessWidget {

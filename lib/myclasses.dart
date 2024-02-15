@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 import 'dart:async';
 import 'package:onscreen_num_keyboard/onscreen_num_keyboard.dart';
+import 'package:intl/intl.dart';
 
 String _data = "";
 DateTime today = DateTime.now();
@@ -320,7 +321,7 @@ class CounterStorage  {
   Future<void> copyToAssets() async {
     final File file = await _localFile;
     file.copy("${_localPath}/counter2.txt");
-    print("write");
+    //print("write");
   }
 
   Future<String> getPath() async {
@@ -333,6 +334,13 @@ class CounterStorage  {
 
 class DateToSave
 {
+
+  String formatDT()
+  {
+    return DateFormat('MM/dd/yyyy hh:mm:ss').format(DateTime.now());
+  }
+
+
   String get()
   {
     if( today.minute < 10) {
