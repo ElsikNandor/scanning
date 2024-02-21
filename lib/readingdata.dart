@@ -88,10 +88,10 @@ class _readingDataState extends State<readingData> {
           SizedBox(height: 5,),
           myListElements(title: "Számlálóállás:", content: argString.split(";")[4]),
           SizedBox(height: 5,),
-          myListElements(title: "Cserekerék:", content: argString.split(";")[6] == "Metrix" ? argString.split(";")[7]+"_" + argString.split(";")[8]+"_" + argString.split(";")[9] : argString.split(";")[7]),
+          myListElements(title: "Cserekerék:", content: argString.split(";")[6] == "Metrix" ? argString.split(";")[7] : argString.split(";")[7]),
           SizedBox(height: 5,),
           myListElements(title: "Rögzítés időpontja:", content: savedate),
-        ],
+        ],//+"_" + argString.split(";")[8]+"_" + argString.split(";")[9]
       ),
                 Column(
                 children: [
