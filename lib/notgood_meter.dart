@@ -83,7 +83,7 @@ String savedate = "";
                 storage.filename = "meterdata_notgood_" + argString.split(";")[2] ;
                 argString += ";"+_data.split(",")[index];
                 try{
-                  argString += ";" +  savedate;
+                  //argString += ";" +  savedate;
                   storage.writeMeterData(argString);
                   setState(() {
                     saveStatus ="Sikeres mentés!";

@@ -117,7 +117,7 @@ class _GearPairsMetrix3State extends State<GearPairsMetrix3> {
                                   args.message.split(";")[3]+";"+
                                   args.message.split(";")[4]+";"+
                                   args.message.split(";")[5]+";"+
-                                  args.message.split(";")[6]+"_"*/argString+";"+gears[index].gear, ""));
+                                  args.message.split(";")[6]+"_"*/argString+"-"+gears[index].gear, ""));
             },
             child: Column(
               children: [

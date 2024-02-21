@@ -216,7 +216,8 @@ class CounterStorage  {
   String filename = "";
   String adroidDir = "/storage/emulated/0/Documents";
   String winDir = "C:/";//"X:/Elokeszito";//"c:/src";
-
+  String safetyfilename = "safetySave";
+  String safetydir = "";
   Future<void> setSaveDirectory(String dirname) async{
 
     this.winDir = dirname;
@@ -230,6 +231,12 @@ class CounterStorage  {
   Future<void> setFName(String fn) async
   {
     this.filename = fn;
+  }
+
+  Future<String> getSafetyDir() async {
+
+      final dir = await Directory.current;
+        return dir.path;
   }
 
   Future<String> get _localPath async {
@@ -267,8 +274,19 @@ class CounterStorage  {
      final path = await _localPath;
       final fn = this.filename;
       String allpath = "$path/"+"$fn"+"_"+"$dateStr"+".csv";
+      print(allpath);
       return File(allpath);
     }
+
+  Future<File> get _safetyFile async {
+    //DateTime today = DateTime.now();
+    //String dateStr = "_";//"${today.year}_${today.month}_${today.day}";
+    final path = await getSafetyDir();
+    final fn = this.safetyfilename;
+    String allpath = "$path/"+"$fn"+".csv";
+    print("safety: " + allpath);
+    return File(allpath);
+  }
 
   Future<int> readCounter() async {
     try {
@@ -298,16 +316,30 @@ class CounterStorage  {
 
   Future<int> writeMeterData(String meterdata) async {
     final file = await _localFile;
+    final safetyS = await _safetyFile;
     try{
+
+      if ( safetyS.existsSync() == true ){
+        safetyS.writeAsString('$meterdata\n', mode: FileMode.append, encoding: SystemEncoding());
+        //print("van");
+      }
+      else
+      {
+        safetyS.writeAsString('$meterdata\n', encoding: SystemEncoding());
+        //print("nincs");
+      }
        if ( file.existsSync() == true ){
         file.writeAsString('$meterdata\n', mode: FileMode.append, encoding: SystemEncoding());
-        print("van");
+       //print("van");
       }
         else
           {
             file.writeAsString('$meterdata\n', encoding: SystemEncoding());
-            print("nincs");
+            //print("nincs");
           }
+
+
+
 
       return 1;
     }
