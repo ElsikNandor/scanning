@@ -26,7 +26,7 @@ class _ConnectionAlertState extends State<ConnectionAlert> {
         builder: (context, value, child) {
 
           //return Text(value.toString());
-          if (value.toString() == "false"  ) {
+          if (value.toString() == "true"  ) {
             return const SizedBox();
           } else {
             return const NetworkAlertBar();

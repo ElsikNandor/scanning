@@ -122,109 +122,107 @@ class _readingDataState extends State<readingData> {
           myListElements(title: "Rögzítés időpontja:", content: savedate),
         ],//+"_" + argString.split(";")[8]+"_" + argString.split(";")[9]
       ),
-                Column(
-                children: [
-                  SizedBox(
-                    height: 50,
-                  ),
+
           ValueListenableBuilder(
               valueListenable: connectivityController.isConnected,
               builder: (context, value, child) {
-                  if (value.toString() == "false"  ) {
-                    return const Text("nem");
+                  if (value.toString() == "true"  ) {
+                    return Column(
+                        children: [
+                          SizedBox(
+                            height: 50,
+                          ),
+                        ElevatedButton.icon(
+                        style: ElevatedButton.styleFrom(
+                          minimumSize: Size(150, 100),
+                          maximumSize: Size(150, 100),
+                          primary: Colors.green,
+                        ),
+                              icon: Icon(
+                                Icons.done,
+                              size: 24,
+                            ),
+                            onPressed:
+
+                                () {
+                              //myReset();
+                                storage.filename = "meterdata_good_" + argString.split(";")[2];
+                              //setState(() {
+                                try{
+                                  argString += ";" + savedate;
+                                      //"${today.year}-${today.month}-${today.day}_${today.hour}:${today.minute}:${today.second}";
+                                  storage.writeMeterData(argString);
+                                  setState(() {
+                                    saveStatus ="Sikeres mentés!";
+                                  });
+
+                                }catch (e) {
+                                  // If encountering an error, return 0
+                                  setState(() {
+                                    saveStatus ="Nem sikerült a mentés! Kérj segítséget!";
+                                  });
+
+                                }
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(content: Text(saveText + "Jó mérők listájába."))); //Text(saveStatus +" " + storage.filename)
+                              //});
+                              Navigator.pushReplacementNamed(context, "/constnum",
+                                  arguments: ScreenArguments(argString.split(";")[0],
+                                      argString.split(";")[0]+";"+argString.split(";")[1]+";"+argString.split(";")[2],
+                                      argString.split(";")[3]+";"+"jó"
+                                  )
+                              );
+                            },
+                            label: Text("Jó"),
+                          ),
+                                  SizedBox(
+                                    height: 80,
+                                  ),
+                                  ElevatedButton.icon(
+                                    style: ElevatedButton.styleFrom(
+                                      minimumSize: Size(150, 100),
+                                      maximumSize: Size(150, 100),
+                                      primary: Colors.red,
+
+                                    ),
+                                    onPressed: () {
+                                      //storage.filename = "meterdata_notgood_" ;
+                                      argString += ";" + savedate;
+                                      try{
+                                        //storage.writeMeterData(argString);
+                                        setState(() {
+                                          saveStatus ="Sikeres mentés!";
+                                        });
+
+                                      }catch (e) {
+                                        // If encountering an error, return 0
+                                        setState(() {
+                                          saveStatus ="Nem sikerült a mentés! Kérj segítséget!";
+                                        });
+
+                                      }
+                                      ScaffoldMessenger.of(context).showSnackBar(
+                                          //SnackBar(content: Text(saveText + "Selejt mérők listájába.")));
+                                      SnackBar(content: Text("Selejt mérő kiválasztva.")));//Text(saveStatus +" " + storage.filename)
+                                      //Navigator.pushReplacementNamed(context, "/constnum",
+                                      Navigator.pushReplacementNamed(context, "/notgood_meter",
+                                        //arguments: ScreenArguments(argString.split(";")[0], argString.split(";")[0]+";"+argString.split(";")[1]+";"+argString.split(";")[2],
+                                          //  argString.split(";")[3]+";"+"selejt") );
+                                          arguments: ScreenArguments(argString.split(";")[0], argString,
+                                              argString.split(";")[3]+";"+"selejt") );
+                                    },
+                                    icon: Icon( Icons.restore_from_trash,
+                                      size: 24,
+                                    ),
+                                    label: Text("Selejt"),
+                                  )
+                                ]
+                                );
                   } else {
-                    return const Text("ahha");
-                    }
-              }
-          ),
-          ElevatedButton.icon(
-            style: ElevatedButton.styleFrom(
-              minimumSize: Size(150, 100),
-              maximumSize: Size(150, 100),
-              primary: Colors.green,
-
-            ),
-            icon: Icon(
-                Icons.done,
-              size: 24,
-            ),
-            onPressed:
-
-                () {
-              //myReset();
-                storage.filename = "meterdata_good_" + argString.split(";")[2];
-              //setState(() {
-                try{
-                  argString += ";" + savedate;
-                      //"${today.year}-${today.month}-${today.day}_${today.hour}:${today.minute}:${today.second}";
-                  storage.writeMeterData(argString);
-                  setState(() {
-                    saveStatus ="Sikeres mentés!";
-                  });
-
-                }catch (e) {
-                  // If encountering an error, return 0
-                  setState(() {
-                    saveStatus ="Nem sikerült a mentés! Kérj segítséget!";
-                  });
-
+                  return const Text("");
+                  }
                 }
-                ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text(saveText + "Jó mérők listájába."))); //Text(saveStatus +" " + storage.filename)
-              //});
-              Navigator.pushReplacementNamed(context, "/constnum",
-                  arguments: ScreenArguments(argString.split(";")[0],
-                      argString.split(";")[0]+";"+argString.split(";")[1]+";"+argString.split(";")[2],
-                      argString.split(";")[3]+";"+"jó"
-                  )
-              );
-            },
-            label: Text("Jó"),
-          ),
-                  SizedBox(
-                    height: 80,
-                  ),
-                  ElevatedButton.icon(
-                    style: ElevatedButton.styleFrom(
-                      minimumSize: Size(150, 100),
-                      maximumSize: Size(150, 100),
-                      primary: Colors.red,
-                      
-                    ),
-                    onPressed: () {
-                      //storage.filename = "meterdata_notgood_" ;
-                      argString += ";" + savedate;
-                      try{
-                        //storage.writeMeterData(argString);
-                        setState(() {
-                          saveStatus ="Sikeres mentés!";
-                        });
-
-                      }catch (e) {
-                        // If encountering an error, return 0
-                        setState(() {
-                          saveStatus ="Nem sikerült a mentés! Kérj segítséget!";
-                        });
-
-                      }
-                      ScaffoldMessenger.of(context).showSnackBar(
-                          //SnackBar(content: Text(saveText + "Selejt mérők listájába.")));
-                      SnackBar(content: Text("Selejt mérő kiválasztva.")));//Text(saveStatus +" " + storage.filename)
-                      //Navigator.pushReplacementNamed(context, "/constnum",
-                      Navigator.pushReplacementNamed(context, "/notgood_meter",
-                        //arguments: ScreenArguments(argString.split(";")[0], argString.split(";")[0]+";"+argString.split(";")[1]+";"+argString.split(";")[2],
-                          //  argString.split(";")[3]+";"+"selejt") );
-                          arguments: ScreenArguments(argString.split(";")[0], argString,
-                              argString.split(";")[3]+";"+"selejt") );
-                    },
-                    icon: Icon( Icons.restore_from_trash,
-                      size: 24,
-                    ),
-                    label: Text("Selejt"),
-                  )
-                ]
                 ),
-
             ],
           ),
             SizedBox(
