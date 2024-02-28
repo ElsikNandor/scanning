@@ -5,6 +5,8 @@ import 'dart:async';
 import 'screenargument.dart';
 import 'myclasses.dart';
 import 'dart:io';
+import 'connection_alert_widget.dart';
+import 'connectivity_controller.dart';
 
 String argString = "Username";
 String meterType = "";
@@ -19,6 +21,9 @@ class _readingDataState extends State<readingData> {
   //String _data = "";
   File fname = File("");
   String savedate = "";
+  ConnectivityController connectivityController = ConnectivityController();
+
+  ValueNotifier<bool> network_state = ValueNotifier(false);
   /*Future<void> _loadData() async {
     final loadedData = await rootBundle.loadString('assets/metertype.txt');
     setState(() {
@@ -36,6 +41,7 @@ class _readingDataState extends State<readingData> {
 
   void initState() {
     SystemChannels.textInput.invokeMethod('TextInput.hide');
+    connectivityController.init();
     super.initState();
     _loadData();
     setState(() {
@@ -67,10 +73,14 @@ class _readingDataState extends State<readingData> {
       ),
       body:Center(
         child:
+        Column(
+
+          children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               verticalDirection: VerticalDirection.up,
               children: [
+
                 Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -182,9 +192,18 @@ class _readingDataState extends State<readingData> {
                     label: Text("Selejt"),
                   )
                 ]
-                )
+                ),
+
+            ],
+          ),
+            SizedBox(
+              height: 10,
+            ),
+            const ConnectionAlert(),
               ],
-            )
+
+            ),
+
       ),
     );
   }

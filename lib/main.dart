@@ -18,7 +18,10 @@ import 'order_number.dart';
 import 'notgood_meter.dart';
 import 'package:window_size/window_size.dart';
 import 'dataexport.dart';
+import 'check_network.dart';
 import 'dart:io';
+import 'connection_alert_widget.dart';
+import 'connectivity_controller.dart';
 
 fileManip fmanip = new fileManip();
 
@@ -59,6 +62,7 @@ class MyApp extends StatelessWidget {
         '/order_number' : (context) => const OrderNumber(),
         '/notgood_meter' : (context) => const NotGoodMeter(),
         '/dataexport' : (context) => const dataExport(),
+        '/network' : (context) => const NetworkCheckPage(title: "Hálózat ellenőrzés."),
       },
     );
   }
@@ -75,6 +79,10 @@ class _HomePageState extends State<HomePage> {
   String _data = "";
   String hhh = "---";
   String path = "dirs";
+
+  ConnectivityController connectivityController = ConnectivityController();
+
+  ValueNotifier<bool> network_state = ValueNotifier(false);
 
   Future<void> setTitlePlatform() async{
     if (Platform.isWindows)
@@ -126,12 +134,13 @@ class _HomePageState extends State<HomePage> {
 
   void initState() {
     SystemChannels.textInput.invokeMethod('TextInput.hide');
+    connectivityController.init();
     super.initState();
     requestPermission();
     _loadData();
     setTitlePlatform();
       setState(() {
-
+        network_state = connectivityController.isConnected;
        });
   }
 
@@ -151,7 +160,13 @@ class _HomePageState extends State<HomePage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.max,
             children:
-              [
+
+            [
+              /*SizedBox(
+                height: 50,
+                child: ConnectionAlert(),
+              ),*/
+
               SizedBox(
               height: 80,
               child: Image.asset('assets/logo.jpg'),
@@ -186,6 +201,7 @@ class _HomePageState extends State<HomePage> {
                   //}),
                 )
                 ),
+
               ]
           )
      );
