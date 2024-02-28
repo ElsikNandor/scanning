@@ -7,11 +7,12 @@ class NetworkAlertBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Positioned(
-      bottom: 0,
-      left: 0,
-      right: 0,
-      child: Container(
+    return //Positioned(
+      //bottom: 0,
+      //left: 0,
+      //right: 0,
+    //  child:
+    Container(
         color: Colors.red,
         height: 50,
         width: MediaQuery.of(context).size.width-10,
@@ -39,7 +40,7 @@ class NetworkAlertBar extends StatelessWidget {
             ],
           ),
         ),
-      ),
-    );
+      );
+    //);
   }
 }

@@ -64,7 +64,8 @@ class _NetworkCheckPageState extends State<NetworkCheckPage> {
         title: Text(widget.title),
         actions: [myMenu(username : "", message: "", mlogin: 1,)],
       ),
-      body: Center(
+      body:
+      Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -92,10 +93,15 @@ class _NetworkCheckPageState extends State<NetworkCheckPage> {
               },
               child: Text("check"),
             ),
-            const ConnectionAlert()
+
+            const ConnectionAlert(),
+
           ],
+
         ),
+
       ),
+
     );
   }
 }
