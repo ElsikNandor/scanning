@@ -4,13 +4,16 @@ import 'package:scanning/readingdata.dart';
 import 'screenargument.dart';
 import 'myclasses.dart';
 import 'package:intl/intl.dart';
+import 'alert_box.dart';
 
 final _formKey = GlobalKey<FormState>();
 String userName = "Username";
 String lastSavedNum = "";
 String meterNumber = "";
 String constNumText = "";
+
 TextEditingController _controller = new TextEditingController();
+TextEditingController _lastSaveNum = new TextEditingController();
 class ConstNum extends StatefulWidget {
   const ConstNum({Key? key}) : super(key: key);
 
@@ -24,6 +27,7 @@ class _ConstNumState extends State<ConstNum> {
     setState(() {
       constNumText = "";
       _controller.text = "";
+      _lastSaveNum.text = "";
 
     });
   }
@@ -36,6 +40,9 @@ class _ConstNumState extends State<ConstNum> {
    // final args = ModalRoute.of(context)!.settings.arguments as SAreadingData;
     userName = args.message;
     lastSavedNum = args.lastSavedNum;
+    //_lastSaveNum.text = args.lastSavedNum;
+
+    //lastSavedNum = _lastSaveNum.text;
     DateTime now = DateTime.now();
     String formattedDate = DateFormat('yyyy MMMM dd').format(now);
     return Scaffold(
@@ -65,7 +72,7 @@ class _ConstNumState extends State<ConstNum> {
             Column(
               children: [
                 SizedBox(
-                  child: myListElements(title: "Legutóbb bevitt gyári szám:\n", content: lastSavedNum.split(";")[0]),
+                  child: myListElements(title: "Legutóbb bevitt gyári szám:\n", content: _lastSaveNum.text.isEmpty == true ? lastSavedNum.split(";")[0] : _lastSaveNum.text.split(";")[0] ),//.split(";")[0]),
                   //child: Text("Legutóbb bevitt gyári szám:\n" +args.message.split(";")[2]),
                   width: (MediaQuery.of(context).size.width-200)/3-100
                 ),
@@ -73,7 +80,7 @@ class _ConstNumState extends State<ConstNum> {
                   height: 10,
                 ),
                 SizedBox(
-                    child: myListElements(title: "Legutóbbi minősítés:\n", content: lastSavedNum.split(";")[1]),
+                    child: myListElements(title: "Legutóbbi minősítés:\n", content: _lastSaveNum.text.isEmpty == true ? lastSavedNum.split(";")[1] : _lastSaveNum.text.split(";")[1]), //lastSavedNum.split(";")[1]),
                     //child: Text("Legutóbb bevitt gyári szám:\n" +args.message.split(";")[2]),
                     width: (MediaQuery.of(context).size.width-200)/3-100
                 )
@@ -93,30 +100,87 @@ class _ConstNumState extends State<ConstNum> {
                    child: winNumPad(constNumText: constNumText, controller: _controller),
                    width: (MediaQuery.of(context).size.width-200)/3+150,
                  ),
+                Row(
+                  children: [
+                    SizedBox(
+                      width: 110,
+                      height: 50,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          onPrimary: Theme.of(context).colorScheme.onPrimary,
+                          primary: Theme.of(context).colorScheme.primary,
+                          backgroundColor: Colors.green,
+                          minimumSize: Size(150,100),
+                        )
+                            .copyWith(elevation: ButtonStyleButton.allOrNull(0.0)
+                        ),
+                        onPressed: ()  {
+                          if (_formKey.currentState!.validate()) {
+                            showDialog(context: context,
+                                builder: (context) => CheckMessageBox()
+                            ).then((value) {
+                              print("Dialoge value: " + value);
+                              if( value == "true")
+                                {
 
-                 SizedBox(
-                   width: 110,
-                   height: 50,
-                   child: ElevatedButton(
-                     style: ElevatedButton.styleFrom(
-                       onPrimary: Theme.of(context).colorScheme.onPrimary,
-                       primary: Theme.of(context).colorScheme.primary,
-                       minimumSize: Size(150,100),
-                     )
-                         .copyWith(elevation: ButtonStyleButton.allOrNull(0.0)
-                     ),
-                     onPressed: () {
-                       setState(() {
-                         if (_formKey.currentState!.validate()) {
-                           Navigator.pushReplacementNamed(context, '/countpos',
-                               arguments: ScreenArguments(userName, args.message.split(";")[0]+";"+args.message.split(";")[1]+";"
-                                   +args.message.split(";")[2]+";"+meterNumber, "") );
-                         }
-                       });
-                     },
-                     child: Text("Tovább"),
-                   ),
-                 ),
+                                 /* Navigator.pushReplacementNamed(context, "/constnum",
+                                    arguments: ScreenArguments(argString.split(";")[0],
+                                        args.message, meterNumber+";"+"jó"*/
+                                  setState(() {
+                                    lastSavedNum = _controller.text+";"+"jó";
+                                    _lastSaveNum.text = _controller.text+";"+"jó";
+                                  });
+
+                                    _controller.text = "";
+                                  //)
+                              //);
+                                }
+
+                            });
+                          }
+
+                          //print("Dialog value: $val");
+                          /*setState(() {
+
+                            if (_formKey.currentState!.validate()) {
+                            //  Navigator.pushReplacementNamed(context, '/countpos',
+                              //    arguments: ScreenArguments(userName, args.message.split(";")[0]+";"+args.message.split(";")[1]+";"
+                                //      +args.message.split(";")[2]+";"+meterNumber, "") );
+
+                            }
+                          });*/
+                        },
+                        child: Text("Keresés"),
+                      ),
+                    ),
+                    SizedBox(
+                      width: 150,
+                    ),
+                    SizedBox(
+                      width: 110,
+                      height: 50,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          onPrimary: Theme.of(context).colorScheme.onPrimary,
+                          primary: Theme.of(context).colorScheme.primary,
+                          minimumSize: Size(150,100),
+                        )
+                            .copyWith(elevation: ButtonStyleButton.allOrNull(0.0)
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            if (_formKey.currentState!.validate()) {
+                              Navigator.pushReplacementNamed(context, '/mtype',
+                                  arguments: ScreenArguments(userName, args.message.split(";")[0]+";"+args.message.split(";")[1]+";"
+                                      +args.message.split(";")[2]+";"+meterNumber, "") );
+                            }
+                          });
+                        },
+                        child: Text("Tovább"),
+                      ),
+                    ),
+                  ],
+                )
 
                ],
              ),

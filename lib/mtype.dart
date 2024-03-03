@@ -37,6 +37,7 @@ class _mTypeState extends State<mType> {
     final args = ModalRoute.of(context)!.settings.arguments as ScreenArguments;
     int metersCount = _data.split(",").length.toInt();
     argString = args.message;
+    String blank = "-";
     return Scaffold(
       appBar: AppBar(
         title: Text("Gyártó kiválasztása | "
@@ -56,9 +57,11 @@ class _mTypeState extends State<mType> {
         children:
         List.generate(metersCount, (index) {
           return ItemWidget(text:  _data.split(",")[index],
-            path: _data.split(",")[index] == "Metrix" ? '/gearpairs_metrix1' : '/gearpairs',
+            //path: _data.split(",")[index] == "Metrix" ? '/gearpairs_metrix1' : '/gearpairs',
+            path: args.message.split(";")[1] == "Tigáz" ?  '/countpos' : '/readingData' ,
+            //path: '/yof',
             //'/countpos',
-            data: argString+';'+_data.split(",")[index], user: argString.split(";")[0],
+            data: args.message.split(";")[1] == "Tigáz" ? argString+';'+_data.split(",")[index] : argString+';'+_data.split(",")[index]+";"+blank+";"+blank+";"+blank, user: argString.split(";")[0],
             lastSavedNum: "-;-",
           );
         }),
@@ -67,6 +70,18 @@ class _mTypeState extends State<mType> {
     );
   }
 }
+/*if(args.message.split(";")[1] == "Tigáz")
+{
+Navigator.pushReplacementNamed(context, '/mtype',
+arguments: ScreenArguments(userName, userName+";"+meterNumber, "") );
+}
+else
+{
+sendMessage = userName+";"+meterNumber+";"+blank+";"+blank+";"+blank;
+Navigator.pushReplacementNamed(context, '/readingData',
+arguments: ScreenArguments(userName, sendMessage, "") );
+}
+*/
 /*if( args.message.split(";")[3] == "Metrix")
 {
 Navigator.pushReplacementNamed(context, '/gearpairs_metrix1',

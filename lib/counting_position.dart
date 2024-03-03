@@ -35,6 +35,8 @@ class _CountPosState extends State<CountPos> {
   Widget build(BuildContext context) {
     final args = ModalRoute.of(context)!.settings.arguments as ScreenArguments;
     userName = args.message;
+    String sendMessage = "";
+    String blank = "-";
     return Scaffold(
         appBar: AppBar(
             title: Text("Számláló állás beírása | "
@@ -73,9 +75,11 @@ class _CountPosState extends State<CountPos> {
                               onPressed: () {
                                 setState(() {
                                   if (_formKey.currentState!.validate()) {
-                                    Navigator.pushReplacementNamed(context, '/yof',
+                                        Navigator.pushReplacementNamed(context, '/yof',
+                                            arguments: ScreenArguments(userName, userName+";"+meterNumber, "") );
+                                    /*Navigator.pushReplacementNamed(context, '/yof',
                                         arguments: ScreenArguments(userName, userName+";"+meterNumber, "") );
-
+*/
                                     /* if( args.message.split(";")[3] == "Metrix")
                                       {
                                         Navigator.pushReplacementNamed(context, '/gearpairs_metrix1',
