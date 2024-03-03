@@ -185,6 +185,11 @@ class myMenu extends StatelessWidget {
           Navigator.pushReplacementNamed(context, "/network",
               arguments: ScreenArguments(username, message, "-;-") );
         }
+        else if( value == "/barcode")
+        {
+          Navigator.pushReplacementNamed(context, "/barcode",
+              arguments: ScreenArguments(username, message, "-;-") );
+        }
         else if( value == "quit")
         {
           exit(0);
@@ -204,6 +209,10 @@ class myMenu extends StatelessWidget {
             PopupMenuItem(
               child: Text("Network check"),
               value: '/network',
+            ),
+            PopupMenuItem(
+              child: Text("BarCode"),
+              value: '/barcode',
             ),
            /* PopupMenuItem(
                 child: Text("Adat export"),

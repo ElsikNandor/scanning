@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:scanning/gen_barcode.dart';
 import 'package:scanning/yof.dart';
 import 'dart:async';
 import 'constnum.dart';
@@ -22,6 +23,7 @@ import 'check_network.dart';
 import 'dart:io';
 import 'connection_alert_widget.dart';
 import 'connectivity_controller.dart';
+import 'gen_barcode.dart';
 
 fileManip fmanip = new fileManip();
 
@@ -63,6 +65,7 @@ class MyApp extends StatelessWidget {
         '/notgood_meter' : (context) => const NotGoodMeter(),
         '/dataexport' : (context) => const dataExport(),
         '/network' : (context) => const NetworkCheckPage(title: "Hálózat ellenőrzés."),
+        '/barcode' : (context) => const Gen_BarCode(),
       },
     );
   }
