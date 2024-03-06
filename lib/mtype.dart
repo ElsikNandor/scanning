@@ -40,7 +40,7 @@ class _mTypeState extends State<mType> {
     String blank = "-";
     return Scaffold(
       appBar: AppBar(
-        title: Text("Gyártó kiválasztása | "
+        title: Text("Típus kiválasztása | "
             + "Adatrögzítő: " + args.message.split(";")[0]
             + " | Megrendelő: " + args.message.split(";")[1]),
         actions: <Widget>[
