@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
+import 'package:scanning/dataread_test.dart';
+import 'package:scanning/fileFlutter.dart';
 import 'dart:async';
 import 'screenargument.dart';
 import 'myclasses.dart';
@@ -85,7 +87,7 @@ class _readingDataState extends State<readingData> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Összegzés: " + savedate ), //+ " network: " + checknetwork ),
+        title: Text("Összegzés: " + savedate), //+ " network: " + checknetwork ),
         actions: <Widget>[
           myMenu(username: argString.split(";")[0], message: argString, mlogin: 0,)
         ]
@@ -145,6 +147,7 @@ class _readingDataState extends State<readingData> {
                             onPressed:
 
                                 () {
+                                  rCount = 0;
                               //myReset();
                                 storage.filename = "meterdata_good_" + argString.split(";")[2];
                               //setState(() {

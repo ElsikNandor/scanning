@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:scanning/data_stores.dart';
 import 'package:scanning/gen_barcode.dart';
+import 'package:scanning/one_meter_data.dart';
 import 'package:scanning/yof.dart';
 import 'dart:async';
 import 'constnum.dart';
@@ -20,26 +22,78 @@ import 'notgood_meter.dart';
 import 'package:window_size/window_size.dart';
 import 'dataexport.dart';
 import 'check_network.dart';
+import 'dataread_test.dart';
 import 'dart:io';
 import 'connection_alert_widget.dart';
 import 'connectivity_controller.dart';
 import 'gen_barcode.dart';
+import 'order_number.dart';
 
 fileManip fmanip = new fileManip();
+String mainakarmi = '1';
+convertData convert = convertData();
+
+orderDirRead orderDir = orderDirRead();
+dataRead orderDataRead = dataRead();
+ownersDataConverter ownConv = ownersDataConverter();
+String dataFilePath = "C:/orders/";
+//dataFile = ""
+List<String> data = ["-"];
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.landscapeLeft, DeviceOrientation.landscapeRight]);
 
-  runApp(const MyApp());
+  runApp(const MyApp_prev());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+class MyApp_prev extends StatefulWidget {
+  const MyApp_prev({Key? key}) : super(key: key);
+
+  @override
+  State<MyApp_prev> createState() => MyApp();
+}
+
+
+class MyApp extends State<MyApp_prev> {
+
+/*  String datastorage = "";
+  String orderNumber = "";
+
+  Future<void> _loadData() async {
+    final loadedData = await rootBundle.loadString('assets/order_tmp.txt');
+    final dataStorageLocation = await rootBundle.loadString('assets/savedirname.txt');
+    final path = await dataStorageLocation.split(";")[0]+":\\"+dataStorageLocation.split(";")[1];
+    final file = await File(path+"\\"+loadedData+".csv");
+    final loadedData2 = await file.readAsString();
+
+    setState(() {
+      orderNumber = loadedData;
+      datastorage = loadedData2;
+
+    });
+  }*/
+
+  void initState() {
+    SystemChannels.textInput.invokeMethod('TextInput.hide');
+    super.initState();
+    //_loadData();
+    orderDir.getDir();
+    setState(() {
+      //fogaz.addDataFile("C:/Storage/Flogi/allomanyok", _orderdata);
+      //_loadMeterData();
+      spn = "1234";
+      pn = "123456";
+      on = "10001";
+    });
+  }
 
    @override
   Widget build(BuildContext context) {
+/*     convert.addDataStore(datastorage);
+     convert.convert();*/
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Application',
@@ -66,6 +120,11 @@ class MyApp extends StatelessWidget {
         '/dataexport' : (context) => const dataExport(),
         '/network' : (context) => const NetworkCheckPage(title: "Hálózat ellenőrzés."),
         '/barcode' : (context) => const Gen_BarCode(),
+        '/meterstoragetest' : (context) => const One_Meter_Data(),
+        '/dataReadTest' : (context) => const dataReadTest(),
+
+
+
       },
     );
   }

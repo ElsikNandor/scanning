@@ -1,16 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:scanning/data_stores.dart';
+import 'package:scanning/main.dart';
 import 'package:scanning/readingdata.dart';
 import 'screenargument.dart';
 import 'myclasses.dart';
 import 'package:intl/intl.dart';
 import 'alert_box.dart';
+//import 'dataread_test.dart';
 
 final _formKey = GlobalKey<FormState>();
 String userName = "Username";
 String lastSavedNum = "";
 String meterNumber = "";
 String constNumText = "";
+String orderNumber = "";
+String owner = "";
+bool orderNumBool = false;
 
 TextEditingController _controller = new TextEditingController();
 TextEditingController _lastSaveNum = new TextEditingController();
@@ -40,11 +46,60 @@ class _ConstNumState extends State<ConstNum> {
    // final args = ModalRoute.of(context)!.settings.arguments as SAreadingData;
     userName = args.message;
     lastSavedNum = args.lastSavedNum;
+
+    orderNumber = args.message.split(";")[2];
+    owner = args.message.split(";")[1];
+
     //_lastSaveNum.text = args.lastSavedNum;
 
     //lastSavedNum = _lastSaveNum.text;
+    
+    orderDataRead.addDataFile(dataFilePath, orderNumber, owner);
     DateTime now = DateTime.now();
     String formattedDate = DateFormat('yyyy MMMM dd').format(now);
+    print(rCount);
+
+    Map<String, String> rowsData = {"-" : "-"};
+
+   /* Future<void> _loadData() async {
+      final loadedData = await orderDataRead.readFile() ; //Kell a beolvasáshoz
+      if( rCount < 3 ) { // hogy ne pörögjön a state a beolvasás után, de 2-3 legalább kell, hogy betöltse
+        setState(() {
+          _data = loadedData;
+          print("DATA1");
+          print(_data);//_data-ába kerül a fájl tartalma
+        });
+        rCount++;
+      }
+    }
+    */
+    void findPersonUsingWhere(List<String> dataList,
+        String sort_prog_num) {
+      // Return list of people matching the condition
+      final found = dataList.where((element) =>
+      element.split(";")[0] == sort_prog_num);
+
+      if (found.isNotEmpty) {
+        print('Találat gysz: ${found.first}');
+        ownConv.setDatas(found.first, "Főgáz");
+        rowsData = ownConv.convertData();
+        orderNumBool = true;
+      }
+      else
+        {
+          orderNumBool = false;
+          print("nincs találat");
+        }
+    }
+
+    //setState(() {
+    //_loadData();
+
+    //findPersonUsingWhere(_data, gysz);
+  print("DATA");
+  print(data);
+
+
     return Scaffold(
       appBar: AppBar(
         title: Text("Gyátrási szám beolvasása | "
@@ -116,39 +171,39 @@ class _ConstNumState extends State<ConstNum> {
                         ),
                         onPressed: ()  {
                           if (_formKey.currentState!.validate()) {
+
+                            findPersonUsingWhere(data, meterNumber);
+
                             showDialog(context: context,
                                 builder: (context) => CheckMessageBox()
                             ).then((value) {
                               print("Dialoge value: " + value);
                               if( value == "true")
-                                {
+                              {
 
-                                 /* Navigator.pushReplacementNamed(context, "/constnum",
-                                    arguments: ScreenArguments(argString.split(";")[0],
-                                        args.message, meterNumber+";"+"jó"*/
-                                  setState(() {
-                                    lastSavedNum = _controller.text+";"+"jó";
-                                    _lastSaveNum.text = _controller.text+";"+"jó";
-                                  });
-
-                                    _controller.text = "";
-                                  //)
-                              //);
-                                }
-
-                            });
-                          }
+                               //Navigator.pushReplacementNamed(context, "/constnum",
+                                 //   arguments: ScreenArguments(argString.split(";")[0],
+                                   //     args.message, meterNumber+";"+"jó"
+                                                          //)
+                                    //);
+                               // }
+                                    print("Szuper");
+                            }
+                          });
 
                           //print("Dialog value: $val");
-                          /*setState(() {
 
-                            if (_formKey.currentState!.validate()) {
-                            //  Navigator.pushReplacementNamed(context, '/countpos',
-                              //    arguments: ScreenArguments(userName, args.message.split(";")[0]+";"+args.message.split(";")[1]+";"
-                                //      +args.message.split(";")[2]+";"+meterNumber, "") );
+                              //setState(() {
 
-                            }
-                          });*/
+                          //  if (_formKey.currentState!.validate()) {
+
+                              //Navigator.pushReplacementNamed(context, '/countpos',
+                                //  arguments: ScreenArguments(userName, args.message.split(";")[0]+";"+args.message.split(";")[1]+";"
+                                  //    +args.message.split(";")[2]+";"+meterNumber, "") );
+
+                                                }
+                            //});
+
                         },
                         child: Text("Keresés"),
                       ),
@@ -196,7 +251,7 @@ class _ConstNumState extends State<ConstNum> {
          child: Text(formattedDate),
       ),*/
       SizedBox(
-          child: myListElements(title: "Megrendelésszám:\n", content: args.message.split(";")[2]),
+          child: myListElements(title: "Megrendelésszám:\n", content: orderNumber),
           //child: Text("Legutóbb bevitt gyári szám:\n" +args.message.split(";")[2]),
           width: (MediaQuery.of(context).size.width-200)/3-200
       ),

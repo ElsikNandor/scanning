@@ -190,6 +190,16 @@ class myMenu extends StatelessWidget {
           Navigator.pushReplacementNamed(context, "/barcode",
               arguments: ScreenArguments(username, message, "-;-") );
         }
+        else if( value == "/meterstoragetest")
+        {
+          Navigator.pushReplacementNamed(context, "/meterstoragetest",
+              arguments: ScreenArguments(username, message, "-;-") );
+        }
+        else if( value == "/Dataread")
+        {
+          Navigator.pushReplacementNamed(context, "/dataReadTest",
+              arguments: ScreenArguments(username, message, "-;-") );
+        }
         else if( value == "quit")
         {
           exit(0);
@@ -213,6 +223,14 @@ class myMenu extends StatelessWidget {
             PopupMenuItem(
               child: Text("BarCode"),
               value: '/barcode',
+            ),
+            PopupMenuItem(
+              child: Text("Meter Storage"),
+              value: '/meterstoragetest',
+            ),
+            PopupMenuItem(
+              child: Text("DataRead"),
+              value: '/Dataread',
             ),
            /* PopupMenuItem(
                 child: Text("Adat export"),
@@ -239,6 +257,7 @@ class CounterStorage  {
   Future<void> setSaveDirectory(String dirname) async{
 
     this.winDir = dirname;
+    print("Windir: " + dirname);
 
   }
 
