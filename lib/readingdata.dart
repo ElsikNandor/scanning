@@ -84,7 +84,7 @@ class _readingDataState extends State<readingData> {
       //_mystring.addlistener(() => _controller.text = _mystring.value);
 
   });
-
+  print(argString);
     return Scaffold(
       appBar: AppBar(
         title: Text("Összegzés: " + savedate), //+ " network: " + checknetwork ),

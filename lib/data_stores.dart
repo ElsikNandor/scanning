@@ -178,20 +178,54 @@ class ownersDataConverter
 
   Map<String, String> convertData()
   {
-    Map<String, String> rowsData = {"-" : "-"};
+    Map<String, String> rowsData = {};
 
     if( this.row.length < 1 )
       {
         return rowsData;
       }
 
-    if( this.owner == "Főgáz") {
-      print("Főgáz Converter");
-      rowsData["sort_prod_num"] = this.row.split(";")[0];
-      rowsData["order_num"] = this.row.split(";")[1];
-      rowsData["long_prod_num"] = this.row.split(";")[3];
+    if( this.owner == "1" || this.owner == "2") {
+      //print("Főgáz, Égáz Converter");
+      try {
+        rowsData["sort_prod_num"] = this.row.split(";")[0];
+        rowsData["order_num"] = this.row.split(";")[1];
+        rowsData["long_prod_num"] = this.row.split(";")[3];
+      }
+      catch (e) {
+        print("OWNER ERROR");
+        return rowsData = {"error" : "owner"};
+
+      }
     }
 
+    if( this.owner == "3" ) {
+      //print("EON Converter");
+      try {
+        rowsData["sort_prod_num"] = this.row.split(";")[0];
+        rowsData["order_num"] = this.row.split(";")[1];
+        rowsData["long_prod_num"] = this.row.split(";")[3];
+      }
+      catch (e) {
+        print("OWNER ERROR");
+        return rowsData = {"error" : "owner"};
+
+      }
+    }
+
+    if( this.owner == "4" ) {
+      //print("EON Converter");
+      try {
+        rowsData["sort_prod_num"] = this.row.split(";")[6];
+        rowsData["order_num"] = this.row.split(";")[2];
+        rowsData["long_prod_num"] = this.row.split(";")[9];
+      }
+      catch (e) {
+        print("OWNER ERROR");
+        return rowsData = {"error" : "owner"};
+
+      }
+    }
 
     return rowsData;
   }

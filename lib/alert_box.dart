@@ -8,6 +8,7 @@ class CheckMessageBox extends StatelessWidget {
   Widget build(BuildContext context) {
    // final args = ModalRoute.of(context)!.settings.arguments as ScreenArguments;
     bool found = orderNumBool;
+    print(found);
     return  AlertDialog(
       title: Text('Eredmény'),
       insetPadding: const EdgeInsets.all(10),
@@ -19,9 +20,10 @@ class CheckMessageBox extends StatelessWidget {
               height: 300,
               child:
               Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Gyártási szám: " + meterNumber.toString()),
-                  Text(found == true ? 'Megtalálható az adatbázisban.' : 'Nem található.')
+                  alertBoxMessage(context, found),
+
                 ],
               )
 
@@ -49,4 +51,86 @@ class CheckMessageBox extends StatelessWidget {
       ],
     );
   }
+}
+
+Widget alertBoxMessage(BuildContext context, bool found) {
+  if( rowsData["error"] == "owner") {
+    //found = false;
+    return Container(
+      alignment: Alignment.center,
+      //color: Colors.red,
+      height: 35,
+        decoration: BoxDecoration(
+            color: Colors.red,
+            border: Border.all(
+              color: Colors.black,
+              width: 1.0,
+            ),
+            borderRadius: BorderRadius.circular(10.0),
+        ),
+
+        child: RichText(
+            text: TextSpan(
+
+                children: <TextSpan>[
+                  TextSpan(
+                      text : "Megrendelő beállítása nem megfelelő!",
+                      style: TextStyle(
+                        fontSize: 20,
+                          color: Colors.white)
+
+                  ),
+                  ]))
+
+    );
+  }
+
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Container(
+      alignment: Alignment.center,
+      //color: Colors.red,
+      height: 35,
+      decoration: BoxDecoration(
+        color: Colors.blue,
+        border: Border.all(
+          color: Colors.black,
+          width: 1.0,
+        ),
+        borderRadius: BorderRadius.circular(10.0),
+      ),
+
+      child:    Text(
+          "Keresett gyártásiszám: " + meterNumber.toString(),
+          style: TextStyle(fontSize: 20,  color: Colors.white)
+      ),
+
+  ),
+      SizedBox(
+        height: 20,
+      ),
+      Container(
+        alignment: Alignment.center,
+        //color: Colors.red,
+        height: 35,
+        decoration: BoxDecoration(
+          color: found == true ? Colors.green : Colors.red,
+          border: Border.all(
+            color: Colors.black,
+            width: 1.0,
+          ),
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+
+        child:    Text(
+            found == true ? 'Megtalálható az adatbázisban.' : 'Nem található.',
+            style: TextStyle(fontSize: 20, color: Colors.white)
+        ),
+
+      ),
+
+
+    ],
+  );
 }

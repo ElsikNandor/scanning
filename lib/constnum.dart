@@ -20,6 +20,7 @@ bool orderNumBool = false;
 
 TextEditingController _controller = new TextEditingController();
 TextEditingController _lastSaveNum = new TextEditingController();
+Map<String, String> rowsData = {"-" : "-"};
 class ConstNum extends StatefulWidget {
   const ConstNum({Key? key}) : super(key: key);
 
@@ -44,12 +45,12 @@ class _ConstNumState extends State<ConstNum> {
   Widget build(BuildContext context) {
     final args = ModalRoute.of(context)!.settings.arguments as ScreenArguments;
    // final args = ModalRoute.of(context)!.settings.arguments as SAreadingData;
-    userName = args.message;
+    //userName = args.message;
     lastSavedNum = args.lastSavedNum;
 
     orderNumber = args.message.split(";")[2];
     owner = args.message.split(";")[1];
-
+    userName = args.message.split(";")[0];
     //_lastSaveNum.text = args.lastSavedNum;
 
     //lastSavedNum = _lastSaveNum.text;
@@ -59,7 +60,16 @@ class _ConstNumState extends State<ConstNum> {
     String formattedDate = DateFormat('yyyy MMMM dd').format(now);
     print(rCount);
 
-    Map<String, String> rowsData = {"-" : "-"};
+
+    Map<String, String> ownerMap = {"Főgáz" : "1",
+                                    "Égáz" : "2",
+                                    "EON" : "3",
+                                    "Tigáz" : "4"};
+
+    if( rowsData.containsKey("error") )
+      {
+        rowsData.remove("error");
+      }
 
    /* Future<void> _loadData() async {
       final loadedData = await orderDataRead.readFile() ; //Kell a beolvasáshoz
@@ -73,15 +83,42 @@ class _ConstNumState extends State<ConstNum> {
       }
     }
     */
-    void findPersonUsingWhere(List<String> dataList,
-        String sort_prog_num) {
+    void findWhere(List<String> dataList,
+        String sort_prod_num) {
       // Return list of people matching the condition
-      final found = dataList.where((element) =>
-      element.split(";")[0] == sort_prog_num);
+      print(ownerMap[owner]);
+      final found = dataList.where((element) {
+        if( ownerMap[owner] == "4" ) // Jó lenne ha minden állomány ugyanúgy nézne ki 0:gysz, 1:rendelés 3:hgysz
+        {
+              try{
+                return element.split(";")[6] == sort_prod_num;
+              }
+              catch (e)
+            {
+              rowsData = {"error" : "owner"};
+              return false;
+            }
+
+        }
+        else
+          {
+            try{
+              return element.split(";")[0] == sort_prod_num;
+            }
+            catch (e)
+            {
+              rowsData = {"error" : "owner"};
+              return false;
+            }
+
+          }
+      });
+
 
       if (found.isNotEmpty) {
         print('Találat gysz: ${found.first}');
-        ownConv.setDatas(found.first, "Főgáz");
+        ownConv.setDatas(found.first, ownerMap[owner].toString());
+        print("owner: " + ownerMap[owner].toString());
         rowsData = ownConv.convertData();
         orderNumBool = true;
       }
@@ -172,7 +209,7 @@ class _ConstNumState extends State<ConstNum> {
                         onPressed: ()  {
                           if (_formKey.currentState!.validate()) {
 
-                            findPersonUsingWhere(data, meterNumber);
+                            findWhere(data, meterNumber);
 
                             showDialog(context: context,
                                 builder: (context) => CheckMessageBox()
@@ -181,12 +218,13 @@ class _ConstNumState extends State<ConstNum> {
                               if( value == "true")
                               {
 
-                               //Navigator.pushReplacementNamed(context, "/constnum",
-                                 //   arguments: ScreenArguments(argString.split(";")[0],
-                                   //     args.message, meterNumber+";"+"jó"
-                                                          //)
-                                    //);
-                               // }
+                             /*  Navigator.pushReplacementNamed(context, "/constnum",
+                                  arguments: ScreenArguments(argString.split(";")[0],
+                                        args.message, meterNumber+";"+"jó"
+                                                          )
+                                    );*/
+                               Navigator.pushReplacementNamed(context, "/readingData",
+                                   arguments: ScreenArguments(userName, args.message+";"+meterNumber+";-;-;-;-;-;-", ""));
                                     print("Szuper");
                             }
                           });
