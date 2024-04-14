@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:scanning/main.dart';
 import 'screenargument.dart';
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';
@@ -143,6 +144,14 @@ class ItemWidgetNotGoodMeter extends StatelessWidget {
   }
 }
 
+class Logout
+{
+  Logout()
+  {
+    readMeterData = ["-"];
+  }
+}
+
 class myMenu extends StatelessWidget {
    myMenu({
     super.key,
@@ -162,6 +171,7 @@ class myMenu extends StatelessWidget {
         onSelected: (value) {
         if( value == "/")
           {
+            Logout();
             Navigator.pushReplacementNamed(context, "/");
           }
         else if( value == "/back")

@@ -42,6 +42,7 @@ class CheckMessageBox extends StatelessWidget {
 /*              Navigator.pushReplacementNamed(context, '/countpos',
                   arguments: ScreenArguments(userName, argString.split(";")[0]+";"+argString.split(";")[1]+";"+argString.split(";")[1]+";"+meterNumber, "") );
   */            Navigator.pop(context, "false");
+                orderNumberAttempt++;
             }
             else{
               Navigator.pop(context, "true");

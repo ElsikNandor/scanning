@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
+import 'package:scanning/constnum.dart';
 import 'package:scanning/dataread_test.dart';
 import 'package:scanning/fileFlutter.dart';
 import 'dart:async';
@@ -147,6 +148,7 @@ class _readingDataState extends State<readingData> {
                             onPressed:
 
                                 () {
+                                  orderNumberAttempt = 0;
                                   rCount = 0;
                               //myReset();
                                 storage.filename = "meterdata_good_" + argString.split(";")[2];
@@ -189,6 +191,7 @@ class _readingDataState extends State<readingData> {
 
                                     ),
                                     onPressed: () {
+                                      orderNumberAttempt = 0;
                                       //storage.filename = "meterdata_notgood_" ;
                                       argString += ";" + savedate;
                                       try{

@@ -1,9 +1,29 @@
 import 'dart:io';
 import 'dart:async';
+import 'package:flutter/cupertino.dart';
 import 'package:path_provider/path_provider.dart';
 //class dataStores{
 
 int rCount = 0;
+
+class meterDataCl
+{
+  List<String> md = [];
+
+  meterDataCl(
+    {
+      required this.md
+    }  );
+}
+
+class dataChange extends ChangeNotifier {
+  late meterDataCl dataList;
+
+  void addDataList({required List<String> dataL}){
+    dataList.md = dataL;
+    notifyListeners();
+  }
+}
 
 class meterDatas{
   String sort_productnumber = "";
@@ -77,12 +97,15 @@ class dataRead
 
     Future<List<String>> readFile() async {
       final file = await _localFile;
-
+      print("LOCAL");
+      print(file.path);
       // Read the file
       final contents = await file.readAsLines();
 
      return contents;
     }
+
+
 
     String readSavedFile()
     {
@@ -99,7 +122,7 @@ class orderDirRead
   String dirPath = "C:/orders/"; //alapértelmezett
   String orderNumber = "0";
   int rows = 0;
-  List<FileSystemEntity> _folders = [];
+  List<FileSystemEntity> folders = [];
 
   void setDir( String dirPath )
   {
@@ -109,12 +132,13 @@ class orderDirRead
 
 
   Future<void> getDir() async {
-    final directory = await getApplicationDocumentsDirectory();
+  //  final directory = await getApplicationDocumentsDirectory();
     final dir = this.dirPath;
     //String pdfDirectory = '$dir/';
     final myDir = new Directory(dir);
     //setState(() {
-      _folders = myDir.listSync(recursive: true, followLinks: false);
+      //_folders = myDir.listSync(recursive: true, followLinks: false);
+    folders = myDir.listSync(recursive: true, followLinks: false);
     //});
 
   }
@@ -127,13 +151,13 @@ class orderDirRead
     FileSystemEntity fullpath = new File(dirPath.toString() + "" + orderNumber + ".csv");
     //getDir();
 
-    final found = _folders.where((element) {
+    final found = folders.where((element) {
       print("element: ");
       print(element.toString());
       return  element.path == fullpath.path;
     });
     print("folders: ");
-    print(_folders);
+    print(folders);
     print("fullpath: ");
     print(fullpath);
     print("found: ");

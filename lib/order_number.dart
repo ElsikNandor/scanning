@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:scanning/order_controller.dart';
 import 'screenargument.dart';
 import 'package:flutter/services.dart' show SystemChannels, rootBundle;
 import 'package:scanning/main.dart';
@@ -12,18 +13,28 @@ final _formKey = GlobalKey<FormState>();
 String userName = "Username";
 String meterNumber = "";
 String constNumText = "";
-String dataFilePath = "C:/orders/";
+//String dataFilePath = "C:/orders/";
 
 
 TextEditingController _controller = new TextEditingController();
 class OrderNumber extends StatefulWidget {
-  const OrderNumber({Key? key}) : super(key: key);
+  OrderNumber({Key? key, required this.storage}) : super(key: key);
+
+  final dataRead storage;
 
   @override
-  State<OrderNumber> createState() => _OrderNumberState();
+  State<OrderNumber> createState() => _OrderNumberState( storage: dataRead() );
 }
 
 class _OrderNumberState extends State<OrderNumber> {
+  _OrderNumberState({Key? key, required this.storage});
+ // OrderController orderC = OrderController();
+  final dataRead storage;
+
+  late dataChange dataChangeVar;
+
+
+
 /*
   String datastorage = "";
   String orderNumber = "";
@@ -41,13 +52,29 @@ class _OrderNumberState extends State<OrderNumber> {
 
     });
   }*/
+  Future<List<String>> _loadData() async {
+    final loadedData = await storage.readFile() ; //Kell a beolvasáshoz
+   // if( rCount < 4 ) { // hogy ne pörögjön a state a beolvasás után, de 2-3 legalább kell, hogy betöltse
+      //setState(() {
+      readMeterData = loadedData;
+      dataChangeVar.dataList.md = loadedData;
+      //print("DATA1");
+      //  print(readMeterData);//_data-ába kerül a fájl tartalma
+      //});
+      rCount++;
+   // }
+    return readMeterData;
+  }
 
   void initState() {
     super.initState();
+
     setState(() {
+      orderC.init();
       constNumText = "";
       _controller.text = "";
-      orderDir.setDir(dataFilePath);
+      //orderDir.setDir(dataFilePath);
+
     });
   }
 
@@ -59,20 +86,16 @@ class _OrderNumberState extends State<OrderNumber> {
   // }
 
   @override
+
+
   Widget build(BuildContext context) {
     final args = ModalRoute.of(context)!.settings.arguments as ScreenArguments;
     userName = args.message;
-    Future<void> _loadData() async {
-      final loadedData = await orderDataRead.readFile() ; //Kell a beolvasáshoz
-      if( rCount < 3 ) { // hogy ne pörögjön a state a beolvasás után, de 2-3 legalább kell, hogy betöltse
-        setState(() {
-          data = loadedData;
-          print("DATA1");
-          print(data);//_data-ába kerül a fájl tartalma
-        });
-        rCount++;
-      }
-    }
+
+    //storage.addDataFile(dataFilePath, args.message.split(";")[2], args.message.split(";")[1]);
+
+
+
 
     return Scaffold(
         appBar: AppBar(
@@ -100,7 +123,93 @@ class _OrderNumberState extends State<OrderNumber> {
                           SizedBox(
                             height:2,
                           ),
-                          SizedBox(
+                          ValueListenableBuilder(
+                              valueListenable: orderC.isorder,
+                              builder: (context, value, child) {
+                                //if (value.toString() == "true"  ) {
+                                  return Row(
+                                      children: [
+                                        SizedBox(
+                                          height: 50,
+                                        ),
+
+
+                                        SizedBox(
+                                          width: 110,
+                                          height: 50,
+                                          child: ElevatedButton(
+                                            style: ElevatedButton.styleFrom(
+                                              onPrimary: Theme.of(context).colorScheme.onPrimary,
+                                              primary: Theme.of(context).colorScheme.primary,
+                                              minimumSize: Size(150,100),
+                                            )
+                                                .copyWith(elevation: ButtonStyleButton.allOrNull(0.0)
+                                            ),
+                                            onPressed: () {
+                                              //setState(() {
+                                              readMeterData = [];
+                                              orderC.init();
+                                              if (_formKey.currentState!.validate()) {
+                                                if( !orderDir.orderDirExists(meterNumber) ) // rendelésszám meglétének ellenőrzése
+                                                    {
+
+                                                  showSnackBarFun(context);
+                                                  return null;
+                                                }
+
+                                                widget.storage.addDataFile(dataFilePath, meterNumber, args.message.split(";")[1]);
+
+                                                widget.storage.readFile().then((value) {
+                                                  setState(() {
+                                                    // print(value);
+                                                    readMeterData = value;
+                                                    orderC.init();
+                                                  });
+
+                                                  print(orderC.isorder);
+                                                });
+
+                                              }
+                                              //  });
+                                            },
+                                            child: Text("Ellenőrzés"),
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: 40,
+                                        ),
+                                        SizedBox(
+                                          width: 110,
+                                          height: 50,
+                                          child:
+                                          ElevatedButton.icon(
+                                            style: ElevatedButton.styleFrom(
+                                              minimumSize: Size(150, 100),
+                                              maximumSize: Size(150, 100),
+                                              primary: orderC.isorder.value == true ? Colors.green : Colors.grey,
+                                            ),
+                                            icon: Icon(
+                                              Icons.done,
+                                              size: 24,
+                                            ),
+                                            onPressed: () {
+                                              if(orderC.isorder.value)
+                                                {
+                                              Navigator.pushReplacementNamed(context, '/constnum',
+                                                  arguments: ScreenArguments(userName, args.message.split(";")[0]+";"+args.message.split(";")[1]+";"+meterNumber, "-;-") );
+                                              }
+                                            },
+                                            label: Text("Tovább"),
+                                          ),
+                                        ),
+                                      ]
+                                  );
+                              //  } else {
+                                //  return const Text("ssss");
+                                //}
+                              }
+                          ),
+                          /*SizedBox(
                             width: 110,
                             child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
@@ -111,7 +220,7 @@ class _OrderNumberState extends State<OrderNumber> {
                                   .copyWith(elevation: ButtonStyleButton.allOrNull(0.0)
                               ),
                               onPressed: () {
-                                setState(() {
+                                //setState(() {
 
                                   if (_formKey.currentState!.validate()) {
                                     if( !orderDir.orderDirExists(meterNumber) ) // rendelésszám meglétének ellenőrzése
@@ -123,22 +232,40 @@ class _OrderNumberState extends State<OrderNumber> {
                                       return null;
                                     }
 
-                                    orderDataRead.addDataFile(dataFilePath, meterNumber, args.message.split(";")[1]);
+                                    widget.storage.addDataFile(dataFilePath, meterNumber, args.message.split(";")[1]);
+                                    //_loadData();
+                                   // setState(() {
 
-                                    _loadData();
 
-                                    Navigator.pushReplacementNamed(context, '/constnum',
+                                      //dataChangeVar.dataList = meterDataCl(md: readMeterData);
+
+                                    //});
+                                    
+                                    widget.storage.readFile().then((value) {
+                                      setState(() {
+                                       // print(value);
+                                        readMeterData = value;
+                                        orderC.init();
+                                      });
+
+                                      print(orderC.isorder);
+                                    });
+
+
+
+                                 //   Navigator.pushReplacementNamed(context, '/constnum',
                                         //arguments: ScreenArguments(userName, userName+";"+meterNumber, "") );
-                                    arguments: ScreenArguments(userName, args.message.split(";")[0]+";"+args.message.split(";")[1]+";"+meterNumber, "-;-") );
+                                  //  arguments: ScreenArguments(userName, args.message.split(";")[0]+";"+args.message.split(";")[1]+";"+meterNumber, "-;-") );
 
 
                                   }
-                                });
+                              //  });
                               },
-                              child: Text("Tovább"),
+                              child: Text("Ellenőrzés"),
                             ),
-                          ),
-                          winNumPad(constNumText: constNumText, controller: _controller)
+                          ),*/
+                          winNumPad(constNumText: constNumText, controller: _controller),
+                          Text(readMeterData[0].toString())
 
 
                         ])

@@ -7,6 +7,7 @@ import 'screenargument.dart';
 import 'myclasses.dart';
 import 'package:intl/intl.dart';
 import 'alert_box.dart';
+import 'meter_controller.dart';
 //import 'dataread_test.dart';
 
 final _formKey = GlobalKey<FormState>();
@@ -17,10 +18,11 @@ String constNumText = "";
 String orderNumber = "";
 String owner = "";
 bool orderNumBool = false;
-
+List<String> xx = [];
 TextEditingController _controller = new TextEditingController();
 TextEditingController _lastSaveNum = new TextEditingController();
 Map<String, String> rowsData = {"-" : "-"};
+int orderNumberAttempt = 0;
 class ConstNum extends StatefulWidget {
   const ConstNum({Key? key}) : super(key: key);
 
@@ -29,16 +31,19 @@ class ConstNum extends StatefulWidget {
 }
 
 class _ConstNumState extends State<ConstNum> {
+
+  String text = "";
+
   void initState() {
     super.initState();
+
     setState(() {
+
       constNumText = "";
       _controller.text = "";
       _lastSaveNum.text = "";
-
-    });
-  }
-  String text = "";
+     });
+ }
 
 
   @override
@@ -55,9 +60,9 @@ class _ConstNumState extends State<ConstNum> {
 
     //lastSavedNum = _lastSaveNum.text;
     
-    orderDataRead.addDataFile(dataFilePath, orderNumber, owner);
+    //orderDataRead.addDataFile(dataFilePath, orderNumber, owner);
     DateTime now = DateTime.now();
-    String formattedDate = DateFormat('yyyy MMMM dd').format(now);
+
     print(rCount);
 
 
@@ -71,22 +76,11 @@ class _ConstNumState extends State<ConstNum> {
         rowsData.remove("error");
       }
 
-   /* Future<void> _loadData() async {
-      final loadedData = await orderDataRead.readFile() ; //Kell a beolvasáshoz
-      if( rCount < 3 ) { // hogy ne pörögjön a state a beolvasás után, de 2-3 legalább kell, hogy betöltse
-        setState(() {
-          _data = loadedData;
-          print("DATA1");
-          print(_data);//_data-ába kerül a fájl tartalma
-        });
-        rCount++;
-      }
-    }
-    */
+
     void findWhere(List<String> dataList,
         String sort_prod_num) {
       // Return list of people matching the condition
-      print(ownerMap[owner]);
+      //print(ownerMap[owner]);
       final found = dataList.where((element) {
         if( ownerMap[owner] == "4" ) // Jó lenne ha minden állomány ugyanúgy nézne ki 0:gysz, 1:rendelés 3:hgysz
         {
@@ -129,12 +123,12 @@ class _ConstNumState extends State<ConstNum> {
         }
     }
 
-    //setState(() {
-    //_loadData();
+ //   print("DATA");
+ //   print(readMeterData);
 
-    //findPersonUsingWhere(_data, gysz);
-  print("DATA");
-  print(data);
+    setState(() {
+      meterController.init();
+    });
 
 
     return Scaffold(
@@ -192,88 +186,97 @@ class _ConstNumState extends State<ConstNum> {
                    child: winNumPad(constNumText: constNumText, controller: _controller),
                    width: (MediaQuery.of(context).size.width-200)/3+150,
                  ),
-                Row(
-                  children: [
-                    SizedBox(
-                      width: 110,
-                      height: 50,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          onPrimary: Theme.of(context).colorScheme.onPrimary,
-                          primary: Theme.of(context).colorScheme.primary,
-                          backgroundColor: Colors.green,
-                          minimumSize: Size(150,100),
-                        )
-                            .copyWith(elevation: ButtonStyleButton.allOrNull(0.0)
-                        ),
-                        onPressed: ()  {
-                          if (_formKey.currentState!.validate()) {
-
-                            findWhere(data, meterNumber);
-
-                            showDialog(context: context,
-                                builder: (context) => CheckMessageBox()
-                            ).then((value) {
-                              print("Dialoge value: " + value);
-                              if( value == "true")
-                              {
-
-                             /*  Navigator.pushReplacementNamed(context, "/constnum",
-                                  arguments: ScreenArguments(argString.split(";")[0],
-                                        args.message, meterNumber+";"+"jó"
-                                                          )
-                                    );*/
-                               Navigator.pushReplacementNamed(context, "/readingData",
-                                   arguments: ScreenArguments(userName, args.message+";"+meterNumber+";-;-;-;-;-;-", ""));
-                                    print("Szuper");
-                            }
-                          });
-
-                          //print("Dialog value: $val");
-
-                              //setState(() {
-
-                          //  if (_formKey.currentState!.validate()) {
-
-                              //Navigator.pushReplacementNamed(context, '/countpos',
-                                //  arguments: ScreenArguments(userName, args.message.split(";")[0]+";"+args.message.split(";")[1]+";"
-                                  //    +args.message.split(";")[2]+";"+meterNumber, "") );
-
-                                                }
-                            //});
-
-                        },
-                        child: Text("Keresés"),
-                      ),
-                    ),
-                    SizedBox(
-                      width: 150,
-                    ),
-                    SizedBox(
-                      width: 110,
-                      height: 50,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          onPrimary: Theme.of(context).colorScheme.onPrimary,
-                          primary: Theme.of(context).colorScheme.primary,
-                          minimumSize: Size(150,100),
-                        )
-                            .copyWith(elevation: ButtonStyleButton.allOrNull(0.0)
-                        ),
-                        onPressed: () {
-                          setState(() {
+                ValueListenableBuilder(
+                valueListenable: meterController.ismeter,
+                builder: (context, value, child) {
+                  return Row(
+                    children: [
+                      SizedBox(
+                        width: 110,
+                        height: 50,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            onPrimary: Theme
+                                .of(context)
+                                .colorScheme
+                                .onPrimary,
+                            primary: Theme
+                                .of(context)
+                                .colorScheme
+                                .primary,
+                            backgroundColor: Colors.green,
+                            minimumSize: Size(150, 100),
+                          )
+                              .copyWith(
+                              elevation: ButtonStyleButton.allOrNull(0.0)
+                          ),
+                          onPressed: () {
                             if (_formKey.currentState!.validate()) {
-                              Navigator.pushReplacementNamed(context, '/mtype',
-                                  arguments: ScreenArguments(userName, args.message.split(";")[0]+";"+args.message.split(";")[1]+";"
-                                      +args.message.split(";")[2]+";"+meterNumber, "") );
+                              findWhere(readMeterData, meterNumber);
+
+                              setState(() {
+                                meterController.init();
+                                print(meterController.ismeter);
+                              });
+
+                              showDialog(context: context,
+                                  builder: (context) => CheckMessageBox()
+                              ).then((value) {
+                                print("Dialoge value: " + value);
+                                print(orderNumberAttempt);
+                                if (value == "true") {
+                                  Navigator.pushReplacementNamed(
+                                      context, "/readingData",
+                                      arguments: ScreenArguments(userName,
+                                          args.message + ";" + meterNumber +
+                                              ";-;-;-;-;-;-", ""));
+                                  print("Szuper");
+                                }
+                              });
                             }
-                          });
-                        },
-                        child: Text("Tovább"),
+                          },
+                          child: Text("Keresés"),
+                        ),
                       ),
-                    ),
-                  ],
-                )
+                      SizedBox(
+                        width: 150,
+                      ),
+                      SizedBox(
+                        width: 110,
+                        height: 50,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            // onPrimary: Theme.of(context).colorScheme.onPrimary,
+                            primary: meterController.ismeter.value == false
+                                ? Colors.blue
+                                : Colors.grey,
+                            minimumSize: Size(150, 100),
+                          )
+                              .copyWith(
+                              elevation: ButtonStyleButton.allOrNull(0.0)
+                          ),
+                          onPressed: () {
+                            if (meterController.ismeter.value) {
+                              return null;
+                            }
+                            setState(() {
+                              if (_formKey.currentState!.validate()) {
+                                Navigator.pushReplacementNamed(
+                                    context, '/mtype',
+                                    arguments: ScreenArguments(userName,
+                                        args.message.split(";")[0] + ";" +
+                                            args.message.split(";")[1] + ";"
+                                            + args.message.split(";")[2] + ";" +
+                                            meterNumber, ""));
+                              }
+                            });
+                          },
+                          child: Text("Tovább"),
+                        ),
+                      ),
+                    ],
+                  );
+                }),
 
                ],
              ),
@@ -290,6 +293,14 @@ class _ConstNumState extends State<ConstNum> {
       ),*/
       SizedBox(
           child: myListElements(title: "Megrendelésszám:\n", content: orderNumber),
+          //child: Text("Legutóbb bevitt gyári szám:\n" +args.message.split(";")[2]),
+          width: (MediaQuery.of(context).size.width-200)/3-200
+      ),
+      SizedBox(
+        height: 10,
+      ),
+      SizedBox(
+          child: myListElements(title: "Darabszám:\n", content: readMeterData .length.toString() +" db"),
           //child: Text("Legutóbb bevitt gyári szám:\n" +args.message.split(";")[2]),
           width: (MediaQuery.of(context).size.width-200)/3-200
       ),

@@ -29,6 +29,8 @@ import 'connectivity_controller.dart';
 import 'gen_barcode.dart';
 import 'order_number.dart';
 //import 'alert_box.dart';
+import 'order_controller.dart';
+import 'meter_controller.dart';
 
 fileManip fmanip = new fileManip();
 String mainakarmi = '1';
@@ -38,9 +40,11 @@ orderDirRead orderDir = orderDirRead();
 dataRead orderDataRead = dataRead();
 ownersDataConverter ownConv = ownersDataConverter();
 String dataFilePath = "C:/orders/";
+OrderController orderC = OrderController();
+MeterController meterController = MeterController();
 //dataFile = ""
-List<String> data = ["-"];
-
+List<String> readMeterData = ["-"];
+bool orderCheck = false;
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations(
@@ -80,15 +84,26 @@ class MyApp extends State<MyApp_prev> {
     SystemChannels.textInput.invokeMethod('TextInput.hide');
     super.initState();
     //_loadData();
+
+    orderDir.setDir(dataFilePath);
     orderDir.getDir();
+    readMeterData = ["-"];
+    orderC.init();
+
     setState(() {
       //fogaz.addDataFile("C:/Storage/Flogi/allomanyok", _orderdata);
       //_loadMeterData();
+
       spn = "1234";
       pn = "123456";
       on = "10001";
     });
+
+    print(orderC.isorder);
+
   }
+
+
 
    @override
   Widget build(BuildContext context) {
@@ -116,7 +131,7 @@ class MyApp extends State<MyApp_prev> {
         '/gearpairs_metrix2' : (context) => const GearPairsMetrix2(),
         '/gearpairs_metrix3' : (context) => const GearPairsMetrix3(),
         '/owners' : (context) => const mOwner(),
-        '/order_number' : (context) => const OrderNumber(),
+        '/order_number' : (context) => OrderNumber(storage: dataRead()),
         '/notgood_meter' : (context) => const NotGoodMeter(),
         '/dataexport' : (context) => const dataExport(),
         '/network' : (context) => const NetworkCheckPage(title: "Hálózat ellenőrzés."),
