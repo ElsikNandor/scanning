@@ -2,7 +2,6 @@ import 'dart:io';
 import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:path_provider/path_provider.dart';
-//class dataStores{
 
 int rCount = 0;
 
@@ -74,31 +73,25 @@ class dataRead
     }
 
     Future<String> get _localPath async {
-      print("dataRead: " + this.datapath);
 
       final directory = await Directory(this.datapath); // c:/src
         if ( !directory.existsSync() )
         {
           final directory = await Directory.current;
-          //print(directory.path as String);
           return directory.path;
         }
         return directory.path;
       }
 
     Future<File> get _localFile async {
-      String dateStr = "_";//"${today.year}_${today.month}_${today.day}";
       final path = await _localPath;
       final fn = this.ordernumber;
       String allpath = "$path"+"$fn.csv";
-      print(allpath);
       return File(allpath);
     }
 
     Future<List<String>> readFile() async {
       final file = await _localFile;
-      print("LOCAL");
-      print(file.path);
       // Read the file
       final contents = await file.readAsLines();
 
@@ -152,24 +145,15 @@ class orderDirRead
     //getDir();
 
     final found = folders.where((element) {
-      print("element: ");
-      print(element.toString());
+
       return  element.path == fullpath.path;
     });
-    print("folders: ");
-    print(folders);
-    print("fullpath: ");
-    print(fullpath);
-    print("found: ");
-    print(found.toString());
-    
+
     if (found.isNotEmpty) {
-      print('Találat: ${found.first}');
       return true;
     }
     else
       {
-        print("Nincs találat.");
         return false;
       }
 
@@ -187,7 +171,6 @@ class ownersDataConverter
   {
     this.row = row;
     this.owner = owner;
-    print("Converter set");
   }
 
   String getRow()
@@ -210,14 +193,13 @@ class ownersDataConverter
       }
 
     if( this.owner == "1" || this.owner == "2") {
-      //print("Főgáz, Égáz Converter");
       try {
         rowsData["sort_prod_num"] = this.row.split(";")[0];
         rowsData["order_num"] = this.row.split(";")[1];
         rowsData["long_prod_num"] = this.row.split(";")[3];
       }
       catch (e) {
-        print("OWNER ERROR");
+
         return rowsData = {"error" : "owner"};
 
       }
@@ -231,7 +213,7 @@ class ownersDataConverter
         rowsData["long_prod_num"] = this.row.split(";")[3];
       }
       catch (e) {
-        print("OWNER ERROR");
+
         return rowsData = {"error" : "owner"};
 
       }
@@ -245,7 +227,7 @@ class ownersDataConverter
         rowsData["long_prod_num"] = this.row.split(";")[9];
       }
       catch (e) {
-        print("OWNER ERROR");
+
         return rowsData = {"error" : "owner"};
 
       }
@@ -275,29 +257,19 @@ class convertData
     rows = 0;
     int datalength = this.dataStore.length;
     int i = 0;
-    int counter = 0;
-    Map<dynamic,dynamic> dataMap ;
-    Map<String, String> meterData;
-    Map<int, String> rowData = {0:"l"};
+     Map<int, String> rowData = {0:"l"};
     print("adat hossza: " +datalength.toString());
     for( i = 0 ; i < datalength; i++ )
       {
         if( i % 61 == 0)
           {
             print(rows.toString());
-            //rowData = { rows : this.dataStore[i]};
+
             rowData[rows] = this.dataStore[i];
             rows++;
 
           }
 
-/*        if( counter == 7)
-          {
-            meterData = { "sort_productnumber" : "" };
-          }
-
-        counter++;
-*/
       }
 
     return rowData;
@@ -309,6 +281,87 @@ class convertData
   }
 
 }
+
+
+class readSavedData
+{
+  String ordernumber = "";
+  String datapath = "";
+  String owner = "";
+
+  bool isgood = false;
+
+  void addDataFile( String datapath, String ordernumber, bool isgood, String owner)
+  {
+    this.ordernumber = ordernumber;
+    this.datapath = datapath;
+    this.isgood = isgood;
+    this.owner = owner;
+  }
+
+  Future<String> get _localPath async {
+
+
+    final directory = await Directory(this.datapath); // c:/src
+    if ( !directory.existsSync() )
+    {
+      final directory = await Directory.current;
+      //print(directory.path as String);
+      return directory.path;
+    }
+    return directory.path;
+  }
+
+  Future<File> get _localFile async {
+    final path = await _localPath;
+    final fn = this.ordernumber;
+    String fnparam = "";
+
+    if(isgood)
+      {
+        fnparam = "meterdata_good_"+fn+"__";
+      }
+    else
+      {
+        fnparam = "meterdata_notgood_"+fn+"__";
+      }
+
+    String allpath = "$path"+"$fnparam.csv";
+
+    return File(allpath);
+  }
+
+  Future<List<String>> readFile() async {
+    final file = await _localFile;
+
+    List<String> contents = [];
+
+    if( file.existsSync() )
+      {
+        contents = await file.readAsLines();
+      }
+    else
+      {
+        contents = ["0"];
+      }
+
+
+
+    return contents;
+  }
+
+
+
+  int getRowCountFile( List<String> data)
+  {
+    if( data[0] == "0")
+      return 0;
+
+    return data.length;
+  }
+
+}
+
 
 //fontos elem a használathoz
 /*String saveDirName = "";

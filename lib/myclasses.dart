@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:scanning/main.dart';
 import 'screenargument.dart';
@@ -185,7 +187,7 @@ class myMenu extends StatelessWidget {
               );
             }
           }
-        else if( value == "/dataexport")
+/*        else if( value == "/dataexport")
         {
               Navigator.pushReplacementNamed(context, "/dataexport",
                 arguments: ScreenArguments(username, message, "-;-") );
@@ -209,7 +211,7 @@ class myMenu extends StatelessWidget {
         {
           Navigator.pushReplacementNamed(context, "/dataReadTest",
               arguments: ScreenArguments(username, message, "-;-") );
-        }
+        }*/
         else if( value == "quit")
         {
           exit(0);
@@ -226,7 +228,7 @@ class myMenu extends StatelessWidget {
                 child: Text("Kijelentkezés"),
                 value: '/',
             ),
-            PopupMenuItem(
+/*            PopupMenuItem(
               child: Text("Network check"),
               value: '/network',
             ),
@@ -241,7 +243,7 @@ class myMenu extends StatelessWidget {
             PopupMenuItem(
               child: Text("DataRead"),
               value: '/Dataread',
-            ),
+            ),*/
            /* PopupMenuItem(
                 child: Text("Adat export"),
                 value: "/dataexport",
@@ -367,21 +369,21 @@ class CounterStorage  {
     try{
 
       if ( safetyS.existsSync() == true ){
-        safetyS.writeAsString('$meterdata\n', mode: FileMode.append, encoding: SystemEncoding());
+        safetyS.writeAsString('$meterdata\n', mode: FileMode.append, encoding: utf8);
         //print("van");
       }
       else
       {
-        safetyS.writeAsString('$meterdata\n', encoding: SystemEncoding());
+        safetyS.writeAsString('$meterdata\n', encoding: utf8);
         //print("nincs");
       }
        if ( file.existsSync() == true ){
-        file.writeAsString('$meterdata\n', mode: FileMode.append, encoding: SystemEncoding());
+        file.writeAsString('$meterdata\n', mode: FileMode.append, encoding: utf8);
        //print("van");
       }
         else
           {
-            file.writeAsString('$meterdata\n', encoding: SystemEncoding());
+            file.writeAsString('$meterdata\n', encoding: utf8);
             //print("nincs");
           }
 

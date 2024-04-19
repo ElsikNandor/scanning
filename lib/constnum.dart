@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:scanning/data_stores.dart';
 import 'package:scanning/main.dart';
 import 'package:scanning/readingdata.dart';
 import 'screenargument.dart';
 import 'myclasses.dart';
-import 'package:intl/intl.dart';
 import 'alert_box.dart';
-import 'meter_controller.dart';
-//import 'dataread_test.dart';
+
 
 final _formKey = GlobalKey<FormState>();
 String userName = "Username";
@@ -23,6 +20,10 @@ TextEditingController _controller = new TextEditingController();
 TextEditingController _lastSaveNum = new TextEditingController();
 Map<String, String> rowsData = {"-" : "-"};
 int orderNumberAttempt = 0;
+
+int count1 = 0;
+int count2 = 0;
+
 class ConstNum extends StatefulWidget {
   const ConstNum({Key? key}) : super(key: key);
 
@@ -34,37 +35,46 @@ class _ConstNumState extends State<ConstNum> {
 
   String text = "";
 
+
   void initState() {
     super.initState();
 
-    setState(() {
-
+  setState(() {
+    orderCountGlobal = 0;
       constNumText = "";
       _controller.text = "";
       _lastSaveNum.text = "";
      });
+
+    rsDataClassGood.readFile().then((value) {
+      setState(() {
+        rcDataGoodCount = value.length;
+        orderCountGlobal = rcDataGoodCount;
+        print(orderCountGlobal);
+      });
+    });
+
+    rsDataClassNotGood.readFile().then((value) {
+      setState(() {
+        rcDataNotGoodCount = value.length;
+        orderCountGlobal = orderCountGlobal+rcDataNotGoodCount;
+        print(orderCountGlobal);
+      });
+    });
+
+
  }
 
 
   @override
   Widget build(BuildContext context) {
     final args = ModalRoute.of(context)!.settings.arguments as ScreenArguments;
-   // final args = ModalRoute.of(context)!.settings.arguments as SAreadingData;
-    //userName = args.message;
+
     lastSavedNum = args.lastSavedNum;
 
     orderNumber = args.message.split(";")[2];
     owner = args.message.split(";")[1];
     userName = args.message.split(";")[0];
-    //_lastSaveNum.text = args.lastSavedNum;
-
-    //lastSavedNum = _lastSaveNum.text;
-    
-    //orderDataRead.addDataFile(dataFilePath, orderNumber, owner);
-    DateTime now = DateTime.now();
-
-    print(rCount);
-
 
     Map<String, String> ownerMap = {"Főgáz" : "1",
                                     "Égáz" : "2",
@@ -75,7 +85,6 @@ class _ConstNumState extends State<ConstNum> {
       {
         rowsData.remove("error");
       }
-
 
     void findWhere(List<String> dataList,
         String sort_prod_num) {
@@ -110,27 +119,21 @@ class _ConstNumState extends State<ConstNum> {
 
 
       if (found.isNotEmpty) {
-        print('Találat gysz: ${found.first}');
         ownConv.setDatas(found.first, ownerMap[owner].toString());
-        print("owner: " + ownerMap[owner].toString());
         rowsData = ownConv.convertData();
         orderNumBool = true;
       }
       else
         {
           orderNumBool = false;
-          print("nincs találat");
         }
     }
 
- //   print("DATA");
- //   print(readMeterData);
-
-    setState(() {
+     setState(() {
       meterController.init();
     });
 
-
+    print(orderCountGlobal);
     return Scaffold(
       appBar: AppBar(
         title: Text("Gyátrási szám beolvasása | "
@@ -222,15 +225,13 @@ class _ConstNumState extends State<ConstNum> {
                               showDialog(context: context,
                                   builder: (context) => CheckMessageBox()
                               ).then((value) {
-                                print("Dialoge value: " + value);
-                                print(orderNumberAttempt);
+                                    print(orderNumberAttempt);
                                 if (value == "true") {
                                   Navigator.pushReplacementNamed(
                                       context, "/readingData",
                                       arguments: ScreenArguments(userName,
                                           args.message + ";" + meterNumber +
                                               ";-;-;-;-;-;-", ""));
-                                  print("Szuper");
                                 }
                               });
                             }
@@ -301,6 +302,22 @@ class _ConstNumState extends State<ConstNum> {
       ),
       SizedBox(
           child: myListElements(title: "Darabszám:\n", content: readMeterData .length.toString() +" db"),
+          //child: Text("Legutóbb bevitt gyári szám:\n" +args.message.split(";")[2]),
+          width: (MediaQuery.of(context).size.width-200)/3-200
+      ),
+      SizedBox(
+        height: 10,
+      ),
+      SizedBox(
+          child: myListElements(title: "Bevitt darabszám:\n", content: orderCountGlobal.toString() +" db"),
+          //child: Text("Legutóbb bevitt gyári szám:\n" +args.message.split(";")[2]),
+          width: (MediaQuery.of(context).size.width-200)/3-200
+      ),
+      SizedBox(
+        height: 10,
+      ),
+      SizedBox(
+          child: myListElements(title: "Fennmaradó:\n", content: (readMeterData .length-orderCountGlobal).toString() +" db"),
           //child: Text("Legutóbb bevitt gyári szám:\n" +args.message.split(";")[2]),
           width: (MediaQuery.of(context).size.width-200)/3-200
       ),

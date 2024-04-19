@@ -24,11 +24,7 @@ import 'dataexport.dart';
 import 'check_network.dart';
 import 'dataread_test.dart';
 import 'dart:io';
-import 'connection_alert_widget.dart';
 import 'connectivity_controller.dart';
-import 'gen_barcode.dart';
-import 'order_number.dart';
-//import 'alert_box.dart';
 import 'order_controller.dart';
 import 'meter_controller.dart';
 
@@ -37,6 +33,12 @@ String mainakarmi = '1';
 convertData convert = convertData();
 
 orderDirRead orderDir = orderDirRead();
+
+int orderCountGlobal = 0;
+readSavedData rsDataClassGood = readSavedData();
+readSavedData rsDataClassNotGood = readSavedData();
+int rcDataGoodCount = 0;
+int rcDataNotGoodCount = 0;
 dataRead orderDataRead = dataRead();
 ownersDataConverter ownConv = ownersDataConverter();
 String dataFilePath = "C:/orders/";
@@ -45,6 +47,7 @@ MeterController meterController = MeterController();
 //dataFile = ""
 List<String> readMeterData = ["-"];
 bool orderCheck = false;
+
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations(
@@ -63,27 +66,9 @@ class MyApp_prev extends StatefulWidget {
 
 class MyApp extends State<MyApp_prev> {
 
-/*  String datastorage = "";
-  String orderNumber = "";
-
-  Future<void> _loadData() async {
-    final loadedData = await rootBundle.loadString('assets/order_tmp.txt');
-    final dataStorageLocation = await rootBundle.loadString('assets/savedirname.txt');
-    final path = await dataStorageLocation.split(";")[0]+":\\"+dataStorageLocation.split(";")[1];
-    final file = await File(path+"\\"+loadedData+".csv");
-    final loadedData2 = await file.readAsString();
-
-    setState(() {
-      orderNumber = loadedData;
-      datastorage = loadedData2;
-
-    });
-  }*/
-
   void initState() {
     SystemChannels.textInput.invokeMethod('TextInput.hide');
     super.initState();
-    //_loadData();
 
     orderDir.setDir(dataFilePath);
     orderDir.getDir();
@@ -91,9 +76,6 @@ class MyApp extends State<MyApp_prev> {
     orderC.init();
 
     setState(() {
-      //fogaz.addDataFile("C:/Storage/Flogi/allomanyok", _orderdata);
-      //_loadMeterData();
-
       spn = "1234";
       pn = "123456";
       on = "10001";
@@ -107,8 +89,6 @@ class MyApp extends State<MyApp_prev> {
 
    @override
   Widget build(BuildContext context) {
-/*     convert.addDataStore(datastorage);
-     convert.convert();*/
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,

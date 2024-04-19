@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:scanning/constnum.dart';
 import 'package:scanning/order_controller.dart';
 import 'screenargument.dart';
 import 'package:flutter/services.dart' show SystemChannels, rootBundle;
@@ -35,39 +36,22 @@ class _OrderNumberState extends State<OrderNumber> {
 
 
 
-/*
-  String datastorage = "";
-  String orderNumber = "";
 
-  Future<void> _loadData() async {
-    final loadedData = await rootBundle.loadString('assets/order_tmp.txt');
-    final dataStorageLocation = await rootBundle.loadString('assets/savedirname.txt');
-    final path = await dataStorageLocation.split(";")[0]+":\\"+dataStorageLocation.split(";")[1];
-    final file = await File(path+"\\"+loadedData+".csv");
-    final loadedData2 = await file.readAsString();
 
-    setState(() {
-      orderNumber = loadedData;
-      datastorage = loadedData2;
-
-    });
-  }*/
   Future<List<String>> _loadData() async {
     final loadedData = await storage.readFile() ; //Kell a beolvasáshoz
-   // if( rCount < 4 ) { // hogy ne pörögjön a state a beolvasás után, de 2-3 legalább kell, hogy betöltse
-      //setState(() {
       readMeterData = loadedData;
       dataChangeVar.dataList.md = loadedData;
-      //print("DATA1");
-      //  print(readMeterData);//_data-ába kerül a fájl tartalma
-      //});
       rCount++;
-   // }
     return readMeterData;
   }
 
+
   void initState() {
     super.initState();
+
+
+
 
     setState(() {
       orderC.init();
@@ -156,7 +140,8 @@ class _OrderNumberState extends State<OrderNumber> {
                                                   showSnackBarFun(context);
                                                   return null;
                                                 }
-
+                                                rsDataClassGood.addDataFile("C:/src/", meterNumber, true, owner);
+                                                rsDataClassNotGood.addDataFile("C:/src/", meterNumber, false, owner);
                                                 widget.storage.addDataFile(dataFilePath, meterNumber, args.message.split(";")[1]);
 
                                                 widget.storage.readFile().then((value) {
@@ -165,8 +150,27 @@ class _OrderNumberState extends State<OrderNumber> {
                                                     readMeterData = value;
                                                     orderC.init();
                                                   });
+                                                  //_DataCounts();
 
-                                                  print(orderC.isorder);
+                                                  rsDataClassGood.readFile().then((value) {
+                                                    setState(() {
+                                                      rcDataGoodCount = value.length;
+                                                      orderCountGlobal = rcDataGoodCount;
+                                                    });
+                                                  });
+
+                                                  rsDataClassNotGood.readFile().then((value) {
+                                                    setState(() {
+
+                                                      rcDataNotGoodCount = value.length;
+                                                      orderCountGlobal += rcDataNotGoodCount;
+
+                                                    });
+                                                  });
+
+
+
+
                                                 });
 
                                               }
@@ -195,6 +199,7 @@ class _OrderNumberState extends State<OrderNumber> {
                                             onPressed: () {
                                               if(orderC.isorder.value)
                                                 {
+
                                               Navigator.pushReplacementNamed(context, '/constnum',
                                                   arguments: ScreenArguments(userName, args.message.split(";")[0]+";"+args.message.split(";")[1]+";"+meterNumber, "-;-") );
                                               }
@@ -209,63 +214,9 @@ class _OrderNumberState extends State<OrderNumber> {
                                 //}
                               }
                           ),
-                          /*SizedBox(
-                            width: 110,
-                            child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                onPrimary: Theme.of(context).colorScheme.onPrimary,
-                                primary: Theme.of(context).colorScheme.primary,
-                                minimumSize: Size(150,100),
-                              )
-                                  .copyWith(elevation: ButtonStyleButton.allOrNull(0.0)
-                              ),
-                              onPressed: () {
-                                //setState(() {
 
-                                  if (_formKey.currentState!.validate()) {
-                                    if( !orderDir.orderDirExists(meterNumber) ) // rendelésszám meglétének ellenőrzése
-                                    {
-                                     // print("MMM: " + meterNumber);
-                                      //print("meter: ");
-                                      //print(meterNumber);
-                                      showSnackBarFun(context);
-                                      return null;
-                                    }
-
-                                    widget.storage.addDataFile(dataFilePath, meterNumber, args.message.split(";")[1]);
-                                    //_loadData();
-                                   // setState(() {
-
-
-                                      //dataChangeVar.dataList = meterDataCl(md: readMeterData);
-
-                                    //});
-                                    
-                                    widget.storage.readFile().then((value) {
-                                      setState(() {
-                                       // print(value);
-                                        readMeterData = value;
-                                        orderC.init();
-                                      });
-
-                                      print(orderC.isorder);
-                                    });
-
-
-
-                                 //   Navigator.pushReplacementNamed(context, '/constnum',
-                                        //arguments: ScreenArguments(userName, userName+";"+meterNumber, "") );
-                                  //  arguments: ScreenArguments(userName, args.message.split(";")[0]+";"+args.message.split(";")[1]+";"+meterNumber, "-;-") );
-
-
-                                  }
-                              //  });
-                              },
-                              child: Text("Ellenőrzés"),
-                            ),
-                          ),*/
                           winNumPad(constNumText: constNumText, controller: _controller),
-                          Text(readMeterData[0].toString())
+
 
 
                         ])
