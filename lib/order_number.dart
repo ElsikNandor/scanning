@@ -146,7 +146,7 @@ class _OrderNumberState extends State<OrderNumber> {
                                                 print(dataFilePath);
                                                 widget.storage.readFile().then((value) {
                                                   setState(() {
-                                                    // print(value);
+                                                    print(value);
                                                     readMeterData = value;
                                                     orderC.init();
                                                   });
@@ -156,6 +156,7 @@ class _OrderNumberState extends State<OrderNumber> {
                                                     setState(() {
                                                       rcDataGoodCount = value.length;
                                                       orderCountGlobal = rcDataGoodCount;
+                                                      print(orderCountGlobal);
                                                     });
                                                   });
 
@@ -164,7 +165,7 @@ class _OrderNumberState extends State<OrderNumber> {
 
                                                       rcDataNotGoodCount = value.length;
                                                       orderCountGlobal += rcDataNotGoodCount;
-
+                                                      print(orderCountGlobal);
                                                     });
                                                   });
 

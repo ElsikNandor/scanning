@@ -198,7 +198,7 @@ class _readingDataState extends State<readingData> {
                                       argString += ";" + savedate;
                                       try{
                                         //storage.writeMeterData(argString);
-                                        rcDataGoodCount = (rcDataNotGoodCount.toInt() + 1 );
+                                        rcDataNotGoodCount = (rcDataNotGoodCount.toInt() + 1 );
                                         setState(() {
                                           saveStatus ="Sikeres mentés!";
                                         });

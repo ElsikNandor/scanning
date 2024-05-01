@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:scanning/data_stores.dart';
 import 'package:scanning/main.dart';
 import 'package:scanning/readingdata.dart';
 import 'screenargument.dart';
@@ -38,29 +39,14 @@ class _ConstNumState extends State<ConstNum> {
 
   void initState() {
     super.initState();
-
+    print(orderCountGlobal);
+    orderCountGlobal = rcDataGoodCount + rcDataNotGoodCount;
   setState(() {
     //orderCountGlobal = 0;
       constNumText = "";
       _controller.text = "";
       _lastSaveNum.text = "";
      });
-
-    rsDataClassGood.readFile().then((value) {
-      setState(() {
-        rcDataGoodCount = value.length;
-      //  orderCountGlobal = rcDataGoodCount;
-        print(orderCountGlobal);
-      });
-    });
-
-    rsDataClassNotGood.readFile().then((value) {
-      setState(() {
-        rcDataNotGoodCount = value.length;
-        orderCountGlobal = orderCountGlobal+rcDataNotGoodCount;
-        print(orderCountGlobal);
-      });
-    });
 
 
  }

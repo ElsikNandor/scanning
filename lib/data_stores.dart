@@ -327,7 +327,7 @@ class readSavedData
         fnparam = "meterdata_notgood_"+fn+"__";
       }
 
-    String allpath = "$path"+"$fnparam.csv";
+    String allpath = "$path/"+"$fnparam.csv";
 
     return File(allpath);
   }
@@ -345,7 +345,7 @@ class readSavedData
       {
         contents = ["0"];
       }
-
+print(file.path);
 
 
     return contents;
