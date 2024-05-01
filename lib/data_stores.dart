@@ -112,7 +112,7 @@ class dataRead
 
 class orderDirRead
 {
-  String dirPath = "C:/orders/"; //alapértelmezett
+  String dirPath = ""; //alapértelmezett
   String orderNumber = "0";
   int rows = 0;
   List<FileSystemEntity> folders = [];
@@ -132,6 +132,7 @@ class orderDirRead
     //setState(() {
       //_folders = myDir.listSync(recursive: true, followLinks: false);
     folders = myDir.listSync(recursive: true, followLinks: false);
+
     //});
 
   }

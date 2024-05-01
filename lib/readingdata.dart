@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:scanning/constnum.dart';
 import 'package:scanning/dataread_test.dart';
 import 'package:scanning/fileFlutter.dart';
+import 'package:scanning/main.dart';
 import 'dart:async';
 import 'screenargument.dart';
 import 'myclasses.dart';
@@ -157,6 +158,7 @@ class _readingDataState extends State<readingData> {
                                   argString += ";" + savedate;
                                       //"${today.year}-${today.month}-${today.day}_${today.hour}:${today.minute}:${today.second}";
                                   storage.writeMeterData(argString);
+                                  rcDataGoodCount = (rcDataGoodCount.toInt() + 1 );
                                   setState(() {
                                     saveStatus ="Sikeres mentés!";
                                   });
@@ -196,6 +198,7 @@ class _readingDataState extends State<readingData> {
                                       argString += ";" + savedate;
                                       try{
                                         //storage.writeMeterData(argString);
+                                        rcDataGoodCount = (rcDataNotGoodCount.toInt() + 1 );
                                         setState(() {
                                           saveStatus ="Sikeres mentés!";
                                         });

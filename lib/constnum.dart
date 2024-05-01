@@ -40,7 +40,7 @@ class _ConstNumState extends State<ConstNum> {
     super.initState();
 
   setState(() {
-    orderCountGlobal = 0;
+    //orderCountGlobal = 0;
       constNumText = "";
       _controller.text = "";
       _lastSaveNum.text = "";
@@ -49,7 +49,7 @@ class _ConstNumState extends State<ConstNum> {
     rsDataClassGood.readFile().then((value) {
       setState(() {
         rcDataGoodCount = value.length;
-        orderCountGlobal = rcDataGoodCount;
+      //  orderCountGlobal = rcDataGoodCount;
         print(orderCountGlobal);
       });
     });

@@ -140,10 +140,10 @@ class _OrderNumberState extends State<OrderNumber> {
                                                   showSnackBarFun(context);
                                                   return null;
                                                 }
-                                                rsDataClassGood.addDataFile("C:/src/", meterNumber, true, owner);
-                                                rsDataClassNotGood.addDataFile("C:/src/", meterNumber, false, owner);
+                                                rsDataClassGood.addDataFile(saveDirName, meterNumber, true, owner);
+                                                rsDataClassNotGood.addDataFile(saveDirName, meterNumber, false, owner);
                                                 widget.storage.addDataFile(dataFilePath, meterNumber, args.message.split(";")[1]);
-
+                                                print(dataFilePath);
                                                 widget.storage.readFile().then((value) {
                                                   setState(() {
                                                     // print(value);

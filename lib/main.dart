@@ -41,12 +41,13 @@ int rcDataGoodCount = 0;
 int rcDataNotGoodCount = 0;
 dataRead orderDataRead = dataRead();
 ownersDataConverter ownConv = ownersDataConverter();
-String dataFilePath = "C:/orders/";
+String dataFilePath = "";
 OrderController orderC = OrderController();
 MeterController meterController = MeterController();
 //dataFile = ""
 List<String> readMeterData = ["-"];
 bool orderCheck = false;
+String saveDirName = "";
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -66,12 +67,24 @@ class MyApp_prev extends StatefulWidget {
 
 class MyApp extends State<MyApp_prev> {
 
+  Future<String> _loadData() async {
+    final loadedData = await rootBundle.loadString('assets/savedirname.txt');
+    setState(() {
+      saveDirName = loadedData.split(";")[0]+":\\"+loadedData.split(";")[1];
+      dataFilePath = saveDirName+"/orders/";
+    });
+    return saveDirName;
+  }
   void initState() {
     SystemChannels.textInput.invokeMethod('TextInput.hide');
     super.initState();
+    _loadData();
+    _loadData().then((value) {
+      dataFilePath = value.toString()+ "/orders/";
+      print(value);
+      return value;
+    });
 
-    orderDir.setDir(dataFilePath);
-    orderDir.getDir();
     readMeterData = ["-"];
     orderC.init();
 
@@ -81,15 +94,21 @@ class MyApp extends State<MyApp_prev> {
       on = "10001";
     });
 
+
+
     print(orderC.isorder);
 
+
   }
+
 
 
 
    @override
   Widget build(BuildContext context) {
 
+     orderDir.setDir(dataFilePath);
+     orderDir.getDir();
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Application',
