@@ -12,7 +12,7 @@ class OrderController {
   }
 
   bool isOrder(int result) {
-    print("ISOLDER");
+    print("ISORDER");
     if (result > 10) {
       orderCheck = true;
       isorder.value = true;

@@ -86,7 +86,7 @@ class _dataReadTestState extends State<dataReadTest> {
 
     findPersonUsingWhere(_data, gysz);
 
-    orderDir.orderDirExists(ordernumber);
+    orderDir.orderDirExists(ordernumber, "FG");
     //});
     return Scaffold(
       appBar: AppBar(

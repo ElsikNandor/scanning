@@ -62,10 +62,7 @@ class _ConstNumState extends State<ConstNum> {
     owner = args.message.split(";")[1];
     userName = args.message.split(";")[0];
 
-    Map<String, String> ownerMap = {"Főgáz" : "1",
-                                    "Égáz" : "2",
-                                    "EON" : "3",
-                                    "Tigáz" : "4"};
+    print("OWNER $owner");
 
     if( rowsData.containsKey("error") )
       {
@@ -106,6 +103,7 @@ class _ConstNumState extends State<ConstNum> {
 
       if (found.isNotEmpty) {
         ownConv.setDatas(found.first, ownerMap[owner].toString());
+
         rowsData = ownConv.convertData();
         orderNumBool = true;
       }
@@ -211,7 +209,7 @@ class _ConstNumState extends State<ConstNum> {
                               showDialog(context: context,
                                   builder: (context) => CheckMessageBox()
                               ).then((value) {
-                                    print(orderNumberAttempt);
+                                    //print(orderNumberAttempt);
                                 if (value == "true") {
                                   Navigator.pushReplacementNamed(
                                       context, "/readingData",

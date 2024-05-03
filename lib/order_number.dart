@@ -134,15 +134,15 @@ class _OrderNumberState extends State<OrderNumber> {
                                               readMeterData = [];
                                               orderC.init();
                                               if (_formKey.currentState!.validate()) {
-                                                if( !orderDir.orderDirExists(meterNumber) ) // rendelésszám meglétének ellenőrzése
+                                                if( !orderDir.orderDirExists(meterNumber, ownerMap[args.message.split(";")[1]].toString()) ) // rendelésszám meglétének ellenőrzése
                                                     {
 
                                                   showSnackBarFun(context);
                                                   return null;
                                                 }
-                                                rsDataClassGood.addDataFile(saveDirName, meterNumber, true, owner);
-                                                rsDataClassNotGood.addDataFile(saveDirName, meterNumber, false, owner);
-                                                widget.storage.addDataFile(dataFilePath, meterNumber, args.message.split(";")[1]);
+                                                rsDataClassGood.addDataFile(saveDirName, meterNumber, true, ownerMap[owner].toString());
+                                                rsDataClassNotGood.addDataFile(saveDirName, meterNumber, false, ownerMap[owner].toString());
+                                                widget.storage.addDataFile(dataFilePath, meterNumber, ownerMap[args.message.split(";")[1]].toString());
                                                 print(dataFilePath);
                                                 widget.storage.readFile().then((value) {
                                                   setState(() {
@@ -230,7 +230,7 @@ class _OrderNumberState extends State<OrderNumber> {
 
 showSnackBarFun(context) {
   SnackBar snackBar = SnackBar(
-    content: const Text('A megadott megrendelésszám nem található!',
+    content: const Text('A megadott MEGRENDELÉSSZÁM nem található vagy rossz SZOLGÁLTATÓ lett megadva!',
         style: TextStyle(fontSize: 20)),
     backgroundColor: Colors.red,
     dismissDirection: DismissDirection.up,

@@ -86,7 +86,10 @@ class dataRead
     Future<File> get _localFile async {
       final path = await _localPath;
       final fn = this.ordernumber;
-      String allpath = "$path"+"$fn.csv";
+      String allpath = path+fn+"_"+this.owner+".csv";
+
+      print("allpath new");
+      print(allpath);
       return File(allpath);
     }
 
@@ -138,11 +141,12 @@ class orderDirRead
   }
 
 
-  bool orderDirExists(String orderNumber)
+  bool orderDirExists(String orderNumber, String ownerID)
   {
     String dirPath = this.dirPath;
     this.orderNumber = orderNumber;
-    FileSystemEntity fullpath = new File(dirPath.toString() + "" + orderNumber + ".csv");
+    FileSystemEntity fullpath = new File(dirPath.toString() + "" + orderNumber + "_"+ownerID+".csv");
+    print(fullpath);
     //getDir();
 
     final found = folders.where((element) {
@@ -193,7 +197,7 @@ class ownersDataConverter
         return rowsData;
       }
 
-    if( this.owner == "1" || this.owner == "2") {
+    if( this.owner == "FG" || this.owner == "ED") {
       try {
         rowsData["sort_prod_num"] = this.row.split(";")[0];
         rowsData["order_num"] = this.row.split(";")[1];
@@ -206,7 +210,7 @@ class ownersDataConverter
       }
     }
 
-    if( this.owner == "3" ) {
+    if( this.owner == "EON" ) {
       //print("EON Converter");
       try {
         rowsData["sort_prod_num"] = this.row.split(";")[0];
@@ -343,7 +347,7 @@ class readSavedData
       }
     else
       {
-        contents = ["0"];
+        contents = [];
       }
 print(file.path);
 
@@ -355,7 +359,7 @@ print(file.path);
 
   int getRowCountFile( List<String> data)
   {
-    if( data[0] == "0")
+    if( data.isEmpty)
       return 0;
 
     return data.length;
