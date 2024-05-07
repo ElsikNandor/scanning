@@ -69,8 +69,7 @@ class _ConstNumState extends State<ConstNum> {
         rowsData.remove("error");
       }
 
-    void findWhere(List<String> dataList,
-        String sort_prod_num) {
+    void findWhere(List<String> dataList, String sort_prod_num) {
       // Return list of people matching the condition
       //print(ownerMap[owner]);
       final found = dataList.where((element) {
@@ -89,6 +88,7 @@ class _ConstNumState extends State<ConstNum> {
         else
           {
             try{
+              //print(element.split(";")[0]);
               return element.split(";")[0] == sort_prod_num;
             }
             catch (e)
@@ -199,6 +199,36 @@ class _ConstNumState extends State<ConstNum> {
                           ),
                           onPressed: () {
                             if (_formKey.currentState!.validate()) {
+
+                              switch(ownerMap[owner])
+                                  {
+                                case "FG" :
+                                  if( meterNumber.length == 18) {
+                                    meterNumber = meterNumber.substring(2);
+                                    meterNumber = meterNumber.substring(0,8);
+                                    print("METER");
+                                    print(meterNumber);
+                                  }
+                                  break;
+                                case "ED" :
+                                  if( meterNumber.length == 14) {
+                                    meterNumber = meterNumber.substring(meterNumber.length-8);
+                                    print("METER");
+                                    print(meterNumber);
+                                  }
+                                  else
+                                    {
+                                      print("METER ELSE");
+                                      print(meterNumber);
+                                    }
+                                  break;
+                                case "EON" :
+                                  if( meterNumber.length == 15) {
+                                    meterNumber = meterNumber.substring(meterNumber.length-8);
+                                  }
+                                  break;
+                              }
+
                               findWhere(readMeterData, meterNumber);
 
                               setState(() {

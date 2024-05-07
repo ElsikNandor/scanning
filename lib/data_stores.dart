@@ -197,7 +197,7 @@ class ownersDataConverter
         return rowsData;
       }
 
-    if( this.owner == "FG" || this.owner == "ED") {
+    if( this.owner == "FG") {
       try {
         rowsData["sort_prod_num"] = this.row.split(";")[0];
         rowsData["order_num"] = this.row.split(";")[1];
@@ -209,6 +209,21 @@ class ownersDataConverter
 
       }
     }
+
+    if(this.owner == "ED") {
+      try {
+        rowsData["sort_prod_num"] = this.row.split(";")[0];
+        rowsData["order_num"] = this.row.split(";")[1];
+        rowsData["long_prod_num"] = this.row.split(";")[3];
+      }
+      catch (e) {
+
+        return rowsData = {"error" : "owner"};
+
+      }
+    }
+
+
 
     if( this.owner == "EON" ) {
       //print("EON Converter");
