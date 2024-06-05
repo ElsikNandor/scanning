@@ -187,11 +187,12 @@ class myMenu extends StatelessWidget {
               );
             }
           }
-/*        else if( value == "/dataexport")
+        else if( value == "/test")
         {
-              Navigator.pushReplacementNamed(context, "/dataexport",
+              Navigator.pushReplacementNamed(context, "/test",
                 arguments: ScreenArguments(username, message, "-;-") );
         }
+        /*
         else if( value == "/network")
         {
           Navigator.pushReplacementNamed(context, "/network",
@@ -228,10 +229,11 @@ class myMenu extends StatelessWidget {
                 child: Text("Kijelentkezés"),
                 value: '/',
             ),
-/*            PopupMenuItem(
-              child: Text("Network check"),
-              value: '/network',
+            PopupMenuItem(
+              child: Text("test"),
+              value: '/test',
             ),
+            /*
             PopupMenuItem(
               child: Text("BarCode"),
               value: '/barcode',

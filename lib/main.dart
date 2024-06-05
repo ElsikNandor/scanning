@@ -27,6 +27,7 @@ import 'dart:io';
 import 'connectivity_controller.dart';
 import 'order_controller.dart';
 import 'meter_controller.dart';
+import 'controller_test.dart';
 
 fileManip fmanip = new fileManip();
 String mainakarmi = '1';
@@ -51,7 +52,8 @@ String saveDirName = "";
 Map<String, String> ownerMap = {"Főgáz" : "FG",
   "Égáz" : "ED",
   "EON" : "EON",
-  "Tigáz" : "4"};
+  "Tigáz" : "4",
+  "Magáz" : "MG"};
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations(
@@ -140,6 +142,7 @@ class MyApp extends State<MyApp_prev> {
         '/barcode' : (context) => const Gen_BarCode(),
         '/meterstoragetest' : (context) => const One_Meter_Data(),
         '/dataReadTest' : (context) => const dataReadTest(),
+        '/test' : (context) => const FlutterDemo2(),
 
 
 
