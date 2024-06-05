@@ -14,6 +14,7 @@ final _formKey = GlobalKey<FormState>();
 String userName = "Username";
 String meterNumber = "";
 String constNumText = "";
+String actualOwner = "";
 //String dataFilePath = "C:/orders/";
 
 
@@ -75,7 +76,7 @@ class _OrderNumberState extends State<OrderNumber> {
   Widget build(BuildContext context) {
     final args = ModalRoute.of(context)!.settings.arguments as ScreenArguments;
     userName = args.message;
-
+    actualOwner = ownerMap[args.message.split(";")[1]].toString();
     //storage.addDataFile(dataFilePath, args.message.split(";")[2], args.message.split(";")[1]);
 
 
@@ -198,11 +199,15 @@ class _OrderNumberState extends State<OrderNumber> {
                                               size: 24,
                                             ),
                                             onPressed: () {
-                                              if(orderC.isorder.value)
-                                                {
-
-                                              Navigator.pushReplacementNamed(context, '/constnum',
-                                                  arguments: ScreenArguments(userName, args.message.split(";")[0]+";"+args.message.split(";")[1]+";"+meterNumber, "-;-") );
+                                              if (_formKey.currentState!.validate()) {
+                                                if (orderC.isorder
+                                                    .value) //|| ownerMap[args.message.split(";")[1]].toString() == "MG")
+                                                    {
+                                                  Navigator.pushReplacementNamed(context, '/constnum',
+                                                      arguments: ScreenArguments(userName,
+                                                          args.message.split(";")[0] + ";" + args.message.split(";")[1] +
+                                                              ";" + meterNumber, "-;-"));
+                                                }
                                               }
                                             },
                                             label: Text("Tovább"),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show SystemChannels, rootBundle;
+import 'package:scanning/order_number.dart';
 import 'dart:async';
 import 'screenargument.dart';
 import 'myclasses.dart';
@@ -58,10 +59,10 @@ class _mTypeState extends State<mType> {
         List.generate(metersCount, (index) {
           return ItemWidget(text:  _data.split(",")[index],
             //path: _data.split(",")[index] == "Metrix" ? '/gearpairs_metrix1' : '/gearpairs',
-            path: args.message.split(";")[1] == "Tigáz" ?  '/countpos' : '/readingData' ,
+            path: actualOwner == "MG" ?  '/countpos' : '/readingData' ,
             //path: '/yof',
             //'/countpos',
-            data: args.message.split(";")[1] == "Tigáz" ? argString+';'+_data.split(",")[index] : argString+';'+_data.split(",")[index]+";"+blank+";"+blank+";"+blank, user: argString.split(";")[0],
+            data: actualOwner == "MG" ? argString+';'+_data.split(",")[index] : argString+';'+_data.split(",")[index]+";"+blank+";"+blank+";"+blank, user: argString.split(";")[0],
             lastSavedNum: "-;-",
           );
         }),

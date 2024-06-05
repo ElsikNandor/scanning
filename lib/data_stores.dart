@@ -252,7 +252,19 @@ class ownersDataConverter
 
       }
     }
+    if( this.owner == "MG" ) {
+      //print("EON Converter");
+      try {
+        rowsData["sort_prod_num"] = "null";
+        rowsData["order_num"] = "null";
+        rowsData["long_prod_num"] = "null";
+      }
+      catch (e) {
 
+        return rowsData = {"error" : "owner"};
+
+      }
+    }
     return rowsData;
   }
 

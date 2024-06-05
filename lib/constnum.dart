@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:scanning/data_stores.dart';
 import 'package:scanning/main.dart';
+import 'package:scanning/order_number.dart';
 import 'package:scanning/readingdata.dart';
 import 'screenargument.dart';
 import 'myclasses.dart';
@@ -40,7 +41,10 @@ class _ConstNumState extends State<ConstNum> {
   void initState() {
     super.initState();
     print(orderCountGlobal);
+
     orderCountGlobal = rcDataGoodCount + rcDataNotGoodCount;
+    if( actualOwner == "MG")
+      orderCountGlobal = 1;
   setState(() {
     //orderCountGlobal = 0;
       constNumText = "";
@@ -118,6 +122,7 @@ class _ConstNumState extends State<ConstNum> {
     });
 
     print(orderCountGlobal);
+    print(actualOwner);
     return Scaffold(
       appBar: AppBar(
         title: Text("Gyátrási szám beolvasása | "
@@ -226,6 +231,10 @@ class _ConstNumState extends State<ConstNum> {
                                   if( meterNumber.length == 15) {
                                     meterNumber = meterNumber.substring(meterNumber.length-8);
                                   }
+                                  break;
+                                case "MG" :
+                                  print("MG meter number");
+                                  print(meterNumber);
                                   break;
                               }
 
