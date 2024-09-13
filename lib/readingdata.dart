@@ -171,7 +171,24 @@ class _readingDataState extends State<readingData> {
 
                                 }
                                 ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(content: Text(saveText + "Jó mérők listájába."))); //Text(saveStatus +" " + storage.filename)
+                                    SnackBar(
+                                        behavior: SnackBarBehavior.floating,
+                                        margin: EdgeInsets.only(bottom: MediaQuery.of(context).size.height - 600, left: 300, right: 300),
+                                        content: //Container(
+                                          //child: Text(saveText + "Jó mérők listájába."),
+                                          //tex
+                                        //),
+                                        Text(saveText + "Jó mérők listájába.",
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            fontSize: 20.0, // insert your font size here
+                                          ),
+                                        ),
+                                        dismissDirection: DismissDirection.none,
+                                        backgroundColor: Colors.green,
+
+                                    )
+                                ); //Text(saveStatus +" " + storage.filename)
                               //});
                               Navigator.pushReplacementNamed(context, "/constnum",
                                   arguments: ScreenArguments(argString.split(";")[0],
@@ -210,9 +227,9 @@ class _readingDataState extends State<readingData> {
                                         });
 
                                       }
-                                      ScaffoldMessenger.of(context).showSnackBar(
+                                    //  ScaffoldMessenger.of(context).showSnackBar(
                                           //SnackBar(content: Text(saveText + "Selejt mérők listájába.")));
-                                      SnackBar(content: Text("Selejt mérő kiválasztva.")));//Text(saveStatus +" " + storage.filename)
+                                  //    SnackBar(content: Text("Selejt mérő kiválasztva.")));//Text(saveStatus +" " + storage.filename)
                                       //Navigator.pushReplacementNamed(context, "/constnum",
                                       Navigator.pushReplacementNamed(context, "/notgood_meter",
                                         //arguments: ScreenArguments(argString.split(";")[0], argString.split(";")[0]+";"+argString.split(";")[1]+";"+argString.split(";")[2],

@@ -4,6 +4,7 @@
 
 list(APPEND FLUTTER_PLUGIN_LIST
   connectivity_plus
+  fullscreen_window
   permission_handler_windows
   window_size
 )

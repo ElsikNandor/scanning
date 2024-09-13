@@ -229,10 +229,10 @@ class myMenu extends StatelessWidget {
                 child: Text("Kijelentkezés"),
                 value: '/',
             ),
-            PopupMenuItem(
-              child: Text("test"),
-              value: '/test',
-            ),
+            //PopupMenuItem(
+             // child: Text("test"),
+              //value: '/test',
+            //),
             /*
             PopupMenuItem(
               child: Text("BarCode"),

@@ -28,6 +28,7 @@ import 'connectivity_controller.dart';
 import 'order_controller.dart';
 import 'meter_controller.dart';
 import 'controller_test.dart';
+import 'package:fullscreen_window/fullscreen_window.dart';
 
 fileManip fmanip = new fileManip();
 String mainakarmi = '1';
@@ -71,7 +72,7 @@ class MyApp_prev extends StatefulWidget {
 
 
 class MyApp extends State<MyApp_prev> {
-
+  String screenSizeText = "";
   Future<String> _loadData() async {
     final loadedData = await rootBundle.loadString('assets/savedirname.txt');
     setState(() {
@@ -80,7 +81,22 @@ class MyApp extends State<MyApp_prev> {
     });
     return saveDirName;
   }
+
+  void setFullScreen(bool isFullScreen) {
+    FullScreenWindow.setFullScreen(isFullScreen);
+  }
+  void showScreenSize(BuildContext context) async {
+    Size logicalSize = await FullScreenWindow.getScreenSize(context);
+    Size physicalSize = await FullScreenWindow.getScreenSize(null);
+    setState(() {
+      screenSizeText =
+      "Screen size (logical pixel): ${logicalSize.width} x ${logicalSize.height}\n";
+      screenSizeText +=
+      "Screen size (physical pixel): ${physicalSize.width} x ${physicalSize.height}\n";
+    });
+  }
   void initState() {
+    setFullScreen(true);
     SystemChannels.textInput.invokeMethod('TextInput.hide');
     super.initState();
     _loadData();

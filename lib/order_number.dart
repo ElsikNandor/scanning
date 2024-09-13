@@ -178,7 +178,7 @@ class _OrderNumberState extends State<OrderNumber> {
                                               }
                                               //  });
                                             },
-                                            child: Text("Ellenőrzés"),
+                                            child: Text("Ellenörzés"),
                                           ),
                                         ),
                                         SizedBox(

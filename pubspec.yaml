@@ -48,6 +48,7 @@ dependencies:
   intl: ^0.18.1
   connectivity_plus: ^5.0.2
   syncfusion_flutter_barcodes: ^24.2.8
+  fullscreen_window: ^1.0.4
 dev_dependencies:
   flutter_test:
     sdk: flutter

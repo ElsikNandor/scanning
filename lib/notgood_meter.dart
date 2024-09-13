@@ -97,7 +97,24 @@ String savedate = "";
 
                 }
                 ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text(saveText + "Selejt mérők listájába.")));
+                    SnackBar(
+                      behavior: SnackBarBehavior.floating,
+                      margin: EdgeInsets.only(bottom: MediaQuery.of(context).size.height - 600, left: 300, right: 300),
+                      content: //Container(
+                      //child: Text(saveText + "Jó mérők listájába."),
+                      //tex
+                      //),
+                      Text(saveText + "Selejt mérők listájába.",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 20.0, // insert your font size here
+                        ),
+                      ),
+                      dismissDirection: DismissDirection.none,
+                      backgroundColor: Colors.red,
+
+                    ));
+
                    // SnackBar(content: Text("Selejt mérő kiválasztva.")));//Text(saveStatus +" " + storage.filename)
                 Navigator.pushReplacementNamed(context, "/constnum",
                     arguments: ScreenArguments(argString.split(";")[0], argString.split(";")[0]+";"+argString.split(";")[1]+";"+argString.split(";")[2],

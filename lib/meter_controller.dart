@@ -14,7 +14,7 @@ class MeterController {
   }
 
   bool isMeter(int result) {
-    print("ISOLDER");
+    print("ISORDER");
 
     if(actualOwner == "MG")
       {
