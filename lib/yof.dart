@@ -7,7 +7,7 @@ import 'myclasses.dart';
 String argString = "Username";
 String meterType = "";
 class yearOfManufacture extends StatefulWidget {
-  const yearOfManufacture({Key? key}) : super(key: key);
+  const yearOfManufacture({super.key});
 
   @override
   State<yearOfManufacture> createState() => _yearOfManufactureState();
@@ -21,6 +21,7 @@ class _yearOfManufactureState extends State<yearOfManufacture> {
       _data = loadedData;
     });
   }
+  @override
   void initState() {
     SystemChannels.textInput.invokeMethod('TextInput.hide');
     super.initState();
@@ -38,9 +39,7 @@ class _yearOfManufactureState extends State<yearOfManufacture> {
     argString = args.message;
     return Scaffold(
       appBar: AppBar(
-          title: Text("Gyártási év kiválasztása | "
-              + "Adatrögzítő: " + args.message.split(";")[0]
-              + " | Megrendelő: " + args.message.split(";")[1]),
+          title: Text("Gyártási év kiválasztása | Adatrögzítő: ${args.message.split(";")[0]} | Megrendelő: ${args.message.split(";")[1]}"),
           actions: <Widget>[
             myMenu(username: argString.split(";")[0], message: argString, mlogin : 0)
           ]
@@ -56,7 +55,7 @@ class _yearOfManufactureState extends State<yearOfManufacture> {
         List.generate(metersCount, (index) {
           return ItemWidget(text:  _data.split(",")[index],
               path: args.message.split(";")[4] == "Metrix" ? '/gearpairs_metrix1' : '/gearpairs',
-              data: argString+';'+_data.split(",")[index], user: argString.split(";")[0],
+              data: '$argString;${_data.split(",")[index]}', user: argString.split(";")[0],
             lastSavedNum: "-;-",
           );
         }),

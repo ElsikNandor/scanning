@@ -9,7 +9,7 @@ final _formKey = GlobalKey<FormState>();
 String argString = "Username";
 String meterType = "";
 class NotGoodMeter extends StatefulWidget {
-  const NotGoodMeter({Key? key}) : super(key: key);
+  const NotGoodMeter({super.key});
 
   @override
   State<NotGoodMeter> createState() => _NotGoodMeterState();
@@ -29,10 +29,11 @@ String savedate = "";
   Future<void> _loadData_dn() async {
     final loadedData = await rootBundle.loadString('assets/savedirname.txt');
     setState(() {
-      saveDirName = loadedData.split(";")[0]+":\\"+loadedData.split(";")[1];
+      saveDirName = "${loadedData.split(";")[0]}:\\${loadedData.split(";")[1]}";
     });
   }
 
+  @override
   void initState() {
     SystemChannels.textInput.invokeMethod('TextInput.hide');
     super.initState();
@@ -55,9 +56,7 @@ String savedate = "";
     String saveText = "Sikeres mentés: ";
     return Scaffold(
       appBar: AppBar(
-          title: Text("Selejtezés meghatározása | "
-              + "Adatrögzítő: " + args.message.split(";")[0]
-              + " | Megrendelő: " + args.message.split(";")[1]),
+          title: Text("Selejtezés meghatározása | Adatrögzítő: ${args.message.split(";")[0]} | Megrendelő: ${args.message.split(";")[1]}"),
           actions: <Widget>[
             myMenu(username: argString.split(";")[0], message: argString, mlogin: 1)
           ]
@@ -74,14 +73,13 @@ String savedate = "";
           return
             ElevatedButton.icon(
               style: ElevatedButton.styleFrom(
-                minimumSize: Size(150, 100),
+                minimumSize: Size(150, 100), backgroundColor: Colors.red,
                 maximumSize: Size(150, 100),
-                primary: Colors.red,
 
               ),
               onPressed: () {
-                storage.filename = "meterdata_notgood_" + argString.split(";")[2] ;
-                argString += ";"+_data.split(",")[index];
+                storage.filename = "meterdata_notgood_${argString.split(";")[2]}" ;
+                argString += ";${_data.split(",")[index]}";
                 try{
                   //argString += ";" +  savedate;
                   storage.writeMeterData(argString);
@@ -104,7 +102,7 @@ String savedate = "";
                       //child: Text(saveText + "Jó mérők listájába."),
                       //tex
                       //),
-                      Text(saveText + "Selejt mérők listájába.",
+                      Text("${saveText}Selejt mérők listájába.",
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 20.0, // insert your font size here
@@ -117,8 +115,8 @@ String savedate = "";
 
                    // SnackBar(content: Text("Selejt mérő kiválasztva.")));//Text(saveStatus +" " + storage.filename)
                 Navigator.pushReplacementNamed(context, "/constnum",
-                    arguments: ScreenArguments(argString.split(";")[0], argString.split(";")[0]+";"+argString.split(";")[1]+";"+argString.split(";")[2],
-                     argString.split(";")[3]+";"+"selejt") );
+                    arguments: ScreenArguments(argString.split(";")[0], "${argString.split(";")[0]};${argString.split(";")[1]};${argString.split(";")[2]}",
+                     "${argString.split(";")[3]};selejt") );
               },
               icon: Icon( Icons.restore_from_trash,
                 size: 24,

@@ -16,7 +16,7 @@ convertData converter = convertData();
 orderDirRead orderDir = orderDirRead();
 ownersDataConverter ownConv = ownersDataConverter();
 class dataReadTest extends StatefulWidget {
-  const dataReadTest({Key? key}) : super(key: key);
+  const dataReadTest({super.key});
 
   @override
   State<dataReadTest> createState() => _dataReadTestState();
@@ -31,6 +31,7 @@ class _dataReadTestState extends State<dataReadTest> {
       _data = loadedData;
     });
   }*/
+  @override
   void initState() {
     SystemChannels.textInput.invokeMethod('TextInput.hide');
     super.initState();
@@ -50,7 +51,7 @@ class _dataReadTestState extends State<dataReadTest> {
     final args = ModalRoute.of(context)!.settings.arguments as ScreenArguments;
     //int metersCount = _data.split(",").length.toInt();
     argString = args.message;
-    print("data: " + orderDataRead.ordernumber);
+    print("data: ${orderDataRead.ordernumber}");
     Map<int, String> conv = {0:"-"};
     Map<String, String> rowsData = {"-" : "-"};
     Future<void> _loadData() async {
@@ -90,8 +91,7 @@ class _dataReadTestState extends State<dataReadTest> {
     //});
     return Scaffold(
       appBar: AppBar(
-          title: Text("Megrendelő kiválasztása | "
-              + "Adatrögzítő: " + args.message.split(";")[0]),
+          title: Text("Megrendelő kiválasztása | Adatrögzítő: ${args.message.split(";")[0]}"),
           actions: <Widget>[
             myMenu(username: argString.split(";")[0], message: argString, mlogin: 1)
           ]

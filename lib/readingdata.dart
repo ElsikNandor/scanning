@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:scanning/constnum.dart';
 import 'package:scanning/dataread_test.dart';
-import 'package:scanning/fileFlutter.dart';
 import 'package:scanning/main.dart';
 import 'dart:async';
 import 'screenargument.dart';
@@ -15,7 +14,7 @@ import 'connectivity_controller.dart';
 String argString = "Username";
 String meterType = "";
 class readingData extends StatefulWidget {
-  const readingData({Key? key}) : super(key: key);
+  const readingData({super.key});
 
   @override
   State<readingData> createState() => _readingDataState();
@@ -40,10 +39,11 @@ class _readingDataState extends State<readingData> {
   Future<void> _loadData() async {
     final loadedData = await rootBundle.loadString('assets/savedirname.txt');
     setState(() {
-      saveDirName = loadedData.split(";")[0]+":\\"+loadedData.split(";")[1];
+      saveDirName = "${loadedData.split(";")[0]}:\\${loadedData.split(";")[1]}";
     });
   }
 
+  @override
   void initState() {
     SystemChannels.textInput.invokeMethod('TextInput.hide');
     connectivityController.init();
@@ -75,11 +75,11 @@ class _readingDataState extends State<readingData> {
     String saveText = "Sikeres mentés: ";
     ValueNotifier reset = ValueNotifier(false);
 
-    ValueNotifier<String> _mystring = ValueNotifier<String>('');
+    ValueNotifier<String> mystring = ValueNotifier<String>('');
   setState(() {
       checknetwork = connectivityController.isConnected.value.toString();
 
-      _mystring.addListener(() {
+      mystring.addListener(() {
         //_controller.text =  connectivityController.isConnected.value.toString();
       });
 
@@ -89,7 +89,7 @@ class _readingDataState extends State<readingData> {
   //print(argString);
     return Scaffold(
       appBar: AppBar(
-        title: Text("Összegzés: " + savedate), //+ " network: " + checknetwork ),
+        title: Text("Összegzés: $savedate"), //+ " network: " + checknetwork ),
         actions: <Widget>[
           myMenu(username: argString.split(";")[0], message: argString, mlogin: 0,)
         ]
@@ -138,9 +138,8 @@ class _readingDataState extends State<readingData> {
                           ),
                         ElevatedButton.icon(
                         style: ElevatedButton.styleFrom(
-                          minimumSize: Size(150, 100),
+                          minimumSize: Size(150, 100), backgroundColor: Colors.green,
                           maximumSize: Size(150, 100),
-                          primary: Colors.green,
                         ),
                               icon: Icon(
                                 Icons.done,
@@ -152,10 +151,10 @@ class _readingDataState extends State<readingData> {
                                   orderNumberAttempt = 0;
                                   rCount = 0;
                               //myReset();
-                                storage.filename = "meterdata_good_" + argString.split(";")[2];
+                                storage.filename = "meterdata_good_${argString.split(";")[2]}";
                               //setState(() {
                                 try{
-                                  argString += ";" + savedate;
+                                  argString += ";$savedate";
                                       //"${today.year}-${today.month}-${today.day}_${today.hour}:${today.minute}:${today.second}";
                                   storage.writeMeterData(argString);
                                   rcDataGoodCount = (rcDataGoodCount.toInt() + 1 );
@@ -178,7 +177,7 @@ class _readingDataState extends State<readingData> {
                                           //child: Text(saveText + "Jó mérők listájába."),
                                           //tex
                                         //),
-                                        Text(saveText + "Jó mérők listájába.",
+                                        Text("${saveText}Jó mérők listájába.",
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
                                             fontSize: 20.0, // insert your font size here
@@ -192,8 +191,8 @@ class _readingDataState extends State<readingData> {
                               //});
                               Navigator.pushReplacementNamed(context, "/constnum",
                                   arguments: ScreenArguments(argString.split(";")[0],
-                                      argString.split(";")[0]+";"+argString.split(";")[1]+";"+argString.split(";")[2],
-                                      argString.split(";")[3]+";"+"jó"
+                                      "${argString.split(";")[0]};${argString.split(";")[1]};${argString.split(";")[2]}",
+                                      "${argString.split(";")[3]};jó"
                                   )
                               );
                             },
@@ -204,15 +203,14 @@ class _readingDataState extends State<readingData> {
                                   ),
                                   ElevatedButton.icon(
                                     style: ElevatedButton.styleFrom(
-                                      minimumSize: Size(150, 100),
+                                      minimumSize: Size(150, 100), backgroundColor: Colors.red,
                                       maximumSize: Size(150, 100),
-                                      primary: Colors.red,
 
                                     ),
                                     onPressed: () {
                                       orderNumberAttempt = 0;
                                       //storage.filename = "meterdata_notgood_" ;
-                                      argString += ";" + savedate;
+                                      argString += ";$savedate";
                                       try{
                                         //storage.writeMeterData(argString);
                                         rcDataNotGoodCount = (rcDataNotGoodCount.toInt() + 1 );
@@ -235,7 +233,7 @@ class _readingDataState extends State<readingData> {
                                         //arguments: ScreenArguments(argString.split(";")[0], argString.split(";")[0]+";"+argString.split(";")[1]+";"+argString.split(";")[2],
                                           //  argString.split(";")[3]+";"+"selejt") );
                                           arguments: ScreenArguments(argString.split(";")[0], argString,
-                                              argString.split(";")[3]+";"+"selejt") );
+                                              "${argString.split(";")[3]};selejt") );
                                     },
                                     icon: Icon( Icons.restore_from_trash,
                                       size: 24,
@@ -294,7 +292,7 @@ class myListElements extends StatelessWidget {
       ),
       child: Text(
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-          "$title " + content
+          "$title $content"
       ),
     );
   }

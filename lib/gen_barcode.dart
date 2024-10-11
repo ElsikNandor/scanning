@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:scanning/readingdata.dart';
-import 'screenargument.dart';
 import 'myclasses.dart';
-import 'package:intl/intl.dart';
 
 import 'package:syncfusion_flutter_barcodes/barcodes.dart';
 
 class Gen_BarCode extends StatefulWidget {
-  const Gen_BarCode({Key? key}) : super(key: key);
+  const Gen_BarCode({super.key});
 
   @override
   State<Gen_BarCode> createState() => _Gen_BarCodeState();
@@ -18,6 +14,7 @@ class _Gen_BarCodeState extends State<Gen_BarCode> {
 
   String barCodeText = "AD12345678";
 
+  @override
   void initState() {
     super.initState();
     setState(() {
@@ -35,7 +32,7 @@ class _Gen_BarCodeState extends State<Gen_BarCode> {
             actions: [myMenu(username : "", message: "", mlogin: 1,)],
           ),
           body: Center(
-              child: Container(
+              child: SizedBox(
                 height: 150,
                 width: 300,
                 child: SfBarcodeGenerator(

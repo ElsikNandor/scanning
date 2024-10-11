@@ -9,7 +9,7 @@ import 'myclasses.dart';
 String argString = "Username";
 String meterType = "";
 class saveData extends StatefulWidget {
-  const saveData({Key? key}) : super(key: key);
+  const saveData({super.key});
 
   @override
   State<saveData> createState() => _saveDataState();
@@ -35,6 +35,7 @@ class _saveDataState extends State<saveData> {
     return File('$path/counter.txt');
   }
 
+  @override
   void initState() {
     super.initState();
     _loadData();
@@ -58,7 +59,7 @@ class _saveDataState extends State<saveData> {
     //final ButtonStyle style = TextButton.styleFrom(textStyle:  Theme.of(context).colorScheme.onPrimary,);
     return Scaffold(
         appBar: AppBar(
-            title: Text(argString.split(";")[0] + " - Összegzés: "),
+            title: Text("${argString.split(";")[0]} - Összegzés: "),
             actions: <Widget>[
               myMenu(username: argString.split(";")[0], message: argString, mlogin: 0)
             ]

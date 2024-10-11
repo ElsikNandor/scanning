@@ -8,7 +8,7 @@ final _formKey = GlobalKey<FormState>();
 String argString = "Username";
 String meterType = "";
 class mOwner extends StatefulWidget {
-  const mOwner({Key? key}) : super(key: key);
+  const mOwner({super.key});
 
   @override
   State<mOwner> createState() => _mOwnerState();
@@ -22,6 +22,7 @@ class _mOwnerState extends State<mOwner> {
       _data = loadedData;
     });
   }
+  @override
   void initState() {
     SystemChannels.textInput.invokeMethod('TextInput.hide');
     super.initState();
@@ -39,8 +40,7 @@ class _mOwnerState extends State<mOwner> {
     argString = args.message;
     return Scaffold(
       appBar: AppBar(
-          title: Text("Megrendelő kiválasztása | "
-              + "Adatrögzítő: " + args.message.split(";")[0]),
+          title: Text("Megrendelő kiválasztása | Adatrögzítő: ${args.message.split(";")[0]}"),
           actions: <Widget>[
             myMenu(username: argString.split(";")[0], message: argString, mlogin: 1)
           ]
@@ -56,7 +56,7 @@ class _mOwnerState extends State<mOwner> {
         List.generate(metersCount, (index) {
           return ItemWidget(text:  _data.split(",")[index],
               path: '/order_number',
-              data: argString+';'+_data.split(",")[index], user: argString.split(";")[0],
+              data: '$argString;${_data.split(",")[index]}', user: argString.split(";")[0],
               lastSavedNum: "-;-",
           );
         }),

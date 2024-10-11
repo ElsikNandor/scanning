@@ -3,6 +3,8 @@ import 'package:scanning/constnum.dart';
 
 
 class CheckMessageBox extends StatelessWidget {
+  const CheckMessageBox({super.key});
+
 
   @override
   Widget build(BuildContext context) {
@@ -103,7 +105,7 @@ Widget alertBoxMessage(BuildContext context, bool found) {
       ),
 
       child:    Text(
-          "Keresett gyártásiszám: " + meterNumber.toString(),
+          "Keresett gyártásiszám: $meterNumber",
           style: TextStyle(fontSize: 20,  color: Colors.white)
       ),
 

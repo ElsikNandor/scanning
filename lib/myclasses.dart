@@ -95,18 +95,23 @@ class ItemWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     //final args = ModalRoute.of(context)!.settings.arguments as ScreenArguments;
     return
-      ElevatedButton(
-        style: ElevatedButton.styleFrom(
-
-          //minimumSize: Size(20, 20),
-          //maximumSize: Size(100, 100),
-        ),
-        onPressed: () {
-          //myReset();
-          Navigator.pushReplacementNamed(context, path,
-              arguments: ScreenArguments(user, data, lastSavedNum));
-        },
-        child: Text(text),
+      Container(
+          padding: const EdgeInsets.all(10),
+        //height: 250,
+        width: 250,
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            //fixedSize: Size(50, 50),
+            //minimumSize: Size(20, 20),
+            //maximumSize: Size(100, 100),
+          ),
+          onPressed: () {
+            //myReset();
+            Navigator.pushReplacementNamed(context, path,
+                arguments: ScreenArguments(user, data, lastSavedNum));
+          },
+          child: Text(text),
+          )
       );
   }
 }
@@ -178,7 +183,7 @@ class myMenu extends StatelessWidget {
           }
         else if( value == "/back")
           {
-            if( this.mlogin == 1 ) {
+            if( mlogin == 1 ) {
               Navigator.pushReplacementNamed(context, "/");
             }
             else {
@@ -222,12 +227,12 @@ class myMenu extends StatelessWidget {
         itemBuilder: (BuildContext bc) {
           return const [
             PopupMenuItem(
-              child: Text("Újrakezdés"),
               value: '/back',
+              child: Text("Újrakezdés"),
             ),
             PopupMenuItem(
-                child: Text("Kijelentkezés"),
                 value: '/',
+                child: Text("Kijelentkezés"),
             ),
             //PopupMenuItem(
              // child: Text("test"),
@@ -251,8 +256,8 @@ class myMenu extends StatelessWidget {
                 value: "/dataexport",
             ),*/
             PopupMenuItem(
-              child: Text("Bezár"),
               value: 'quit',
+              child: Text("Bezár"),
             )
           ];
         }
@@ -270,23 +275,23 @@ class CounterStorage  {
   String safetydir = "";
   Future<void> setSaveDirectory(String dirname) async{
 
-    this.winDir = dirname;
-    print("Windir: " + dirname);
+    winDir = dirname;
+    print("Windir: $dirname");
 
   }
 
   Future<String> getFileName() async {
-    return await this.filename;
+    return filename;
   }
 
   Future<void> setFName(String fn) async
   {
-    this.filename = fn;
+    filename = fn;
   }
 
   Future<String> getSafetyDir() async {
 
-      final dir = await Directory.current;
+      final dir = Directory.current;
         return dir.path;
   }
 
@@ -294,7 +299,7 @@ class CounterStorage  {
 
 
     if( Platform.isAndroid == true){
-      final directory = await Directory(this.adroidDir);
+      final directory = Directory(adroidDir);
          // await Directory("/stdorage/emulated/0/Documents/").exists();
         if( !directory.existsSync() ){
           final directory = await getApplicationDocumentsDirectory();
@@ -306,10 +311,10 @@ class CounterStorage  {
     else
       {
         //final directory = await Directory("./build/windows/runner/Release/datas/");
-          final directory = await Directory(this.winDir); // c:/src
+          final directory = Directory(winDir); // c:/src
           if ( !directory.existsSync() )
             {
-              final directory = await Directory.current;
+              final directory = Directory.current;
               //print(directory.path as String);
               return directory.path;
             }
@@ -323,8 +328,8 @@ class CounterStorage  {
     DateTime today = DateTime.now();
     String dateStr = "_";//"${today.year}_${today.month}_${today.day}";
      final path = await _localPath;
-      final fn = this.filename;
-      String allpath = "$path/"+"$fn"+"_"+"$dateStr"+".csv";
+      final fn = filename;
+      String allpath = path+"/"+fn+"_"+dateStr+".csv";
       print(allpath);
       return File(allpath);
     }
@@ -333,9 +338,9 @@ class CounterStorage  {
     //DateTime today = DateTime.now();
     //String dateStr = "_";//"${today.year}_${today.month}_${today.day}";
     final path = await getSafetyDir();
-    final fn = this.safetyfilename;
-    String allpath = "$path/"+"$fn"+".csv";
-    print("safety: " + allpath);
+    final fn = safetyfilename;
+    String allpath = "$path/$fn.csv";
+    print("safety: $allpath");
     return File(allpath);
   }
 
@@ -360,7 +365,7 @@ class CounterStorage  {
       // Read the file
       final contents = await file.readAsString();
 
-      return "content" + contents;
+      return "content$contents";
 
 
   }
@@ -403,7 +408,7 @@ class CounterStorage  {
 
   Future<void> copyToAssets() async {
     final File file = await _localFile;
-    file.copy("${_localPath}/counter2.txt");
+    file.copy("$_localPath/counter2.txt");
     //print("write");
   }
 

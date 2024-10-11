@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'dart:async';
 import 'package:flutter/cupertino.dart';
-import 'package:path_provider/path_provider.dart';
 
 int rCount = 0;
 
@@ -31,10 +30,10 @@ class meterDatas{
 
   Map<String, String> meter = {};
 
-  void add_MeterDatas(String sort_productnumber, String productnumber, String ordernumber)
+  void add_MeterDatas(String sortProductnumber, String productnumber, String ordernumber)
   {
 
-    this.sort_productnumber = sort_productnumber;
+    sort_productnumber = sortProductnumber;
     this.productnumber = productnumber;
     this.ordernumber = ordernumber;
 
@@ -43,17 +42,17 @@ class meterDatas{
 
   String getSortProductNumber()
   {
-    return this.sort_productnumber;
+    return sort_productnumber;
   }
 
   String getProductNumber()
   {
-    return this.productnumber;
+    return productnumber;
   }
 
   String getOrderNumber()
   {
-    return this.ordernumber;
+    return ordernumber;
   }
 
 
@@ -74,10 +73,10 @@ class dataRead
 
     Future<String> get _localPath async {
 
-      final directory = await Directory(this.datapath); // c:/src
+      final directory = Directory(datapath); // c:/src
         if ( !directory.existsSync() )
         {
-          final directory = await Directory.current;
+          final directory = Directory.current;
           return directory.path;
         }
         return directory.path;
@@ -85,8 +84,8 @@ class dataRead
 
     Future<File> get _localFile async {
       final path = await _localPath;
-      final fn = this.ordernumber;
-      String allpath = path+fn+"_"+this.owner+".csv";
+      final fn = ordernumber;
+      String allpath = "$path${fn}_$owner.csv";
 
       print("allpath new");
       print(allpath);
@@ -129,9 +128,9 @@ class orderDirRead
 
   Future<void> getDir() async {
   //  final directory = await getApplicationDocumentsDirectory();
-    final dir = this.dirPath;
+    final dir = dirPath;
     //String pdfDirectory = '$dir/';
-    final myDir = new Directory(dir);
+    final myDir = Directory(dir);
     //setState(() {
       //_folders = myDir.listSync(recursive: true, followLinks: false);
     folders = myDir.listSync(recursive: true, followLinks: false);
@@ -145,7 +144,7 @@ class orderDirRead
   {
     String dirPath = this.dirPath;
     this.orderNumber = orderNumber;
-    FileSystemEntity fullpath = new File(dirPath.toString() + "" + orderNumber + "_"+ownerID+".csv");
+    FileSystemEntity fullpath = File("$dirPath${orderNumber}_$ownerID.csv");
     print(fullpath);
     //getDir();
 
@@ -180,28 +179,28 @@ class ownersDataConverter
 
   String getRow()
   {
-    return this.row;
+    return row;
   }
 
   String getOwner()
   {
-    return this.owner;
+    return owner;
   }
 
   Map<String, String> convertData()
   {
     Map<String, String> rowsData = {};
 
-    if( this.row.length < 1 )
+    if( row.isEmpty )
       {
         return rowsData;
       }
 
-    if( this.owner == "FG") {
+    if( owner == "FG") {
       try {
-        rowsData["sort_prod_num"] = this.row.split(";")[0];
-        rowsData["order_num"] = this.row.split(";")[1];
-        rowsData["long_prod_num"] = this.row.split(";")[3];
+        rowsData["sort_prod_num"] = row.split(";")[0];
+        rowsData["order_num"] = row.split(";")[1];
+        rowsData["long_prod_num"] = row.split(";")[3];
       }
       catch (e) {
 
@@ -210,11 +209,11 @@ class ownersDataConverter
       }
     }
 
-    if(this.owner == "ED") {
+    if(owner == "ED") {
       try {
-        rowsData["sort_prod_num"] = this.row.split(";")[0];
-        rowsData["order_num"] = this.row.split(";")[1];
-        rowsData["long_prod_num"] = this.row.split(";")[3];
+        rowsData["sort_prod_num"] = row.split(";")[0];
+        rowsData["order_num"] = row.split(";")[1];
+        rowsData["long_prod_num"] = row.split(";")[3];
       }
       catch (e) {
 
@@ -225,12 +224,12 @@ class ownersDataConverter
 
 
 
-    if( this.owner == "EON" ) {
+    if( owner == "EON" ) {
       //print("EON Converter");
       try {
-        rowsData["sort_prod_num"] = this.row.split(";")[0];
-        rowsData["order_num"] = this.row.split(";")[1];
-        rowsData["long_prod_num"] = this.row.split(";")[3];
+        rowsData["sort_prod_num"] = row.split(";")[0];
+        rowsData["order_num"] = row.split(";")[1];
+        rowsData["long_prod_num"] = row.split(";")[3];
       }
       catch (e) {
 
@@ -239,12 +238,12 @@ class ownersDataConverter
       }
     }
 
-    if( this.owner == "4" ) {
+    if( owner == "4" ) {
       //print("EON Converter");
       try {
-        rowsData["sort_prod_num"] = this.row.split(";")[6];
-        rowsData["order_num"] = this.row.split(";")[2];
-        rowsData["long_prod_num"] = this.row.split(";")[9];
+        rowsData["sort_prod_num"] = row.split(";")[6];
+        rowsData["order_num"] = row.split(";")[2];
+        rowsData["long_prod_num"] = row.split(";")[9];
       }
       catch (e) {
 
@@ -252,7 +251,7 @@ class ownersDataConverter
 
       }
     }
-    if( this.owner == "MG" ) {
+    if( owner == "MG" ) {
       //print("EON Converter");
       try {
         rowsData["sort_prod_num"] = "null";
@@ -287,17 +286,17 @@ class convertData
   Map<int, String> convert()
   {
     rows = 0;
-    int datalength = this.dataStore.length;
+    int datalength = dataStore.length;
     int i = 0;
      Map<int, String> rowData = {0:"l"};
-    print("adat hossza: " +datalength.toString());
+    print("adat hossza: $datalength");
     for( i = 0 ; i < datalength; i++ )
       {
         if( i % 61 == 0)
           {
             print(rows.toString());
 
-            rowData[rows] = this.dataStore[i];
+            rowData[rows] = dataStore[i];
             rows++;
 
           }
@@ -334,10 +333,10 @@ class readSavedData
   Future<String> get _localPath async {
 
 
-    final directory = await Directory(this.datapath); // c:/src
+    final directory = Directory(datapath); // c:/src
     if ( !directory.existsSync() )
     {
-      final directory = await Directory.current;
+      final directory = Directory.current;
       //print(directory.path as String);
       return directory.path;
     }
@@ -346,19 +345,19 @@ class readSavedData
 
   Future<File> get _localFile async {
     final path = await _localPath;
-    final fn = this.ordernumber;
+    final fn = ordernumber;
     String fnparam = "";
 
     if(isgood)
       {
-        fnparam = "meterdata_good_"+fn+"__";
+        fnparam = "meterdata_good_${fn}__";
       }
     else
       {
-        fnparam = "meterdata_notgood_"+fn+"__";
+        fnparam = "meterdata_notgood_${fn}__";
       }
 
-    String allpath = "$path/"+"$fnparam.csv";
+    String allpath = "$path/""$fnparam.csv";
 
     return File(allpath);
   }
@@ -386,8 +385,9 @@ print(file.path);
 
   int getRowCountFile( List<String> data)
   {
-    if( data.isEmpty)
+    if( data.isEmpty) {
       return 0;
+    }
 
     return data.length;
   }

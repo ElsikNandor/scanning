@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:scanning/constnum.dart';
-import 'package:scanning/order_controller.dart';
 import 'screenargument.dart';
-import 'package:flutter/services.dart' show SystemChannels, rootBundle;
 import 'package:scanning/main.dart';
 import 'myclasses.dart';
-import 'dart:io';
 import 'dart:async';
 import 'data_stores.dart';
 
@@ -18,9 +15,9 @@ String actualOwner = "";
 //String dataFilePath = "C:/orders/";
 
 
-TextEditingController _controller = new TextEditingController();
+TextEditingController _controller = TextEditingController();
 class OrderNumber extends StatefulWidget {
-  OrderNumber({Key? key, required this.storage}) : super(key: key);
+  const OrderNumber({super.key, required this.storage});
 
   final dataRead storage;
 
@@ -29,7 +26,7 @@ class OrderNumber extends StatefulWidget {
 }
 
 class _OrderNumberState extends State<OrderNumber> {
-  _OrderNumberState({Key? key, required this.storage});
+  _OrderNumberState({required this.storage});
  // OrderController orderC = OrderController();
   final dataRead storage;
 
@@ -48,6 +45,7 @@ class _OrderNumberState extends State<OrderNumber> {
   }
 
 
+  @override
   void initState() {
     super.initState();
 
@@ -124,8 +122,7 @@ class _OrderNumberState extends State<OrderNumber> {
                                           height: 50,
                                           child: ElevatedButton(
                                             style: ElevatedButton.styleFrom(
-                                              onPrimary: Theme.of(context).colorScheme.onPrimary,
-                                              primary: Theme.of(context).colorScheme.primary,
+                                              foregroundColor: Theme.of(context).colorScheme.onPrimary, backgroundColor: Theme.of(context).colorScheme.primary,
                                               minimumSize: Size(150,100),
                                             )
                                                 .copyWith(elevation: ButtonStyleButton.allOrNull(0.0)
@@ -139,7 +136,7 @@ class _OrderNumberState extends State<OrderNumber> {
                                                     {
 
                                                   showSnackBarFun(context);
-                                                  return null;
+                                                  return;
                                                 }
                                                 rsDataClassGood.addDataFile(saveDirName, meterNumber, true, ownerMap[owner].toString());
                                                 rsDataClassNotGood.addDataFile(saveDirName, meterNumber, false, ownerMap[owner].toString());
@@ -190,9 +187,8 @@ class _OrderNumberState extends State<OrderNumber> {
                                           child:
                                           ElevatedButton.icon(
                                             style: ElevatedButton.styleFrom(
-                                              minimumSize: Size(150, 100),
+                                              minimumSize: Size(150, 100), backgroundColor: orderC.isorder.value == true ? Colors.green : Colors.grey,
                                               maximumSize: Size(150, 100),
-                                              primary: orderC.isorder.value == true ? Colors.green : Colors.grey,
                                             ),
                                             icon: Icon(
                                               Icons.done,
@@ -205,8 +201,7 @@ class _OrderNumberState extends State<OrderNumber> {
                                                     {
                                                   Navigator.pushReplacementNamed(context, '/constnum',
                                                       arguments: ScreenArguments(userName,
-                                                          args.message.split(";")[0] + ";" + args.message.split(";")[1] +
-                                                              ";" + meterNumber, "-;-"));
+                                                          "${args.message.split(";")[0]};${args.message.split(";")[1]};$meterNumber", "-;-"));
                                                 }
                                               }
                                             },

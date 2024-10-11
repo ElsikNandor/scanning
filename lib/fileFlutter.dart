@@ -1,14 +1,9 @@
 // import 'dart:html';
 import 'dart:async';
 import 'dart:io';
-import 'dart:typed_data';
 import 'package:flutter/material.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:scanning/readingdata.dart';
 import 'myclasses.dart';
-import 'package:flutter/services.dart' show rootBundle;
-import 'package:platform/platform.dart';
 
 void main() {
   runApp(
@@ -44,10 +39,10 @@ class FlutterDemo extends StatefulWidget {
 }
 
 class _FlutterDemoState extends State<FlutterDemo> {
-  String _counter = "";
+  final String _counter = "";
   String hhh = "---";
   String path = "dirs";
-  bool _allowWriteFile = false;
+  final bool _allowWriteFile = false;
   @override
   void initState() {
     super.initState();
@@ -70,7 +65,7 @@ class _FlutterDemoState extends State<FlutterDemo> {
     var status = await Permission.manageExternalStorage.status;
     bool isShown = await Permission.manageExternalStorage
         .shouldShowRequestRationale;
-    PermissionStatus _permissionStatus = PermissionStatus.denied;
+    PermissionStatus permissionStatus0 = PermissionStatus.denied;
 
 
     if (status.isDenied || status.isGranted == false) {
@@ -87,8 +82,8 @@ class _FlutterDemoState extends State<FlutterDemo> {
         await Permission.manageExternalStorage.status;
         hhh += " req granted";
         setState(() {
-          _permissionStatus = permissionStatus;
-          hhh = _permissionStatus.toString();
+          permissionStatus0 = permissionStatus;
+          hhh = permissionStatus0.toString();
         });
       }
 
@@ -111,8 +106,8 @@ class _FlutterDemoState extends State<FlutterDemo> {
   // }
 
   Future<void> fWrite() async  {
-    var file = await File('./file.txt');
-    var sink = await file.openWrite();
+    var file = File('./file.txt');
+    var sink = file.openWrite();
     sink.write('FILE ACCESSED ${DateTime.now()}\n');
 
     // Close the IOSink to free system resources.

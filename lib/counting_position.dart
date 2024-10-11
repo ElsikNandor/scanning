@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'screenargument.dart';
 import 'myclasses.dart';
-import 'package:onscreen_num_keyboard/onscreen_num_keyboard.dart';
 final _formKey = GlobalKey<FormState>();
 String userName = "Username";
 String meterNumber = "";
 String constNumText = "";
-TextEditingController _controller = new TextEditingController();
+TextEditingController _controller = TextEditingController();
 class CountPos extends StatefulWidget {
-  const CountPos({Key? key}) : super(key: key);
+  const CountPos({super.key});
 
   @override
   State<CountPos> createState() => _CountPosState();
@@ -16,6 +15,7 @@ class CountPos extends StatefulWidget {
 
 class _CountPosState extends State<CountPos> {
 
+  @override
   void initState() {
     super.initState();
     setState(() {
@@ -39,9 +39,7 @@ class _CountPosState extends State<CountPos> {
     String blank = "-";
     return Scaffold(
         appBar: AppBar(
-            title: Text("Számláló állás beírása | "
-                + "Adatrögzítő: " + args.message.split(";")[0]
-                + " | Megrendelő: " + args.message.split(";")[1]),
+            title: Text("Számláló állás beírása | Adatrögzítő: ${args.message.split(";")[0]} | Megrendelő: ${args.message.split(";")[1]}"),
             actions: <Widget>[
               myMenu( username: userName, message: args.message, mlogin: 0,)]
         ),
@@ -66,8 +64,7 @@ class _CountPosState extends State<CountPos> {
                             width: 110,
                             child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
-                                onPrimary: Theme.of(context).colorScheme.onPrimary,
-                                primary: Theme.of(context).colorScheme.primary,
+                                foregroundColor: Theme.of(context).colorScheme.onPrimary, backgroundColor: Theme.of(context).colorScheme.primary,
                                 minimumSize: Size(150,100),
                               )
                                   .copyWith(elevation: ButtonStyleButton.allOrNull(0.0)
@@ -76,7 +73,7 @@ class _CountPosState extends State<CountPos> {
                                 setState(() {
                                   if (_formKey.currentState!.validate()) {
                                         Navigator.pushReplacementNamed(context, '/yof',
-                                            arguments: ScreenArguments(userName, userName+";"+meterNumber, "") );
+                                            arguments: ScreenArguments(userName, "$userName;$meterNumber", "") );
                                     /*Navigator.pushReplacementNamed(context, '/yof',
                                         arguments: ScreenArguments(userName, userName+";"+meterNumber, "") );
 */

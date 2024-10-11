@@ -3,8 +3,6 @@ import 'package:flutter/services.dart' show SystemChannels, rootBundle;
 import 'package:scanning/main.dart';
 import 'screenargument.dart';
 import 'myclasses.dart';
-import 'dart:io';
-import 'package:path_provider/path_provider.dart';
 import 'dart:async';
 
 import 'data_stores.dart';
@@ -14,7 +12,7 @@ String pn = "";
 String on = "";
 
 class One_Meter_Data extends StatefulWidget {
-  const One_Meter_Data({Key? key}) : super(key: key);
+  const One_Meter_Data({super.key});
 
   @override
   State<One_Meter_Data> createState() => _One_Meter_DataState();
@@ -51,6 +49,7 @@ class _One_Meter_DataState extends State<One_Meter_Data> {
   }*/
   
 
+  @override
   void initState() {
     SystemChannels.textInput.invokeMethod('TextInput.hide');
     super.initState();
@@ -74,7 +73,7 @@ class _One_Meter_DataState extends State<One_Meter_Data> {
     convert.convert();*/
     int rowss = convert.getRows();
     //print(datastorage);
-    print("rows-: " + rowss.toString());
+    print("rows-: $rowss");
     final args = ModalRoute.of(context)!.settings.arguments as ScreenArguments;
     md.add_MeterDatas(spn, pn, on);
     //print("data: "+ fogaz.readSavedFile());
@@ -87,19 +86,19 @@ class _One_Meter_DataState extends State<One_Meter_Data> {
             actions: [myMenu(username : "", message: "", mlogin: 1,)],
           ),
           body: Center(
-              child: Container(
+              child: SizedBox(
                 height: 200,
                 width: 300,
                 child: 
                   Column(
                     children: [
-                      Text("Rövid gyáriszám: " + md.getSortProductNumber()),
-                      Text("Gyáriszám: " + md.getProductNumber()),
-                      Text("Megrendelésszám: " + md.getOrderNumber()),
+                      Text("Rövid gyáriszám: ${md.getSortProductNumber()}"),
+                      Text("Gyáriszám: ${md.getProductNumber()}"),
+                      Text("Megrendelésszám: ${md.getOrderNumber()}"),
                       //Text("infó: " + _orderdata.split(";")[0]),
-                      Text("storage: " +datastorage[0]),
-                      Text("sorok: " + convert.getRows().toString()),
-                      Text("data: " + convert.dataStore),
+                      Text("storage: ${datastorage[0]}"),
+                      Text("sorok: ${convert.getRows()}"),
+                      Text("data: ${convert.dataStore}"),
                       Text(mainakarmi),
                       SizedBox(
                         width: 100,

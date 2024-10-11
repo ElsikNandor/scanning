@@ -8,7 +8,7 @@ import 'dart:io';
 String argString = "Username";
 String meterType = "";
 class dataExport extends StatefulWidget {
-  const dataExport({Key? key}) : super(key: key);
+  const dataExport({super.key});
 
   @override
   State<dataExport> createState() => _dataExportState();
@@ -107,7 +107,7 @@ class _dataExportState extends State<dataExport> {
     ),
     child: Text(
     style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-    "$title " + content
+    "$title $content"
     ),
     );
     }

@@ -30,7 +30,7 @@ import 'meter_controller.dart';
 import 'controller_test.dart';
 import 'package:fullscreen_window/fullscreen_window.dart';
 
-fileManip fmanip = new fileManip();
+fileManip fmanip = fileManip();
 String mainakarmi = '1';
 convertData convert = convertData();
 
@@ -64,7 +64,7 @@ void main() {
 }
 
 class MyApp_prev extends StatefulWidget {
-  const MyApp_prev({Key? key}) : super(key: key);
+  const MyApp_prev({super.key});
 
   @override
   State<MyApp_prev> createState() => MyApp();
@@ -76,8 +76,8 @@ class MyApp extends State<MyApp_prev> {
   Future<String> _loadData() async {
     final loadedData = await rootBundle.loadString('assets/savedirname.txt');
     setState(() {
-      saveDirName = loadedData.split(";")[0]+":\\"+loadedData.split(";")[1];
-      dataFilePath = saveDirName+"/orders/";
+      saveDirName = "${loadedData.split(";")[0]}:\\${loadedData.split(";")[1]}";
+      dataFilePath = "$saveDirName/orders/";
     });
     return saveDirName;
   }
@@ -95,13 +95,14 @@ class MyApp extends State<MyApp_prev> {
       "Screen size (physical pixel): ${physicalSize.width} x ${physicalSize.height}\n";
     });
   }
+  @override
   void initState() {
     setFullScreen(true);
     SystemChannels.textInput.invokeMethod('TextInput.hide');
     super.initState();
     _loadData();
     _loadData().then((value) {
-      dataFilePath = value.toString()+ "/orders/";
+      dataFilePath = "$value/orders/";
       print(value);
       return value;
     });
@@ -168,7 +169,7 @@ class MyApp extends State<MyApp_prev> {
 }
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  const HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -201,7 +202,7 @@ class _HomePageState extends State<HomePage> {
     var status = await Permission.manageExternalStorage.status;
     bool isShown = await Permission.manageExternalStorage
         .shouldShowRequestRationale;
-    PermissionStatus _permissionStatus = PermissionStatus.denied;
+    PermissionStatus permissionStatus0 = PermissionStatus.denied;
 
     await Permission.manageExternalStorage.request();
     if (status.isDenied || status.isGranted == false) {
@@ -218,7 +219,7 @@ class _HomePageState extends State<HomePage> {
         await Permission.manageExternalStorage.status;
         //hhh += " req granted";
         setState(() {
-          _permissionStatus = permissionStatus;
+          permissionStatus0 = permissionStatus;
         });
       }
     }
@@ -231,6 +232,7 @@ class _HomePageState extends State<HomePage> {
 
   }
 
+  @override
   void initState() {
     SystemChannels.textInput.invokeMethod('TextInput.hide');
     connectivityController.init();
@@ -270,36 +272,49 @@ class _HomePageState extends State<HomePage> {
               height: 80,
               child: Image.asset('assets/logo.jpg'),
               ),
-                SizedBox(
+              SizedBox(
+                height: 250,
+              width: boxWith,
+              child:
+              ListView.builder(
+                 itemCount: nameCount,
+                  scrollDirection: Axis.horizontal,
+                   itemBuilder: (context, index){
+                     return ItemWidget(text:  _data.split(",")[index],
+                       path: '/owners',
+                       data: _data.split(",")[index], user: _data.split(",")[index],
+                       lastSavedNum: "",
+                     );
+                   }
+
+               ),
+
+            ),
+               /* SizedBox(
                   height: 500,
-                  width: nameCount < 5 ? boxWith/2 : boxWith,
+                  width: nameCount < 5 ? boxWith/3 : boxWith,
                  child:
                   GridView.builder(
                   primary: false,
-                  padding: const EdgeInsets.all(10),
-
-                    itemCount: nameCount,
+                  padding: const EdgeInsets.all(0),
+                  itemCount: nameCount,
                   itemBuilder: (context, index) =>
-                     Container(
-                       height: 10,
-                      //width: 130,
-                      child:  ItemWidget(text:  _data.split(",")[index],
+                    ItemWidget(text:  _data.split(",")[index],
                           path: '/owners',
                           data: _data.split(",")[index], user: _data.split(",")[index],
                         lastSavedNum: "",
-                      )
-                     ),
+                      ),
                     gridDelegate:  SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: nameCount < 5 ? nameCount : 5,//_crossAxisCount,
                       crossAxisSpacing: 20,//_crossAxisSpacing,
-                      mainAxisSpacing: 50,//_mainAxisSpacing,
-                      childAspectRatio: 10,//_aspectRatio,
+                      mainAxisSpacing: 500,//_mainAxisSpacing,
+                      childAspectRatio: nameCount.toDouble(),//_aspectRatio,
                       mainAxisExtent: nameCount < 5 ? (boxWith)/(nameCount*2) : (boxWith)/(nameCount),
 
                     ),
                   //}),
                 )
-                ),
+                ),*/
 
               ]
           )

@@ -1,9 +1,5 @@
-import 'dart:io';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
-import 'dart:io';
-import 'package:path_provider/path_provider.dart';
 import 'package:flutter/material.dart';
 
 //var gears ={ {"32/40", "white", "1"}, {"11", "kk", "2"} };
@@ -29,7 +25,7 @@ class fileManip{
 
   Future<String> readMetrixGears(String count) async {
 
-    final contents = await rootBundle.loadString('assets/metrix_gears_'+count+'.txt');
+    final contents = await rootBundle.loadString('assets/metrix_gears_$count.txt');
 
     return contents;
   }

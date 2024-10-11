@@ -9,7 +9,7 @@ final _formKey = GlobalKey<FormState>();
 String argString = "Username";
 String meterType = "";
 class mType extends StatefulWidget {
-  const mType({Key? key}) : super(key: key);
+  const mType({super.key});
 
   @override
   State<mType> createState() => _mTypeState();
@@ -23,6 +23,7 @@ class _mTypeState extends State<mType> {
       _data = loadedData;
     });
   }
+  @override
   void initState() {
     SystemChannels.textInput.invokeMethod('TextInput.hide');
     super.initState();
@@ -41,9 +42,7 @@ class _mTypeState extends State<mType> {
     String blank = "-";
     return Scaffold(
       appBar: AppBar(
-        title: Text("Típus kiválasztása | "
-            + "Adatrögzítő: " + args.message.split(";")[0]
-            + " | Megrendelő: " + args.message.split(";")[1]),
+        title: Text("Típus kiválasztása | Adatrögzítő: ${args.message.split(";")[0]} | Megrendelő: ${args.message.split(";")[1]}"),
         actions: <Widget>[
         myMenu(username: argString.split(";")[0], message: argString, mlogin: 0)
         ]
@@ -62,7 +61,7 @@ class _mTypeState extends State<mType> {
             path: actualOwner == "MG" ?  '/countpos' : '/readingData' ,
             //path: '/yof',
             //'/countpos',
-            data: actualOwner == "MG" ? argString+';'+_data.split(",")[index] : argString+';'+_data.split(",")[index]+";"+blank+";"+blank+";"+blank, user: argString.split(";")[0],
+            data: actualOwner == "MG" ? '$argString;${_data.split(",")[index]}' : argString+';'+_data.split(",")[index]+";"+blank+";"+blank+";"+blank, user: argString.split(";")[0],
             lastSavedNum: "-;-",
           );
         }),

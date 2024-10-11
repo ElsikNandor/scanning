@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:scanning/dataread_test.dart';
 import 'package:scanning/main.dart';
 import 'package:scanning/order_number.dart';
 
@@ -8,7 +7,7 @@ class OrderController {
   ValueNotifier<bool> isorder = ValueNotifier(false);
 
   Future<void> init() async {
-    int result = await readMeterData.length;
+    int result = readMeterData.length;
     isOrder(result);
   }
 
@@ -24,8 +23,9 @@ class OrderController {
       orderCheck = true;
       isorder.value = true;
       return true;
-    } else
+    } else {
       orderCheck = false;
+    }
       isorder.value = false;
     return false;
 

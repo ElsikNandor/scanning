@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:scanning/data_stores.dart';
 import 'package:scanning/main.dart';
 import 'package:scanning/order_number.dart';
 import 'package:scanning/readingdata.dart';
@@ -18,8 +16,8 @@ String orderNumber = "";
 String owner = "";
 bool orderNumBool = false;
 List<String> xx = [];
-TextEditingController _controller = new TextEditingController();
-TextEditingController _lastSaveNum = new TextEditingController();
+TextEditingController _controller = TextEditingController();
+TextEditingController _lastSaveNum = TextEditingController();
 Map<String, String> rowsData = {"-" : "-"};
 int orderNumberAttempt = 0;
 
@@ -27,7 +25,7 @@ int count1 = 0;
 int count2 = 0;
 
 class ConstNum extends StatefulWidget {
-  const ConstNum({Key? key}) : super(key: key);
+  const ConstNum({super.key});
 
   @override
   State<ConstNum> createState() => _ConstNumState();
@@ -38,13 +36,15 @@ class _ConstNumState extends State<ConstNum> {
   String text = "";
 
 
+  @override
   void initState() {
     super.initState();
     print(orderCountGlobal);
 
     orderCountGlobal = rcDataGoodCount + rcDataNotGoodCount;
-    if( actualOwner == "MG")
+    if( actualOwner == "MG") {
       orderCountGlobal = 1;
+    }
   setState(() {
     //orderCountGlobal = 0;
       constNumText = "";
@@ -73,14 +73,14 @@ class _ConstNumState extends State<ConstNum> {
         rowsData.remove("error");
       }
 
-    void findWhere(List<String> dataList, String sort_prod_num) {
+    void findWhere(List<String> dataList, String sortProdNum) {
       // Return list of people matching the condition
       //print(ownerMap[owner]);
       final found = dataList.where((element) {
         if( ownerMap[owner] == "4" ) // Jó lenne ha minden állomány ugyanúgy nézne ki 0:gysz, 1:rendelés 3:hgysz
         {
               try{
-                return element.split(";")[6] == sort_prod_num;
+                return element.split(";")[6] == sortProdNum;
               }
               catch (e)
             {
@@ -93,7 +93,7 @@ class _ConstNumState extends State<ConstNum> {
           {
             try{
               //print(element.split(";")[0]);
-              return element.split(";")[0] == sort_prod_num;
+              return element.split(";")[0] == sortProdNum;
             }
             catch (e)
             {
@@ -125,9 +125,7 @@ class _ConstNumState extends State<ConstNum> {
     print(actualOwner);
     return Scaffold(
       appBar: AppBar(
-        title: Text("Gyátrási szám beolvasása | "
-            + "Adatrögzítő: " + args.message.split(";")[0]
-            + " | Megrendelő: " + args.message.split(";")[1]),
+        title: Text("Gyátrási szám beolvasása | Adatrögzítő: ${args.message.split(";")[0]} | Megrendelő: ${args.message.split(";")[1]}"),
         actions: <Widget>[
           myMenu( username: userName, message: args.message, mlogin: 0),]
       ),
@@ -150,17 +148,15 @@ class _ConstNumState extends State<ConstNum> {
             Column(
               children: [
                 SizedBox(
-                  child: myListElements(title: "Legutóbb bevitt gyári szám:\n", content: _lastSaveNum.text.isEmpty == true ? lastSavedNum.split(";")[0] : _lastSaveNum.text.split(";")[0] ),//.split(";")[0]),
-                  //child: Text("Legutóbb bevitt gyári szám:\n" +args.message.split(";")[2]),
-                  width: (MediaQuery.of(context).size.width-200)/3-100
+                  width: (MediaQuery.of(context).size.width-200)/3-100,
+                  child: myListElements(title: "Legutóbb bevitt gyári szám:\n", content: _lastSaveNum.text.isEmpty == true ? lastSavedNum.split(";")[0] : _lastSaveNum.text.split(";")[0] )
                 ),
                 SizedBox(
                   height: 10,
                 ),
                 SizedBox(
-                    child: myListElements(title: "Legutóbbi minősítés:\n", content: _lastSaveNum.text.isEmpty == true ? lastSavedNum.split(";")[1] : _lastSaveNum.text.split(";")[1]), //lastSavedNum.split(";")[1]),
-                    //child: Text("Legutóbb bevitt gyári szám:\n" +args.message.split(";")[2]),
-                    width: (MediaQuery.of(context).size.width-200)/3-100
+                    width: (MediaQuery.of(context).size.width-200)/3-100,
+                    child: myListElements(title: "Legutóbbi minősítés:\n", content: _lastSaveNum.text.isEmpty == true ? lastSavedNum.split(";")[1] : _lastSaveNum.text.split(";")[1])
                 )
 
               ],
@@ -171,12 +167,12 @@ class _ConstNumState extends State<ConstNum> {
              Column(
                children: [
                  SizedBox(
-                   child: constInputForm(),
                    width: (MediaQuery.of(context).size.width-200)/3+200,
+                   child: constInputForm(),
                  ),
                  SizedBox(
-                   child: winNumPad(constNumText: constNumText, controller: _controller),
                    width: (MediaQuery.of(context).size.width-200)/3+150,
+                   child: winNumPad(constNumText: constNumText, controller: _controller),
                  ),
                 ValueListenableBuilder(
                 valueListenable: meterController.ismeter,
@@ -188,16 +184,14 @@ class _ConstNumState extends State<ConstNum> {
                         height: 50,
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            onPrimary: Theme
+                            foregroundColor: Theme
                                 .of(context)
                                 .colorScheme
-                                .onPrimary,
-                            primary: Theme
+                                .onPrimary, backgroundColor: Theme
                                 .of(context)
                                 .colorScheme
                                 .primary,
-                            backgroundColor: Colors.green,
-                            minimumSize: Size(150, 100),
+                             minimumSize: Size(150, 100),
                           )
                               .copyWith(
                               elevation: ButtonStyleButton.allOrNull(0.0)
@@ -253,8 +247,7 @@ class _ConstNumState extends State<ConstNum> {
                                   Navigator.pushReplacementNamed(
                                       context, "/readingData",
                                       arguments: ScreenArguments(userName,
-                                          args.message + ";" + meterNumber +
-                                              ";-;-;-;-;-;-", ""));
+                                          "${args.message};$meterNumber;-;-;-;-;-;-", ""));
                                 }
                               });
                             }
@@ -271,7 +264,7 @@ class _ConstNumState extends State<ConstNum> {
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
                             // onPrimary: Theme.of(context).colorScheme.onPrimary,
-                            primary: meterController.ismeter.value == false
+                            backgroundColor: meterController.ismeter.value == false
                                 ? Colors.blue
                                 : Colors.grey,
                             minimumSize: Size(150, 100),
@@ -281,17 +274,14 @@ class _ConstNumState extends State<ConstNum> {
                           ),
                           onPressed: () {
                             if (meterController.ismeter.value) {
-                              return null;
+                              return;
                             }
                             setState(() {
                               if (_formKey.currentState!.validate()) {
                                 Navigator.pushReplacementNamed(
                                     context, '/mtype',
                                     arguments: ScreenArguments(userName,
-                                        args.message.split(";")[0] + ";" +
-                                            args.message.split(";")[1] + ";"
-                                            + args.message.split(";")[2] + ";" +
-                                            meterNumber, ""));
+                                        "${args.message.split(";")[0]};${args.message.split(";")[1]};${args.message.split(";")[2]};$meterNumber", ""));
                               }
                             });
                           },
@@ -316,33 +306,29 @@ class _ConstNumState extends State<ConstNum> {
          child: Text(formattedDate),
       ),*/
       SizedBox(
-          child: myListElements(title: "Megrendelésszám:\n", content: orderNumber),
-          //child: Text("Legutóbb bevitt gyári szám:\n" +args.message.split(";")[2]),
-          width: (MediaQuery.of(context).size.width-200)/3-200
+          width: (MediaQuery.of(context).size.width-200)/3-200,
+          child: myListElements(title: "Megrendelésszám:\n", content: orderNumber)
       ),
       SizedBox(
         height: 10,
       ),
       SizedBox(
-          child: myListElements(title: "Darabszám:\n", content: readMeterData .length.toString() +" db"),
-          //child: Text("Legutóbb bevitt gyári szám:\n" +args.message.split(";")[2]),
-          width: (MediaQuery.of(context).size.width-200)/3-200
+          width: (MediaQuery.of(context).size.width-200)/3-200,
+          child: myListElements(title: "Darabszám:\n", content: "${readMeterData .length} db")
       ),
       SizedBox(
         height: 10,
       ),
       SizedBox(
-          child: myListElements(title: "Bevitt darabszám:\n", content: orderCountGlobal.toString() +" db"),
-          //child: Text("Legutóbb bevitt gyári szám:\n" +args.message.split(";")[2]),
-          width: (MediaQuery.of(context).size.width-200)/3-200
+          width: (MediaQuery.of(context).size.width-200)/3-200,
+          child: myListElements(title: "Bevitt darabszám:\n", content: "$orderCountGlobal db")
       ),
       SizedBox(
         height: 10,
       ),
       SizedBox(
-          child: myListElements(title: "Fennmaradó:\n", content: (readMeterData .length-orderCountGlobal).toString() +" db"),
-          //child: Text("Legutóbb bevitt gyári szám:\n" +args.message.split(";")[2]),
-          width: (MediaQuery.of(context).size.width-200)/3-200
+          width: (MediaQuery.of(context).size.width-200)/3-200,
+          child: myListElements(title: "Fennmaradó:\n", content: "${readMeterData .length-orderCountGlobal} db")
       ),
     ],
   )
