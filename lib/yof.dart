@@ -56,6 +56,7 @@ class _yearOfManufactureState extends State<yearOfManufacture> {
           return ItemWidget(text:  _data.split(",")[index],
               path: args.message.split(";")[4] == "Metrix" ? '/gearpairs_metrix1' : '/gearpairs',
               data: '$argString;${_data.split(",")[index]}', user: argString.split(";")[0],
+            page : "yof",
             lastSavedNum: "-;-",
           );
         }),

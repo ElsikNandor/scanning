@@ -55,6 +55,12 @@ Map<String, String> ownerMap = {"Főgáz" : "FG",
   "EON" : "EON",
   "Tigáz" : "4",
   "Magáz" : "MG"};
+
+List<String> dataStore = [
+  "User",
+  "Owner"
+];
+
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations(
@@ -283,6 +289,7 @@ class _HomePageState extends State<HomePage> {
                      return ItemWidget(text:  _data.split(",")[index],
                        path: '/owners',
                        data: _data.split(",")[index], user: _data.split(",")[index],
+                       page: "main",
                        lastSavedNum: "",
                      );
                    }

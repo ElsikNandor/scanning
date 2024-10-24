@@ -83,6 +83,7 @@ class ItemWidget extends StatelessWidget {
     required this.path,
     required this.data,
     required this.user,
+    required this.page,
     required this.lastSavedNum
   });
 
@@ -90,6 +91,7 @@ class ItemWidget extends StatelessWidget {
   final String path;
   final String data;
   final String user;
+  final String page;
   final String lastSavedNum;
   @override
   Widget build(BuildContext context) {
@@ -107,6 +109,21 @@ class ItemWidget extends StatelessWidget {
           ),
           onPressed: () {
             //myReset();
+            switch (page) {
+              case "main":
+                print("main");
+                dataStore[0] = data;
+
+                break;
+              case "owner":
+                print("main");
+                dataStore[1] = data;
+                //dataStore.update("Owner", (value) => data);
+                break;
+            }
+
+            print("ItemWpress: " + data);
+            print("DTS " + dataStore.toString());
             Navigator.pushReplacementNamed(context, path,
                 arguments: ScreenArguments(user, data, lastSavedNum));
           },
@@ -123,6 +140,7 @@ class ItemWidgetNotGoodMeter extends StatelessWidget {
     required this.path,
     required this.data,
     required this.user,
+    required this.page,
     required this.lastSavedNum
   });
 
@@ -130,6 +148,7 @@ class ItemWidgetNotGoodMeter extends StatelessWidget {
   final String path;
   final String data;
   final String user;
+  final String page;
   final String lastSavedNum;
   @override
   Widget build(BuildContext context) {
@@ -143,6 +162,15 @@ class ItemWidgetNotGoodMeter extends StatelessWidget {
         ),
         onPressed: () {
           //myReset();
+          switch (page) {
+            case "main":
+              dataStore[0] = data;
+              break;
+            case "owner":
+              dataStore[1] = data;
+              break;
+          }
+
           Navigator.pushReplacementNamed(context, path,
               arguments: ScreenArguments(user, data, lastSavedNum));
         },

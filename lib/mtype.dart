@@ -62,6 +62,7 @@ class _mTypeState extends State<mType> {
             //path: '/yof',
             //'/countpos',
             data: actualOwner == "MG" ? '$argString;${_data.split(",")[index]}' : argString+';'+_data.split(",")[index]+";"+blank+";"+blank+";"+blank, user: argString.split(";")[0],
+            page : "mtype",
             lastSavedNum: "-;-",
           );
         }),

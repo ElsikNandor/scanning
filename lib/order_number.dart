@@ -56,6 +56,7 @@ class _OrderNumberState extends State<OrderNumber> {
       orderC.init();
       constNumText = "";
       _controller.text = "";
+      orderC.isorder.value = false;
       //orderDir.setDir(dataFilePath);
 
     });
@@ -77,9 +78,9 @@ class _OrderNumberState extends State<OrderNumber> {
     actualOwner = ownerMap[args.message.split(";")[1]].toString();
     //storage.addDataFile(dataFilePath, args.message.split(";")[2], args.message.split(";")[1]);
 
-
-
-
+    //print("AO " + actualOwner);
+  //orderC.init();
+    //print("AO2 " + dataStore[1].toString());
     return Scaffold(
         appBar: AppBar(
             title: Text("Megrendelésszám megadása."
@@ -130,7 +131,7 @@ class _OrderNumberState extends State<OrderNumber> {
                                             onPressed: () {
                                               //setState(() {
                                               readMeterData = [];
-                                              orderC.init();
+                                              //orderC.init();
                                               if (_formKey.currentState!.validate()) {
                                                 if( !orderDir.orderDirExists(meterNumber, ownerMap[args.message.split(";")[1]].toString()) ) // rendelésszám meglétének ellenőrzése
                                                     {
@@ -199,6 +200,7 @@ class _OrderNumberState extends State<OrderNumber> {
                                                 if (orderC.isorder
                                                     .value) //|| ownerMap[args.message.split(";")[1]].toString() == "MG")
                                                     {
+
                                                   Navigator.pushReplacementNamed(context, '/constnum',
                                                       arguments: ScreenArguments(userName,
                                                           "${args.message.split(";")[0]};${args.message.split(";")[1]};$meterNumber", "-;-"));

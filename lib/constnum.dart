@@ -42,9 +42,9 @@ class _ConstNumState extends State<ConstNum> {
     print(orderCountGlobal);
 
     orderCountGlobal = rcDataGoodCount + rcDataNotGoodCount;
-    if( actualOwner == "MG") {
-      orderCountGlobal = 1;
-    }
+    /*if( actualOwner == "MG") {
+      orderCountGlobal = 0;
+    }*/
   setState(() {
     //orderCountGlobal = 0;
       constNumText = "";
@@ -120,9 +120,9 @@ class _ConstNumState extends State<ConstNum> {
      setState(() {
       meterController.init();
     });
-
-    print(orderCountGlobal);
-    print(actualOwner);
+meterController.init();
+//    print(orderCountGlobal);
+  //  print(actualOwner);
     return Scaffold(
       appBar: AppBar(
         title: Text("Gyátrási szám beolvasása | Adatrögzítő: ${args.message.split(";")[0]} | Megrendelő: ${args.message.split(";")[1]}"),
@@ -184,19 +184,29 @@ class _ConstNumState extends State<ConstNum> {
                         height: 50,
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            foregroundColor: Theme
+                            /*foregroundColor: Theme
                                 .of(context)
                                 .colorScheme
                                 .onPrimary, backgroundColor: Theme
                                 .of(context)
                                 .colorScheme
                                 .primary,
-                             minimumSize: Size(150, 100),
+                             minimumSize: Size(150, 100),*/
+                            backgroundColor: meterController.checkmeter.value == true
+                                ? Colors.blue
+                                : Colors.grey,
+                            minimumSize: Size(150, 100),
+
                           )
                               .copyWith(
                               elevation: ButtonStyleButton.allOrNull(0.0)
                           ),
                           onPressed: () {
+
+                            if (meterController.checkmeter.value == false) {
+                              return;
+                            }
+
                             if (_formKey.currentState!.validate()) {
 
                               switch(ownerMap[owner])
@@ -314,7 +324,7 @@ class _ConstNumState extends State<ConstNum> {
       ),
       SizedBox(
           width: (MediaQuery.of(context).size.width-200)/3-200,
-          child: myListElements(title: "Darabszám:\n", content: "${readMeterData .length} db")
+          child: myListElements(title: "Darabszám:\n", content: actualOwner == "MG" ? "-" : "${readMeterData .length} db")
       ),
       SizedBox(
         height: 10,
@@ -328,7 +338,7 @@ class _ConstNumState extends State<ConstNum> {
       ),
       SizedBox(
           width: (MediaQuery.of(context).size.width-200)/3-200,
-          child: myListElements(title: "Fennmaradó:\n", content: "${readMeterData .length-orderCountGlobal} db")
+          child: myListElements(title: "Fennmaradó:\n", content: actualOwner == "MG" ? "-" : "${readMeterData .length-orderCountGlobal} db")
       ),
     ],
   )
