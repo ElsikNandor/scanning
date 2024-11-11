@@ -111,19 +111,19 @@ class ItemWidget extends StatelessWidget {
             //myReset();
             switch (page) {
               case "main":
-                print("main");
+                //print("main");
                 dataStore[0] = data;
 
                 break;
               case "owner":
-                print("main");
+              //  print("main");
                 dataStore[1] = data;
                 //dataStore.update("Owner", (value) => data);
                 break;
             }
 
-            print("ItemWpress: " + data);
-            print("DTS " + dataStore.toString());
+            //print("ItemWpress: " + data);
+            //print("DTS " + dataStore.toString());
             Navigator.pushReplacementNamed(context, path,
                 arguments: ScreenArguments(user, data, lastSavedNum));
           },

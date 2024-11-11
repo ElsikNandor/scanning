@@ -232,7 +232,8 @@ class _OrderNumberState extends State<OrderNumber> {
 
 showSnackBarFun(context) {
   SnackBar snackBar = SnackBar(
-    content: const Text('A megadott MEGRENDELÉSSZÁM nem található vagy rossz SZOLGÁLTATÓ lett megadva!',
+      duration: const Duration(seconds: 1),
+    content: const Text('A megadott megrendelésszám nem található vagy rossz szolgáltató lett megadva!',
         style: TextStyle(fontSize: 20)),
     backgroundColor: Colors.red,
     dismissDirection: DismissDirection.up,

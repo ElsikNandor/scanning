@@ -215,20 +215,20 @@ meterController.init();
                                   if( meterNumber.length == 18) {
                                     meterNumber = meterNumber.substring(2);
                                     meterNumber = meterNumber.substring(0,8);
-                                    print("METER");
-                                    print(meterNumber);
+                                    //print("METER");
+                                    //print(meterNumber);
                                   }
                                   break;
                                 case "ED" :
                                   if( meterNumber.length == 14) {
                                     meterNumber = meterNumber.substring(meterNumber.length-8);
-                                    print("METER");
-                                    print(meterNumber);
+                                    //print("METER");
+                                    //print(meterNumber);
                                   }
                                   else
                                     {
-                                      print("METER ELSE");
-                                      print(meterNumber);
+                                      //print("METER ELSE");
+                                      //print(meterNumber);
                                     }
                                   break;
                                 case "EON" :
@@ -236,9 +236,9 @@ meterController.init();
                                     meterNumber = meterNumber.substring(meterNumber.length-8);
                                   }
                                   break;
-                                case "MG" :
-                                  print("MG meter number");
-                                  print(meterNumber);
+                                case "EGY" :
+                                  print("EGY meter number");
+                                  //print(meterNumber);
                                   break;
                               }
 
@@ -324,7 +324,7 @@ meterController.init();
       ),
       SizedBox(
           width: (MediaQuery.of(context).size.width-200)/3-200,
-          child: myListElements(title: "Darabszám:\n", content: actualOwner == "MG" ? "-" : "${readMeterData .length} db")
+          child: myListElements(title: "Darabszám:\n", content: actualOwner == "OT" ? "-" : "${readMeterData .length} db")
       ),
       SizedBox(
         height: 10,
@@ -338,7 +338,7 @@ meterController.init();
       ),
       SizedBox(
           width: (MediaQuery.of(context).size.width-200)/3-200,
-          child: myListElements(title: "Fennmaradó:\n", content: actualOwner == "MG" ? "-" : "${readMeterData .length-orderCountGlobal} db")
+          child: myListElements(title: "Fennmaradó:\n", content: actualOwner == "OT" ? "-" : "${readMeterData .length-orderCountGlobal} db")
       ),
     ],
   )

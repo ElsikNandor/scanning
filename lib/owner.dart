@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show SystemChannels, rootBundle;
+import 'package:scanning/constnum.dart';
+import 'package:scanning/main.dart';
 import 'dart:async';
 import 'screenargument.dart';
 import 'myclasses.dart';
@@ -16,17 +18,17 @@ class mOwner extends StatefulWidget {
 
 class _mOwnerState extends State<mOwner> {
   String _data = "";
-  Future<void> _loadData() async {
+/*  Future<void> _loadData() async {
     final loadedData = await rootBundle.loadString('assets/owners.txt');
     setState(() {
       _data = loadedData;
     });
-  }
+  }*/
   @override
   void initState() {
     SystemChannels.textInput.invokeMethod('TextInput.hide');
     super.initState();
-    _loadData();
+    //_loadData();
     setState(() {
 
     });
@@ -36,7 +38,8 @@ class _mOwnerState extends State<mOwner> {
   @override
   Widget build(BuildContext context) {
     final args = ModalRoute.of(context)!.settings.arguments as ScreenArguments;
-    int metersCount = _data.split(",").length.toInt();
+    //int metersCount = _data.split(",").length.toInt();
+    int metersCount = ownersList.length;
     argString = args.message;
     return Scaffold(
       appBar: AppBar(
@@ -54,9 +57,10 @@ class _mOwnerState extends State<mOwner> {
         crossAxisCount: 5,
         children:
         List.generate(metersCount, (index) {
-          return ItemWidget(text:  _data.split(",")[index],
+          return ItemWidget(text: ownersList[index].toString(),
+          //_data.split(",")[index],
               path: '/order_number',
-              data: '$argString;${_data.split(",")[index]}', user: argString.split(";")[0],
+              data: '$argString;${ownersList[index].toString()}', user: argString.split(";")[0],
             page : "owner",
               lastSavedNum: "-;-",
           );

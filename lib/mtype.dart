@@ -37,7 +37,9 @@ class _mTypeState extends State<mType> {
   @override
   Widget build(BuildContext context) {
     final args = ModalRoute.of(context)!.settings.arguments as ScreenArguments;
-    int metersCount = _data.split(",").length.toInt();
+    int metersCount = _data.split(";").length.toInt();
+    //print("count: " + metersCount.toString());
+    //print(_data);
     argString = args.message;
     String blank = "-";
     return Scaffold(
@@ -47,27 +49,33 @@ class _mTypeState extends State<mType> {
         myMenu(username: argString.split(";")[0], message: argString, mlogin: 0)
         ]
       ),
-      body: Scrollbar( child:
+      body: ScrollbarTheme(
+        //thumbVisibility: true,
+        //interactive: true,
+        //controller: ScrollController(),
+        data: ScrollbarTheme.of(context).copyWith(thumbVisibility: MaterialStateProperty.all(true)),
+        child:
       GridView.count(
         primary: false,
-        padding: const EdgeInsets.all(50),
-        mainAxisSpacing: 20,
-        crossAxisSpacing: 20,
-        crossAxisCount: 5,
+        padding: const EdgeInsets.all(20),
+        mainAxisSpacing: 10,
+        crossAxisSpacing: 10,
+        crossAxisCount: 8,
         children:
         List.generate(metersCount, (index) {
-          return ItemWidget(text:  _data.split(",")[index],
+          return ItemWidget(text:  _data.split(";")[index],
             //path: _data.split(",")[index] == "Metrix" ? '/gearpairs_metrix1' : '/gearpairs',
-            path: actualOwner == "MG" ?  '/countpos' : '/readingData' ,
+            path: actualOwner == "MG" ?  '/countpos' : '/readingData' , // MG át lett nevezve OT-re nem kell az MG feltétel 2024.11.11
             //path: '/yof',
             //'/countpos',
-            data: actualOwner == "MG" ? '$argString;${_data.split(",")[index]}' : argString+';'+_data.split(",")[index]+";"+blank+";"+blank+";"+blank, user: argString.split(";")[0],
+            data: actualOwner == "MG" ? '$argString;${_data.split(";")[index]}' : argString+';'+_data.split(";")[index]+";"+blank+";"+blank+";"+blank, user: argString.split(";")[0],
             page : "mtype",
             lastSavedNum: "-;-",
           );
         }),
+
       ),
-      ),
+    )
     );
   }
 }

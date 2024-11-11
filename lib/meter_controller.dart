@@ -15,9 +15,9 @@ class MeterController {
   bool isMeter(int result) {
     print("metercontroller");
 
-    if(actualOwner == "MG")
+    if(actualOwner == "OT")
       {
-        print("metercontroller MG");
+        print("metercontroller OT");
         ismeter.value = false;
         checkmeter.value = false;
         return false;

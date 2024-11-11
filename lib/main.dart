@@ -54,7 +54,15 @@ Map<String, String> ownerMap = {"Főgáz" : "FG",
   "Égáz" : "ED",
   "EON" : "EON",
   "Tigáz" : "4",
-  "Magáz" : "MG"};
+  "Egyéb" : "OT"};
+
+List<String> ownersList = [
+  "Főgáz",
+  "Égáz",
+  "EON" ,
+  "Tigáz" ,
+  "Egyéb"
+];
 
 List<String> dataStore = [
   "User",
@@ -89,7 +97,7 @@ class MyApp extends State<MyApp_prev> {
   }
 
   void setFullScreen(bool isFullScreen) {
-    FullScreenWindow.setFullScreen(isFullScreen);
+    //FullScreenWindow.setFullScreen(isFullScreen);
   }
   void showScreenSize(BuildContext context) async {
     Size logicalSize = await FullScreenWindow.getScreenSize(context);
