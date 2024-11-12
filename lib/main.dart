@@ -97,7 +97,7 @@ class MyApp extends State<MyApp_prev> {
   }
 
   void setFullScreen(bool isFullScreen) {
-    //FullScreenWindow.setFullScreen(isFullScreen);
+    FullScreenWindow.setFullScreen(isFullScreen);
   }
   void showScreenSize(BuildContext context) async {
     Size logicalSize = await FullScreenWindow.getScreenSize(context);

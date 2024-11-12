@@ -291,7 +291,7 @@ meterController.init();
                                 Navigator.pushReplacementNamed(
                                     context, '/mtype',
                                     arguments: ScreenArguments(userName,
-                                        "${args.message.split(";")[0]};${args.message.split(";")[1]};${args.message.split(";")[2]};$meterNumber", ""));
+                                        "${args.message.split(";")[0]};${args.message.split(";")[1]};${args.message.split(";")[2]};$meterNumber*", ""));
                               }
                             });
                           },
