@@ -266,7 +266,7 @@ class _HomePageState extends State<HomePage> {
     double boxWith = MediaQuery.of(context).size.width-400;
     return Scaffold(
       appBar: AppBar(
-        title: Text("Adatrögzítő választó"),
+        title: Text("Verzió: 2024.11.13. Adatrögzítő választó"),
         actions: [myMenu(username : "", message: "", mlogin: 1,)],
       ),
       body:
