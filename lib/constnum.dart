@@ -218,6 +218,11 @@ meterController.init();
                                     //print("METER");
                                     //print(meterNumber);
                                   }
+                                  if( meterNumber.length == 14) {
+                                    meterNumber = meterNumber.substring(meterNumber.length-8);
+                                    //print("METER");
+                                    //print(meterNumber);
+                                  }
                                   break;
                                 case "ED" :
                                   if( meterNumber.length == 14) {
