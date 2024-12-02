@@ -19,7 +19,7 @@ List<String> xx = [];
 TextEditingController _controller = TextEditingController();
 TextEditingController _lastSaveNum = TextEditingController();
 Map<String, String> rowsData = {"-" : "-"};
-int orderNumberAttempt = 0;
+int orderNumberAttempt = 1;
 
 int count1 = 0;
 int count2 = 0;
@@ -67,7 +67,7 @@ class _ConstNumState extends State<ConstNum> {
     userName = args.message.split(";")[0];
 
     print("OWNER $owner");
-
+    print(args);
     if( rowsData.containsKey("error") )
       {
         rowsData.remove("error");

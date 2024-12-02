@@ -251,7 +251,7 @@ class ownersDataConverter
 
       }
     }
-    if( owner == "OT" ) {
+    if( owner == "MG" ) {
       //print("EON Converter");
       try {
         rowsData["sort_prod_num"] = "null";

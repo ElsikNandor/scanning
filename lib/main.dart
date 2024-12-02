@@ -50,7 +50,8 @@ MeterController meterController = MeterController();
 List<String> readMeterData = ["-"];
 bool orderCheck = false;
 String saveDirName = "";
-Map<String, String> ownerMap = {"Főgáz" : "FG",
+Map<String, String> ownerMap = {
+  "Főgáz" : "FG",
   "Égáz" : "ED",
   "EON" : "EON",
   "Tigáz" : "4",

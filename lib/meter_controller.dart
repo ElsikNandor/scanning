@@ -23,7 +23,7 @@ class MeterController {
         return false;
       }
 
-    if (result == 0) {
+    if (result < 1) {
       ismeter.value = true;
       checkmeter.value = true;
       return true;
