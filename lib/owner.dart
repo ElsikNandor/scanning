@@ -37,15 +37,16 @@ class _mOwnerState extends State<mOwner> {
 
   @override
   Widget build(BuildContext context) {
-    final args = ModalRoute.of(context)!.settings.arguments as ScreenArguments;
+    //final args = ModalRoute.of(context)!.settings.arguments as ScreenArguments;
     //int metersCount = _data.split(",").length.toInt();
     int metersCount = ownersList.length;
-    argString = args.message;
+    //argString = args.message;
+    print("reading: " + readMeterDataMap.toString());
     return Scaffold(
       appBar: AppBar(
-          title: Text("Megrendelő kiválasztása | Adatrögzítő: ${args.message.split(";")[0]}"),
+          title: Text("Megrendelő kiválasztása | Adatrögzítő: ${readMeterDataMap['user'].toString()}"),
           actions: <Widget>[
-            myMenu(username: argString.split(";")[0], message: argString, mlogin: 1)
+            myMenu(username: readMeterDataMap['user'].toString(), message: argString, mlogin: 1)
           ]
       ),
       body: Scrollbar( child:
@@ -60,9 +61,10 @@ class _mOwnerState extends State<mOwner> {
           return ItemWidget(text: ownersList[index].toString(),
           //_data.split(",")[index],
               path: '/order_number',
-              data: '$argString;${ownersList[index].toString()}', user: argString.split(";")[0],
+              data: '${ownersList[index].toString()}', user: readMeterDataMap['user'].toString(),
+              //data: '$argString;${ownersList[index].toString()}', user: argString.split(";")[0],
             page : "owner",
-              lastSavedNum: "-;-",
+              lastSavedNum: "-",
           );
         }),
       ),

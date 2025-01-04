@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:scanning/main.dart';
 import 'screenargument.dart';
 import 'myclasses.dart';
 final _formKey = GlobalKey<FormState>();
@@ -33,15 +34,15 @@ class _CountPosState extends State<CountPos> {
 
   @override
   Widget build(BuildContext context) {
-    final args = ModalRoute.of(context)!.settings.arguments as ScreenArguments;
-    userName = args.message;
+    //final args = ModalRoute.of(context)!.settings.arguments as ScreenArguments;
+    userName = readMeterDataMap["user"].toString();
     String sendMessage = "";
     String blank = "-";
     return Scaffold(
         appBar: AppBar(
-            title: Text("Számláló állás beírása | Adatrögzítő: ${args.message.split(";")[0]} | Megrendelő: ${args.message.split(";")[1]}"),
+            title: Text("Számláló állás beírása | Adatrögzítő: ${userName} | Megrendelő: ${ readMeterDataMap["owner"]  }"),
             actions: <Widget>[
-              myMenu( username: userName, message: args.message, mlogin: 0,)]
+              myMenu( username: userName, message: userName, mlogin: 0,)]
         ),
         body: SingleChildScrollView(
             child:
@@ -72,8 +73,10 @@ class _CountPosState extends State<CountPos> {
                               onPressed: () {
                                 setState(() {
                                   if (_formKey.currentState!.validate()) {
-                                        Navigator.pushReplacementNamed(context, '/yof',
-                                            arguments: ScreenArguments(userName, "$userName;$meterNumber", "") );
+
+                                    readMeterDataMap.addEntries({"countPos" : meterNumber.toString()}.entries);
+                                        Navigator.pushReplacementNamed(context, '/readingData');
+                                          //  arguments: ScreenArguments(userName, "$userName;$meterNumber", "") );
                                     /*Navigator.pushReplacementNamed(context, '/yof',
                                         arguments: ScreenArguments(userName, userName+";"+meterNumber, "") );
 */

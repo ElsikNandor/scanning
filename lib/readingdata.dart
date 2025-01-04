@@ -66,10 +66,12 @@ class _readingDataState extends State<readingData> {
 
   @override
   Widget build(BuildContext context) {
-    final args = ModalRoute.of(context)!.settings.arguments as ScreenArguments;
+    //final args = ModalRoute.of(context)!.settings.arguments as ScreenArguments;
 
     //int metersCount = _data.split(",").length.toInt();
-    argString = args.message;
+    //argString = args.message;
+    //print("ARG: " + argString.toString());
+    print("reading: " + readMeterDataMap.toString());
     final CounterStorage storage = CounterStorage();
     storage.setSaveDirectory(saveDirName);
     String saveStatus = "";
@@ -92,7 +94,7 @@ class _readingDataState extends State<readingData> {
       appBar: AppBar(
         title: Text("Összegzés: $savedate"), //+ " network: " + checknetwork ),
         actions: <Widget>[
-          myMenu(username: argString.split(";")[0], message: argString, mlogin: 0,)
+          myMenu( username: readMeterDataMap['user'].toString(), message: readMeterDataMap['user'].toString(), mlogin: 0),
         ]
       ),
       body:Center(
@@ -110,19 +112,20 @@ class _readingDataState extends State<readingData> {
         children: [
 
           SizedBox(height: 50,),
-          myListElements(title: "Megrendelő:", content: argString.split(";")[1]),
+          myListElements(title: "Megrendelő:", content: readMeterDataMap["owner"].toString()),
           SizedBox(height: 5,),
-          myListElements(title: "Megrendelésszám:", content: argString.split(";")[2]),
+          myListElements(title: "Megrendelésszám:", content: readMeterDataMap["order_number"].toString()),
           SizedBox(height: 5,),
-          myListElements(title: "Gyártási szám:", content: argString.split(";")[3]),
+          myListElements(title: "Gyártási szám rövid:", content: readMeterDataMap["constnum_cut"].toString()),
           SizedBox(height: 5,),
-          myListElements(title: "Típus:", content: argString.split(";")[4]),
+          myListElements(title: "Típus:", content: readMeterDataMap["mtype"].toString()),
            SizedBox(height: 5,),
-          myListElements(title: "Gyártási Év:", content: argString.split(";")[6]),
+          myListElements(title: "Gyártási Év:", content: readMeterDataMap["yof"].toString()),
           SizedBox(height: 5,),
-          myListElements(title: "Számlálóállás:", content: argString.split(";")[5]),
+          myListElements(title: "Számlálóállás:", content: readMeterDataMap['countPos'].toString()),
+          //myListElements(title: "Számlálóállás:", content: argString.split(";")[5]),
           SizedBox(height: 5,),
-          myListElements(title: "Cserekerék:", content: argString.split(";")[6] == "Metrix" ? argString.split(";")[7] : argString.split(";")[7]),
+          myListElements(title: "Cserekerék:", content: "-"),
           SizedBox(height: 5,),
           myListElements(title: "Rögzítés időpontja:", content: savedate),
         ],//+"_" + argString.split(";")[8]+"_" + argString.split(";")[9]
@@ -152,12 +155,14 @@ class _readingDataState extends State<readingData> {
                                   orderNumberAttempt = 0;
                                   rCount = 0;
                               //myReset();
-                                storage.filename = "meterdata_good_${argString.split(";")[2]}";
+                                storage.filename = "meterdata_good_${readMeterDataMap["order_number"]}";
                               //setState(() {
                                 try{
-                                  argString += ";$savedate";
+
+                                  readMeterDataMap.addEntries({"savedate" : savedate}.entries);
                                       //"${today.year}-${today.month}-${today.day}_${today.hour}:${today.minute}:${today.second}";
-                                  storage.writeMeterData(argString);
+                                  storage.writeMeterData(readMeterDataMap);
+
                                   rcDataGoodCount = (rcDataGoodCount.toInt() + 1 );
                                   setState(() {
                                     saveStatus ="Sikeres mentés!";
@@ -190,12 +195,11 @@ class _readingDataState extends State<readingData> {
                                     )
                                 ); //Text(saveStatus +" " + storage.filename)
                               //});
-                              Navigator.pushReplacementNamed(context, "/constnum",
-                                  arguments: ScreenArguments(argString.split(";")[0],
-                                      "${argString.split(";")[0]};${argString.split(";")[1]};${argString.split(";")[2]}",
-                                      "${argString.split(";")[3]};jó"
-                                  )
-                              );
+
+                                  readMeterDataMap.update("lastSaveNum", (value) => readMeterDataMap["constnum"].toString());
+                                  readMeterDataMap.update("lastSaveQuality", (value) => "jó");
+                              Navigator.pushReplacementNamed(context, "/constnum" );
+
                             },
                             label: Text("Jó"),
                           ),
@@ -211,7 +215,8 @@ class _readingDataState extends State<readingData> {
                                     onPressed: () {
                                       orderNumberAttempt = 0;
                                       //storage.filename = "meterdata_notgood_" ;
-                                      argString += ";$savedate";
+                                      //argString += ";$savedate";
+
                                       try{
                                         //storage.writeMeterData(argString);
                                         rcDataNotGoodCount = (rcDataNotGoodCount.toInt() + 1 );
@@ -230,11 +235,9 @@ class _readingDataState extends State<readingData> {
                                           //SnackBar(content: Text(saveText + "Selejt mérők listájába.")));
                                   //    SnackBar(content: Text("Selejt mérő kiválasztva.")));//Text(saveStatus +" " + storage.filename)
                                       //Navigator.pushReplacementNamed(context, "/constnum",
-                                      Navigator.pushReplacementNamed(context, "/notgood_meter",
-                                        //arguments: ScreenArguments(argString.split(";")[0], argString.split(";")[0]+";"+argString.split(";")[1]+";"+argString.split(";")[2],
-                                          //  argString.split(";")[3]+";"+"selejt") );
-                                          arguments: ScreenArguments(argString.split(";")[0], argString,
-                                              "${argString.split(";")[3]};selejt") );
+                                      readMeterDataMap.update("lastSaveQuality", (value) => "selejt");
+                                      Navigator.pushReplacementNamed(context, "/notgood_meter");
+
                                     },
                                     icon: Icon( Icons.restore_from_trash,
                                       size: 24,

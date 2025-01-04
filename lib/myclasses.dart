@@ -113,10 +113,14 @@ class ItemWidget extends StatelessWidget {
               case "main":
                 //print("main");
                 dataStore[0] = data;
-
+                readMeterDataMap.addEntries({"user" : data}.entries);
+                readMeterDataMap.addEntries({"lastSaveNum" : "-"}.entries);
+                readMeterDataMap.addEntries({"lastSaveQuality" : "-"}.entries);
                 break;
-              case "owner":
+              default:
               //  print("main");
+                readMeterDataMap.addEntries({page.toString() : data}.entries);
+                readMeterDataMap.update("lastSaveNum", (value) => lastSavedNum);
                 dataStore[1] = data;
                 //dataStore.update("Owner", (value) => data);
                 break;
@@ -124,8 +128,13 @@ class ItemWidget extends StatelessWidget {
 
             //print("ItemWpress: " + data);
             //print("DTS " + dataStore.toString());
-            Navigator.pushReplacementNamed(context, path,
-                arguments: ScreenArguments(user, data, lastSavedNum));
+
+            //readMeterDataMap = {"" : user};
+
+            Navigator.pushReplacementNamed(context, path);
+
+            //Navigator.pushReplacementNamed(context, path,
+              //  arguments: ScreenArguments(user, data, lastSavedNum));
           },
           child: Text(text),
           )
@@ -398,9 +407,24 @@ class CounterStorage  {
 
   }
 
-  Future<int> writeMeterData(String meterdata) async {
+  Future<int> writeMeterData(Map<String, String> meterdataMap) async {
     final file = await _localFile;
     final safetyS = await _safetyFile;
+
+    String meterdata = "";
+
+    meterdata = meterdataMap["user"].toString()+";"+
+        meterdataMap["owner"].toString()+";"+
+        meterdataMap["order_number"].toString()+";"+
+        meterdataMap["constnum"].toString()+";"+
+        meterdataMap["constnum_cut"].toString()+";"+
+        meterdataMap["mtype"].toString()+";"+
+        meterdataMap["countPos"].toString()+";"+
+        meterdataMap["lastSaveQuality"].toString()+";"+
+        meterdataMap["lastSaveQualityText"].toString()+";"+
+        //meterdataMap["yof"].toString()+";"+
+        meterdataMap["savedate"].toString();
+
     try{
 
       if ( safetyS.existsSync() == true ){
@@ -468,5 +492,81 @@ class DateToSave
         return "${today.year}-${today.month}-${today.day}_${today.hour}:${today
             .minute}:${today.second}";
       }
+  }
+}
+
+class meterDataClass  {
+  Map<String, String> meterDataMap = {};
+
+  //@override
+  Map<String, String> meterDataMapInit(){
+    this.meterDataMap['user'] = '';
+    this.meterDataMap['owner'] = '';
+    this.meterDataMap['order_number'] = '';
+    this.meterDataMap['constnum'] = '';
+    this.meterDataMap['constnum_cut'] = '';
+    this.meterDataMap['mtype'] = '';
+    this.meterDataMap['countPos'] = '';
+    this.meterDataMap['lastSaveQuality'] = '';
+    this.meterDataMap['lastSaveQualityText'] = '';
+    this.meterDataMap['lastSaveNum'] = '';
+    this.meterDataMap['yof'] = '';
+    this.meterDataMap['savedate'] = '';
+
+    return this.meterDataMap;
+  }
+
+  bool resetDataMapAfterQuality(){
+
+    //readMeterDataMap['user'] = '';
+    //readMeterDataMap['owner'] = '';
+    readMeterDataMap['order_number'] = '';
+    readMeterDataMap['constnum'] = '';
+    readMeterDataMap['constnum_cut'] = '';
+    readMeterDataMap['mtype'] = '';
+    readMeterDataMap['countPos'] = '';
+    readMeterDataMap['lastSaveQuality'] = '';
+    readMeterDataMap['lastSaveQualityText'] = '';
+    readMeterDataMap['lastSaveNum'] = '';
+    readMeterDataMap['yof'] = '';
+    readMeterDataMap['savedate'] = '';
+
+    return true;
+  }
+
+  bool resetDataMapAll(){
+
+    readMeterDataMap['user'] = '';
+    readMeterDataMap['owner'] = '';
+    readMeterDataMap['order_number'] = '';
+    readMeterDataMap['constnum'] = '';
+    readMeterDataMap['constnum_cut'] = '';
+    readMeterDataMap['mtype'] = '';
+    readMeterDataMap['countPos'] = '';
+    readMeterDataMap['lastSaveQuality'] = '';
+    readMeterDataMap['lastSaveQualityText'] = '';
+    readMeterDataMap['lastSaveNum'] = '';
+    readMeterDataMap['yof'] = '';
+    readMeterDataMap['savedate'] = '';
+
+    return true;
+  }
+
+  void setUser(String user)
+  {
+    readMeterDataMap.update("user", (value) => user);
+  }
+
+  String getUser(){
+    return readMeterDataMap['user'].toString();
+  }
+
+  void setOrderNumber(String ordernumber)
+  {
+    readMeterDataMap.update("order_number", (value) => ordernumber);
+  }
+
+  String getOrderNumber(){
+    return readMeterDataMap['order_number'].toString();
   }
 }

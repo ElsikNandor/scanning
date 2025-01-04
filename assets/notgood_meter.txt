@@ -1,1 +1,1 @@
-horpadt,rozsdás,zsíros/koszos,manipulált,évjárat miatt
+horpadt;rozsdás;zsíros/koszos;manipulált;évjárat miatt

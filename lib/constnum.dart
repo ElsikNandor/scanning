@@ -10,7 +10,10 @@ import 'alert_box.dart';
 final _formKey = GlobalKey<FormState>();
 String userName = "Username";
 String lastSavedNum = "";
+String lastSavedQuality = "";
+
 String meterNumber = "";
+String meterNumber_cut = "";
 String constNumText = "";
 String orderNumber = "";
 String owner = "";
@@ -58,16 +61,20 @@ class _ConstNumState extends State<ConstNum> {
 
   @override
   Widget build(BuildContext context) {
-    final args = ModalRoute.of(context)!.settings.arguments as ScreenArguments;
+    //final args = ModalRoute.of(context)!.settings.arguments as ScreenArguments;
 
-    lastSavedNum = args.lastSavedNum;
+    lastSavedNum = readMeterDataMap['lastSaveNum'].toString(); //args.lastSavedNum;
+    lastSavedQuality = readMeterDataMap['lastSaveQuality'].toString(); //args.lastSavedNum;
 
-    orderNumber = args.message.split(";")[2];
-    owner = args.message.split(";")[1];
-    userName = args.message.split(";")[0];
+    orderNumber = readMeterDataMap['order_number'].toString();
+    owner = readMeterDataMap['owner'].toString();
+    userName = readMeterDataMap['user'].toString();
+    print("reading const: " + readMeterDataMap.toString());
 
-    print("OWNER $owner");
-    print(args);
+    mDataClass.resetDataMapAfterQuality();
+    //print("OWNER $owner");
+    //print(args);
+
     if( rowsData.containsKey("error") )
       {
         rowsData.remove("error");
@@ -92,7 +99,8 @@ class _ConstNumState extends State<ConstNum> {
         else
           {
             try{
-              //print(element.split(";")[0]);
+             // print(element.split(";")[0]);
+              //print("s" + sortProdNum);
               return element.split(";")[0] == sortProdNum;
             }
             catch (e)
@@ -122,12 +130,13 @@ class _ConstNumState extends State<ConstNum> {
     });
 meterController.init();
 //    print(orderCountGlobal);
+
   //  print(actualOwner);
     return Scaffold(
       appBar: AppBar(
-        title: Text("Gyátrási szám beolvasása | Adatrögzítő: ${args.message.split(";")[0]} | Megrendelő: ${args.message.split(";")[1]}"),
+        title: Text("Gyátrási szám beolvasása | Adatrögzítő: ${userName} | Megrendelő: ${owner}"),
         actions: <Widget>[
-          myMenu( username: userName, message: args.message, mlogin: 0),]
+          myMenu( username: userName, message: readMeterDataMap['user'].toString(), mlogin: 0),]
       ),
         body:Center(
           child:
@@ -149,14 +158,14 @@ meterController.init();
               children: [
                 SizedBox(
                   width: (MediaQuery.of(context).size.width-200)/3-100,
-                  child: myListElements(title: "Legutóbb bevitt gyári szám:\n", content: _lastSaveNum.text.isEmpty == true ? lastSavedNum.split(";")[0] : _lastSaveNum.text.split(";")[0] )
+                  child: myListElements(title: "Legutóbb bevitt gyári szám:\n", content: lastSavedNum )
                 ),
                 SizedBox(
                   height: 10,
                 ),
                 SizedBox(
                     width: (MediaQuery.of(context).size.width-200)/3-100,
-                    child: myListElements(title: "Legutóbbi minősítés:\n", content: _lastSaveNum.text.isEmpty == true ? lastSavedNum.split(";")[1] : _lastSaveNum.text.split(";")[1])
+                    child: myListElements(title: "Legutóbbi minősítés:\n", content:  lastSavedQuality )
                 )
 
               ],
@@ -213,41 +222,54 @@ meterController.init();
                                   {
                                 case "FG" :
                                   if( meterNumber.length == 18) {
-                                    meterNumber = meterNumber.substring(2);
-                                    meterNumber = meterNumber.substring(0,8);
+                                    meterNumber_cut = meterNumber.substring(2);
+                                    meterNumber_cut = meterNumber.substring(0,8);
                                     //print("METER");
-                                    //print(meterNumber);
+                                    print(meterNumber);
                                   }
                                   if( meterNumber.length == 14) {
-                                    meterNumber = meterNumber.substring(meterNumber.length-8);
-                                    //print("METER");
-                                    //print(meterNumber);
-                                  }
-                                  break;
-                                case "ED" :
-                                  if( meterNumber.length == 14) {
-                                    meterNumber = meterNumber.substring(meterNumber.length-8);
+                                    meterNumber_cut = meterNumber.substring(meterNumber.length-8);
                                     //print("METER");
                                     //print(meterNumber);
                                   }
                                   else
+                                  {
+                                    //print("METER ELSE");
+                                    print("meter rövidFG : " +meterNumber);
+                                    meterNumber_cut = meterNumber;
+                                  }
+                                  break;
+                                case "ED" :
+                                  if( meterNumber.length == 14) {
+                                    meterNumber_cut = meterNumber.substring(meterNumber.length-8);
+                                    //print("METER");
+                                    print(meterNumber);
+                                  }
+                                  else
                                     {
                                       //print("METER ELSE");
-                                      //print(meterNumber);
+                                     print("meter rövid: " +meterNumber);
+                                     meterNumber_cut = meterNumber;
                                     }
                                   break;
                                 case "EON" :
                                   if( meterNumber.length == 15) {
-                                    meterNumber = meterNumber.substring(meterNumber.length-8);
+                                    meterNumber_cut = meterNumber.substring(meterNumber.length-8);
+                                  }
+                                  else
+                                  {
+                                    //print("METER ELSE");
+                                    print("meter rövid: " +meterNumber);
+                                    meterNumber_cut = meterNumber;
                                   }
                                   break;
-                                case "EGY" :
-                                  print("EGY meter number");
-                                  //print(meterNumber);
+                                case "OT" :
+                                  print("OT meter number");
+                                  meterNumber = meterNumber_cut;
                                   break;
                               }
 
-                              findWhere(readMeterData, meterNumber);
+                              findWhere(readMeterData, meterNumber_cut);
 
                               setState(() {
                                 meterController.init();
@@ -259,10 +281,12 @@ meterController.init();
                               ).then((value) {
                                     //print(orderNumberAttempt);
                                 if (value == "true") {
+                                  readMeterDataMap.addEntries({"constnum" : meterNumber}.entries);
+                                  readMeterDataMap.addEntries({"constnum_cut" : meterNumber_cut }.entries);
                                   Navigator.pushReplacementNamed(
-                                      context, "/readingData",
-                                      arguments: ScreenArguments(userName,
-                                          "${args.message};$meterNumber;-;-;-;-;-;-", ""));
+                                      context, "/countpos");
+                                      //arguments: ScreenArguments(userName,
+                                        //  "${args.message};$meterNumber_cut;-;-;-;-;-;-", ""));
                                 }
                               });
                             }
@@ -293,10 +317,12 @@ meterController.init();
                             }
                             setState(() {
                               if (_formKey.currentState!.validate()) {
+                                readMeterDataMap.addEntries({"constnum" : meterNumber}.entries);
+                                readMeterDataMap.addEntries({"constnum_cut" : meterNumber }.entries);
                                 Navigator.pushReplacementNamed(
-                                    context, '/mtype',
-                                    arguments: ScreenArguments(userName,
-                                        "${args.message.split(";")[0]};${args.message.split(";")[1]};${args.message.split(";")[2]};$meterNumber*", ""));
+                                    context, '/mtype');
+                                    //arguments: ScreenArguments(userName,
+                                        //"${args.message.split(";")[0]};${args.message.split(";")[1]};${args.message.split(";")[2]};$meterNumber*", ""));
                               }
                             });
                           },

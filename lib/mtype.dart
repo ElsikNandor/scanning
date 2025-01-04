@@ -4,6 +4,7 @@ import 'package:scanning/order_number.dart';
 import 'dart:async';
 import 'screenargument.dart';
 import 'myclasses.dart';
+import 'main.dart';
 
 final _formKey = GlobalKey<FormState>();
 String argString = "Username";
@@ -17,6 +18,7 @@ class mType extends StatefulWidget {
 
 class _mTypeState extends State<mType> {
   String _data = "";
+
   Future<void> _loadData() async {
     final loadedData = await rootBundle.loadString('assets/metertype.txt');
     setState(() {
@@ -36,15 +38,16 @@ class _mTypeState extends State<mType> {
 
   @override
   Widget build(BuildContext context) {
-    final args = ModalRoute.of(context)!.settings.arguments as ScreenArguments;
+    //final args = ModalRoute.of(context)!.settings.arguments as ScreenArguments;
     int metersCount = _data.split(";").length.toInt();
     //print("count: " + metersCount.toString());
     //print(_data);
-    argString = args.message;
+  print("reading: " + readMeterDataMap.toString());
+    //argString = args.message;
     String blank = "-";
     return Scaffold(
       appBar: AppBar(
-        title: Text("Típus kiválasztása | Adatrögzítő: ${args.message.split(";")[0]} | Megrendelő: ${args.message.split(";")[1]}"),
+        title: Text("Típus kiválasztása | Adatrögzítő: ${readMeterDataMap["user"].toString() } | Megrendelő: ${ readMeterDataMap["owner"] }"),
         actions: <Widget>[
         myMenu(username: argString.split(";")[0], message: argString, mlogin: 0)
         ]
@@ -65,12 +68,14 @@ class _mTypeState extends State<mType> {
         List.generate(metersCount, (index) {
           return ItemWidget(text:  _data.split(";")[index],
             //path: _data.split(",")[index] == "Metrix" ? '/gearpairs_metrix1' : '/gearpairs',
-            path: actualOwner == "MG" ?  '/countpos' : '/readingData' , // MG át lett nevezve OT-re nem kell az MG feltétel 2024.11.11
+            path: actualOwner == "MG" ?  '/countpos' : '/countpos' , // MG át lett nevezve OT-re nem kell az MG feltétel 2024.11.11
             //path: '/yof',
             //'/countpos',
-            data: actualOwner == "MG" ? '$argString;${_data.split(";")[index]}' : argString+';'+_data.split(";")[index]+";"+blank+";"+blank+";"+blank, user: argString.split(";")[0],
+            data: _data.split(";")[index] ,
+            user: readMeterDataMap['user'].toString(),
+            //data: actualOwner == "MG" ? '$argString;${_data.split(";")[index]}' : argString+';'+_data.split(";")[index]+";"+blank+";"+blank+";"+blank, user: argString.split(";")[0],
             page : "mtype",
-            lastSavedNum: "-;-",
+            lastSavedNum: "-",
           );
         }),
 

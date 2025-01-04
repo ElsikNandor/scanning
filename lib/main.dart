@@ -48,6 +48,7 @@ OrderController orderC = OrderController();
 MeterController meterController = MeterController();
 //dataFile = ""
 List<String> readMeterData = ["-"];
+Map<String, String> readMeterDataMap = {};
 bool orderCheck = false;
 String saveDirName = "";
 Map<String, String> ownerMap = {
@@ -69,6 +70,8 @@ List<String> dataStore = [
   "User",
   "Owner"
 ];
+
+meterDataClass mDataClass = new meterDataClass();
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -98,7 +101,7 @@ class MyApp extends State<MyApp_prev> {
   }
 
   void setFullScreen(bool isFullScreen) {
-    FullScreenWindow.setFullScreen(isFullScreen);
+    //FullScreenWindow.setFullScreen(isFullScreen);
   }
   void showScreenSize(BuildContext context) async {
     Size logicalSize = await FullScreenWindow.getScreenSize(context);
@@ -265,6 +268,19 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     int nameCount = _data.split(",").length.toInt();
     double boxWith = MediaQuery.of(context).size.width-400;
+    /*readMeterDataMap['user'] = '';
+    readMeterDataMap['owner'] = '';
+    readMeterDataMap['order_number'] = '';
+    readMeterDataMap['constnum'] = '';
+    readMeterDataMap['constnum_cut'] = '';
+    readMeterDataMap['mtype'] = '';
+    readMeterDataMap['countPos'] = '';
+    readMeterDataMap['lastSaveQuality'] = '';
+    readMeterDataMap['lastSaveQualityText'] = '';
+    readMeterDataMap['lastSaveNum'] = '';
+    readMeterDataMap['yof'] = '';
+*/
+  mDataClass.resetDataMapAll();
     return Scaffold(
       appBar: AppBar(
         title: Text("Verzió: 2024.11.13. Adatrögzítő választó"),
@@ -297,7 +313,8 @@ class _HomePageState extends State<HomePage> {
                    itemBuilder: (context, index){
                      return ItemWidget(text:  _data.split(",")[index],
                        path: '/owners',
-                       data: _data.split(",")[index], user: _data.split(",")[index],
+                       data: _data.split(",")[index],
+                       user: _data.split(",")[index],
                        page: "main",
                        lastSavedNum: "",
                      );

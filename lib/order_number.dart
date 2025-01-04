@@ -12,6 +12,7 @@ String userName = "Username";
 String meterNumber = "";
 String constNumText = "";
 String actualOwner = "";
+String readDataTmp = "1";
 //String dataFilePath = "C:/orders/";
 
 
@@ -73,11 +74,12 @@ class _OrderNumberState extends State<OrderNumber> {
 
 
   Widget build(BuildContext context) {
-    final args = ModalRoute.of(context)!.settings.arguments as ScreenArguments;
-    userName = args.message;
-    actualOwner = ownerMap[args.message.split(";")[1]].toString();
+    //final args = ModalRoute.of(context)!.settings.arguments as ScreenArguments;
+    //userName = args.message;
+    //actualOwner = ownerMap[args.message.split(";")[1]].toString();
     //storage.addDataFile(dataFilePath, args.message.split(";")[2], args.message.split(";")[1]);
-
+    print("reading: " + readMeterDataMap.toString());
+    owner = readMeterDataMap["owner"].toString();
     //print("AO " + actualOwner);
   //orderC.init();
     //print("AO2 " + dataStore[1].toString());
@@ -88,7 +90,7 @@ class _OrderNumberState extends State<OrderNumber> {
                 //+ " | Megrendelő: " + args.message.split(";")[1]
                ),
             actions: <Widget>[
-              myMenu( username: userName, message: args.message, mlogin: 1,)]
+              myMenu( username: readMeterDataMap['user'].toString(), message: readMeterDataMap['owners'].toString(), mlogin: 1,)]
         ),
         body: SingleChildScrollView(
             child:
@@ -133,7 +135,9 @@ class _OrderNumberState extends State<OrderNumber> {
                                               readMeterData = [];
                                               //orderC.init();
                                               if (_formKey.currentState!.validate()) {
-                                                if( !orderDir.orderDirExists(meterNumber, ownerMap[args.message.split(";")[1]].toString()) ) // rendelésszám meglétének ellenőrzése
+                                                print("OWNER: " + readMeterDataMap["owner"].toString());
+                                                if( !orderDir.orderDirExists(meterNumber, ownerMap[ owner ].toString()) ) // rendelésszám meglétének ellenőrzése
+                                                //if( !orderDir.orderDirExists(meterNumber, ownerMap[ readDataTmp.toString() ]) ) // rendelésszám meglétének ellenőrzése
                                                     {
 
                                                   showSnackBarFun(context);
@@ -141,11 +145,11 @@ class _OrderNumberState extends State<OrderNumber> {
                                                 }
                                                 rsDataClassGood.addDataFile(saveDirName, meterNumber, true, ownerMap[owner].toString());
                                                 rsDataClassNotGood.addDataFile(saveDirName, meterNumber, false, ownerMap[owner].toString());
-                                                widget.storage.addDataFile(dataFilePath, meterNumber, ownerMap[args.message.split(";")[1]].toString());
+                                                widget.storage.addDataFile(dataFilePath, meterNumber, ownerMap[owner].toString());
                                                 print(dataFilePath);
                                                 widget.storage.readFile().then((value) {
                                                   setState(() {
-                                                    print(value);
+                                                    //print(value); //kiirja a fájl tartalmát
                                                     readMeterData = value;
                                                     orderC.init();
                                                   });
@@ -200,10 +204,11 @@ class _OrderNumberState extends State<OrderNumber> {
                                                 if (orderC.isorder
                                                     .value) //|| ownerMap[args.message.split(";")[1]].toString() == "MG")
                                                     {
-
-                                                  Navigator.pushReplacementNamed(context, '/constnum',
-                                                      arguments: ScreenArguments(userName,
-                                                          "${args.message.split(";")[0]};${args.message.split(";")[1]};$meterNumber", "-;-"));
+                                                  //readMeterDataMap.addEntries({"order_number" : meterNumber.toString()}.entries);
+                                                  mDataClass.setOrderNumber(meterNumber.toString());
+                                                  Navigator.pushReplacementNamed(context, '/constnum');
+                                                      //arguments: ScreenArguments(userName,
+                                                        //  "${args.message.split(";")[0]};${args.message.split(";")[1]};$meterNumber", "-;-"));
                                                 }
                                               }
                                             },

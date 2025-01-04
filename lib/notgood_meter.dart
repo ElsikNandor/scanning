@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show SystemChannels, rootBundle;
+import 'package:scanning/main.dart';
 import 'dart:async';
 import 'screenargument.dart';
 import 'myclasses.dart';
@@ -47,18 +48,18 @@ String savedate = "";
 
   @override
   Widget build(BuildContext context) {
-    final args = ModalRoute.of(context)!.settings.arguments as ScreenArguments;
-    int metersCount = _data.split(",").length.toInt();
-    argString = args.message;
+
+    int metersCount = _data.split(";").length.toInt();
+print(_data);
     final CounterStorage storage = CounterStorage();
     storage.setSaveDirectory(saveDirName);
     String saveStatus = "";
     String saveText = "Sikeres mentés: ";
     return Scaffold(
       appBar: AppBar(
-          title: Text("Selejtezés meghatározása | Adatrögzítő: ${args.message.split(";")[0]} | Megrendelő: ${args.message.split(";")[1]}"),
+          title: Text("Típus kiválasztása | Adatrögzítő: ${readMeterDataMap["user"].toString() } | Megrendelő: ${ readMeterDataMap["owner"] }"),
           actions: <Widget>[
-            myMenu(username: argString.split(";")[0], message: argString, mlogin: 1)
+            myMenu( username: readMeterDataMap['user'].toString(), message: readMeterDataMap['user'].toString(), mlogin: 1),
           ]
       ),
       body: Scrollbar( child:
@@ -78,11 +79,11 @@ String savedate = "";
 
               ),
               onPressed: () {
-                storage.filename = "meterdata_notgood_${argString.split(";")[2]}" ;
-                argString += ";${_data.split(",")[index]}";
+                storage.filename = "meterdata_notgood_${readMeterDataMap["order_number"]}" ;
+                readMeterDataMap.addEntries({"savedate" : savedate}.entries);
                 try{
                   //argString += ";" +  savedate;
-                  storage.writeMeterData(argString);
+                  storage.writeMeterData(readMeterDataMap);
                   setState(() {
                     saveStatus ="Sikeres mentés!";
                   });
@@ -114,14 +115,15 @@ String savedate = "";
                     ));
 
                    // SnackBar(content: Text("Selejt mérő kiválasztva.")));//Text(saveStatus +" " + storage.filename)
-                Navigator.pushReplacementNamed(context, "/constnum",
-                    arguments: ScreenArguments(argString.split(";")[0], "${argString.split(";")[0]};${argString.split(";")[1]};${argString.split(";")[2]}",
-                     "${argString.split(";")[3]};selejt") );
+                readMeterDataMap.update("lastSaveNum", (value) => readMeterDataMap["constnum"].toString());
+                readMeterDataMap.update("lastSaveQuality", (value) => "selejt");
+                readMeterDataMap.update("lastSaveQualityText", (value) => _data.split(";")[index]);
+                Navigator.pushReplacementNamed(context, "/constnum");
               },
               icon: Icon( Icons.restore_from_trash,
                 size: 24,
               ),
-              label: Text(_data.split(",")[index]),
+              label: Text(_data.split(";")[index]),
             );
 
           /*ItemWidgetNotGoodMeter(text:  _data.split(",")[index],

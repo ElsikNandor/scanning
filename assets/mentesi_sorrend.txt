@@ -1,0 +1,10 @@
+Felhasználó neve
+Megrendelő
+Megrendelészszám
+Gyártásiszám
+Gyártásiszám rövid
+Mérőtípus
+Számlálóállás
+Minősítés
+Minősítés megjegyzés
+Bevitel ideje
