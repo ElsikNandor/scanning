@@ -413,18 +413,33 @@ class CounterStorage  {
 
     String meterdata = "";
 
-    meterdata = meterdataMap["user"].toString()+";"+
-        meterdataMap["owner"].toString()+";"+
-        meterdataMap["order_number"].toString()+";"+
-        meterdataMap["constnum"].toString()+";"+
-        meterdataMap["constnum_cut"].toString()+";"+
-        meterdataMap["mtype"].toString()+";"+
-        meterdataMap["countPos"].toString()+";"+
-        meterdataMap["lastSaveQuality"].toString()+";"+
-        meterdataMap["lastSaveQualityText"].toString()+";"+
-        //meterdataMap["yof"].toString()+";"+
-        meterdataMap["savedate"].toString();
-
+    if( meterdataMap["lastSaveQuality"].toString() == "jó" )
+      {
+        meterdata = meterdataMap["user"].toString()+";"+
+          meterdataMap["owner"].toString()+";"+
+          meterdataMap["order_number"].toString()+";"+
+          meterdataMap["constnum"].toString()+";"+
+          meterdataMap["constnum_cut"].toString()+";"+
+          meterdataMap["mtype"].toString()+";"+
+          meterdataMap["countPos"].toString()+";"+
+          meterdataMap["lastSaveQuality"].toString()+";"+
+          meterdataMap["yof"].toString()+";"+
+          meterdataMap["savedate"].toString();
+      }
+    else
+      {
+        meterdata = meterdataMap["user"].toString()+";"+
+            meterdataMap["owner"].toString()+";"+
+            meterdataMap["order_number"].toString()+";"+
+            meterdataMap["constnum"].toString()+";"+
+            meterdataMap["constnum_cut"].toString()+";"+
+            meterdataMap["mtype"].toString()+";"+
+            meterdataMap["countPos"].toString()+";"+
+            meterdataMap["lastSaveQuality"].toString()+";"+
+            meterdataMap["lastSaveQualityText"].toString()+";"+
+            meterdataMap["yof"].toString()+";"+
+            meterdataMap["savedate"].toString();
+      }
     try{
 
       if ( safetyS.existsSync() == true ){
@@ -442,7 +457,22 @@ class CounterStorage  {
       }
         else
           {
-            file.writeAsString('$meterdata\n', encoding: utf8);
+            if( meterdataMap["lastSaveQuality"].toString() == "jó" )
+            {
+              print("JÓ MENTÉS NINCS FÁJL");
+              String Titles ;
+              Titles = "Felhasználó;Megrendelő;Megrendelésszám;Gyáriszám;Gyáriszám rövid;Mérő típus;Számlálóállás;Minősítés;Gyártási év;Mentés dátuma";
+              file.writeAsString('$Titles\n$meterdata\n', encoding: utf8);
+            }
+            else
+              {
+              String Titles ;
+              Titles = "Felhasználó;Megrendelő;Megrendelésszám;Gyáriszám;Gyáriszám rövid;Mérő típus;Számlálóállás;Minősítés;Minősítés megjegyzés;Gyártási év;Mentés dátuma";
+              file.writeAsString('$Titles\n$meterdata\n', encoding: utf8);
+
+              }
+
+            //file.writeAsString('$meterdata\n', mode: FileMode.append, encoding: utf8);
             //print("nincs");
           }
 
@@ -520,7 +550,7 @@ class meterDataClass  {
 
     //readMeterDataMap['user'] = '';
     //readMeterDataMap['owner'] = '';
-    readMeterDataMap['order_number'] = '';
+    //readMeterDataMap['order_number'] = '';
     readMeterDataMap['constnum'] = '';
     readMeterDataMap['constnum_cut'] = '';
     readMeterDataMap['mtype'] = '';
@@ -569,4 +599,23 @@ class meterDataClass  {
   String getOrderNumber(){
     return readMeterDataMap['order_number'].toString();
   }
+
+  void setConstNum(String constnum)
+  {
+    readMeterDataMap.update("constnum", (value) => constnum);
+  }
+
+  String getConstNum(){
+    return readMeterDataMap['constnum'].toString();
+  }
+
+  void setConstNum_Cut(String constnum_cut)
+  {
+    readMeterDataMap.update("constnum_cut", (value) => constnum_cut);
+  }
+
+  String getConstNum_Cut(){
+    return readMeterDataMap['constnum_cut'].toString();
+  }
+
 }

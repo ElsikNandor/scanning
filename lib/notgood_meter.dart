@@ -81,6 +81,9 @@ print(_data);
               onPressed: () {
                 storage.filename = "meterdata_notgood_${readMeterDataMap["order_number"]}" ;
                 readMeterDataMap.addEntries({"savedate" : savedate}.entries);
+                readMeterDataMap.update("lastSaveNum", (value) => readMeterDataMap["constnum"].toString());
+                readMeterDataMap.update("lastSaveQuality", (value) => "selejt");
+                readMeterDataMap.update("lastSaveQualityText", (value) => _data.split(";")[index]);
                 try{
                   //argString += ";" +  savedate;
                   storage.writeMeterData(readMeterDataMap);
@@ -115,9 +118,7 @@ print(_data);
                     ));
 
                    // SnackBar(content: Text("Selejt mérő kiválasztva.")));//Text(saveStatus +" " + storage.filename)
-                readMeterDataMap.update("lastSaveNum", (value) => readMeterDataMap["constnum"].toString());
-                readMeterDataMap.update("lastSaveQuality", (value) => "selejt");
-                readMeterDataMap.update("lastSaveQualityText", (value) => _data.split(";")[index]);
+
                 Navigator.pushReplacementNamed(context, "/constnum");
               },
               icon: Icon( Icons.restore_from_trash,

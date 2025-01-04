@@ -225,7 +225,7 @@ meterController.init();
                                     meterNumber_cut = meterNumber.substring(2);
                                     meterNumber_cut = meterNumber.substring(0,8);
                                     //print("METER");
-                                    print(meterNumber);
+                                    print("FG_mn" + meterNumber);
                                   }
                                   if( meterNumber.length == 14) {
                                     meterNumber_cut = meterNumber.substring(meterNumber.length-8);
@@ -281,8 +281,10 @@ meterController.init();
                               ).then((value) {
                                     //print(orderNumberAttempt);
                                 if (value == "true") {
-                                  readMeterDataMap.addEntries({"constnum" : meterNumber}.entries);
-                                  readMeterDataMap.addEntries({"constnum_cut" : meterNumber_cut }.entries);
+                                  //readMeterDataMap.addEntries({"constnum" : meterNumber}.entries);
+                                  //readMeterDataMap.addEntries({"constnum_cut" : meterNumber_cut }.entries);
+                                  mDataClass.setConstNum(meterNumber.toString());
+                                  mDataClass.setConstNum_Cut(meterNumber.toString());
                                   Navigator.pushReplacementNamed(
                                       context, "/countpos");
                                       //arguments: ScreenArguments(userName,
@@ -317,8 +319,8 @@ meterController.init();
                             }
                             setState(() {
                               if (_formKey.currentState!.validate()) {
-                                readMeterDataMap.addEntries({"constnum" : meterNumber}.entries);
-                                readMeterDataMap.addEntries({"constnum_cut" : meterNumber }.entries);
+                                mDataClass.setConstNum(meterNumber.toString());
+                                mDataClass.setConstNum_Cut(meterNumber.toString());
                                 Navigator.pushReplacementNamed(
                                     context, '/mtype');
                                     //arguments: ScreenArguments(userName,
