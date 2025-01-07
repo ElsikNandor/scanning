@@ -101,7 +101,7 @@ class MyApp extends State<MyApp_prev> {
   }
 
   void setFullScreen(bool isFullScreen) {
-    //FullScreenWindow.setFullScreen(isFullScreen);
+    FullScreenWindow.setFullScreen(isFullScreen);
   }
   void showScreenSize(BuildContext context) async {
     Size logicalSize = await FullScreenWindow.getScreenSize(context);
@@ -283,7 +283,7 @@ class _HomePageState extends State<HomePage> {
   mDataClass.resetDataMapAll();
     return Scaffold(
       appBar: AppBar(
-        title: Text("Verzió: 2025.01.04. Adatrögzítő választó"),
+        title: Text("Verzió: 2025.01.07. Adatrögzítő választó"),
         actions: [myMenu(username : "", message: "", mlogin: 1,)],
       ),
       body:

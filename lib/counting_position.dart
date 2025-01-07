@@ -34,6 +34,7 @@ class _CountPosState extends State<CountPos> {
 
   @override
   Widget build(BuildContext context) {
+    print("reading const: " + readMeterDataMap.toString());
     //final args = ModalRoute.of(context)!.settings.arguments as ScreenArguments;
     userName = readMeterDataMap["user"].toString();
     String sendMessage = "";
@@ -73,8 +74,8 @@ class _CountPosState extends State<CountPos> {
                               onPressed: () {
                                 setState(() {
                                   if (_formKey.currentState!.validate()) {
-
-                                    readMeterDataMap.addEntries({"countPos" : meterNumber.toString()}.entries);
+                                    mDataClass.setCountPos(meterNumber.toString());
+                                    //readMeterDataMap.addEntries({"countPos" : meterNumber.toString()}.entries);
                                         Navigator.pushReplacementNamed(context, '/readingData');
                                           //  arguments: ScreenArguments(userName, "$userName;$meterNumber", "") );
                                     /*Navigator.pushReplacementNamed(context, '/yof',

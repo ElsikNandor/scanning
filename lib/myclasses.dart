@@ -591,6 +591,15 @@ class meterDataClass  {
     return readMeterDataMap['user'].toString();
   }
 
+  void setOwner(String owner)
+  {
+    readMeterDataMap.update("owner", (value) => owner);
+  }
+
+  String getOwner(){
+    return readMeterDataMap['owner'].toString();
+  }
+
   void setOrderNumber(String ordernumber)
   {
     readMeterDataMap.update("order_number", (value) => ordernumber);
@@ -617,5 +626,16 @@ class meterDataClass  {
   String getConstNum_Cut(){
     return readMeterDataMap['constnum_cut'].toString();
   }
+
+
+  void setCountPos(String countpos)
+  {
+    readMeterDataMap.update("countPos", (value) => countpos);
+  }
+
+  String getCountPos(){
+    return readMeterDataMap['countPos'].toString();
+  }
+
 
 }

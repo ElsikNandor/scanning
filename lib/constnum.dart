@@ -22,7 +22,7 @@ List<String> xx = [];
 TextEditingController _controller = TextEditingController();
 TextEditingController _lastSaveNum = TextEditingController();
 Map<String, String> rowsData = {"-" : "-"};
-int orderNumberAttempt = 1;
+int orderNumberAttempt = 0;
 
 int count1 = 0;
 int count2 = 0;
@@ -158,7 +158,7 @@ meterController.init();
               children: [
                 SizedBox(
                   width: (MediaQuery.of(context).size.width-200)/3-100,
-                  child: myListElements(title: "Legutóbb bevitt gyári szám:\n", content: lastSavedNum )
+                  child: myListElements(title: "Legutóbb bevitt gyártási szám:\n", content: lastSavedNum )
                 ),
                 SizedBox(
                   height: 10,
@@ -217,11 +217,31 @@ meterController.init();
                             }
 
                             if (_formKey.currentState!.validate()) {
-
-                              switch(ownerMap[owner])
+                              print("hossz : "  + meterNumber.length.toString());
+                              switch(ownerMap[mDataClass.getOwner()])
                                   {
                                 case "FG" :
-                                  if( meterNumber.length == 18) {
+                                  switch(meterNumber.length)
+                                  {
+                                    case 18 :
+                                      meterNumber_cut = meterNumber.substring(2);
+                                      meterNumber_cut = meterNumber_cut.substring(0,8);
+                                      mDataClass.setConstNum_Cut(meterNumber_cut);
+                                      //print("METER");
+                                      print("FG_18" + meterNumber);
+                                      break;
+                                    case 14 :
+                                      meterNumber_cut = meterNumber.substring(meterNumber.length-8);
+                                      print("FG_14" + meterNumber);
+                                      mDataClass.setConstNum_Cut(meterNumber_cut);
+                                      break;
+                                    default :
+                                      print("meter rövidFG : " +meterNumber);
+                                      meterNumber_cut = meterNumber;
+                                      mDataClass.setConstNum_Cut(meterNumber_cut);
+                                      break;
+                                  }
+                                  /*if( meterNumber.length == 18) {
                                     meterNumber_cut = meterNumber.substring(2);
                                     meterNumber_cut = meterNumber.substring(0,8);
                                     //print("METER");
@@ -237,7 +257,7 @@ meterController.init();
                                     //print("METER ELSE");
                                     print("meter rövidFG : " +meterNumber);
                                     meterNumber_cut = meterNumber;
-                                  }
+                                  }*/
                                   break;
                                 case "ED" :
                                   if( meterNumber.length == 14) {
@@ -265,7 +285,7 @@ meterController.init();
                                   break;
                                 case "OT" :
                                   print("OT meter number");
-                                  meterNumber = meterNumber_cut;
+                                  meterNumber_cut = meterNumber;
                                   break;
                               }
 
@@ -284,7 +304,7 @@ meterController.init();
                                   //readMeterDataMap.addEntries({"constnum" : meterNumber}.entries);
                                   //readMeterDataMap.addEntries({"constnum_cut" : meterNumber_cut }.entries);
                                   mDataClass.setConstNum(meterNumber.toString());
-                                  mDataClass.setConstNum_Cut(meterNumber.toString());
+                                  mDataClass.setConstNum_Cut(meterNumber_cut.toString());
                                   Navigator.pushReplacementNamed(
                                       context, "/countpos");
                                       //arguments: ScreenArguments(userName,
@@ -317,16 +337,16 @@ meterController.init();
                             if (meterController.ismeter.value) {
                               return;
                             }
-                            setState(() {
+                            //setState(() {
                               if (_formKey.currentState!.validate()) {
-                                mDataClass.setConstNum(meterNumber.toString());
-                                mDataClass.setConstNum_Cut(meterNumber.toString());
+                                mDataClass.setConstNum(meterNumber.toString()+"*");
+                                mDataClass.setConstNum_Cut(meterNumber.toString()+"*");
                                 Navigator.pushReplacementNamed(
                                     context, '/mtype');
                                     //arguments: ScreenArguments(userName,
                                         //"${args.message.split(";")[0]};${args.message.split(";")[1]};${args.message.split(";")[2]};$meterNumber*", ""));
                               }
-                            });
+                            //});
                           },
                           child: Text("Tovább"),
                         ),
@@ -357,21 +377,21 @@ meterController.init();
       ),
       SizedBox(
           width: (MediaQuery.of(context).size.width-200)/3-200,
-          child: myListElements(title: "Darabszám:\n", content: actualOwner == "OT" ? "-" : "${readMeterData .length} db")
+          child: myListElements(title: "Darabszám:\n", content: actualOwner == "OT" ? "-" : "${readMeterData .length-1} db")
       ),
       SizedBox(
         height: 10,
       ),
       SizedBox(
           width: (MediaQuery.of(context).size.width-200)/3-200,
-          child: myListElements(title: "Bevitt darabszám:\n", content: "$orderCountGlobal db")
+          child: myListElements(title: "Bevitt darabszám:\n", content: orderCountGlobal == 0 ? (orderCountGlobal).toString() + " db" : (orderCountGlobal).toString() + " db")
       ),
       SizedBox(
         height: 10,
       ),
       SizedBox(
           width: (MediaQuery.of(context).size.width-200)/3-200,
-          child: myListElements(title: "Fennmaradó:\n", content: actualOwner == "OT" ? "-" : "${readMeterData .length-orderCountGlobal} db")
+          child: myListElements(title: "Fennmaradó:\n", content: ownerMap[mDataClass.getOwner()] == "OT" ? "-" : "${readMeterData .length-orderCountGlobal-1} db")
       ),
     ],
   )
@@ -442,7 +462,9 @@ class constInputFormState extends State<constInputForm> {
                 //myReset();
                 return 'A mező csak számokat tartalmazhat!';
               }*/
-              meterNumber = value;
+              //meterNumber = value;
+              mDataClass.setConstNum(value);
+              meterNumber = mDataClass.getConstNum();
               return null;
             },
           ),

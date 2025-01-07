@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:scanning/constnum.dart';
+import 'package:scanning/main.dart';
 import 'package:scanning/order_number.dart';
 
 
@@ -15,11 +16,13 @@ class MeterController {
   bool isMeter(int result) {
     print("metercontroller");
 
-    if(actualOwner == "OT")
+    //if(actualOwner == "OT")
+    if(ownerMap[mDataClass.getOwner()] == "OT")
       {
         print("metercontroller OT");
         ismeter.value = false;
         checkmeter.value = false;
+        result = 2;
         return false;
       }
 

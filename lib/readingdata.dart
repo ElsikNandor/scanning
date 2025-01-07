@@ -196,7 +196,8 @@ class _readingDataState extends State<readingData> {
                                 ); //Text(saveStatus +" " + storage.filename)
                               //});
 
-                                  readMeterDataMap.update("lastSaveNum", (value) => readMeterDataMap["constnum"].toString());
+                                  //readMeterDataMap.update("lastSaveNum", (value) => readMeterDataMap["constnum"].toString());
+                                  readMeterDataMap.update("lastSaveNum", (value) => mDataClass.getConstNum_Cut().toString());
                                   readMeterDataMap.update("lastSaveQuality", (value) => "jó");
                               Navigator.pushReplacementNamed(context, "/constnum" );
 

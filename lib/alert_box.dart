@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:scanning/constnum.dart';
+import 'package:scanning/main.dart';
 
 
 class CheckMessageBox extends StatelessWidget {
@@ -105,7 +106,7 @@ Widget alertBoxMessage(BuildContext context, bool found) {
       ),
 
       child:    Text(
-          "Keresett gyártásiszám: $meterNumber",
+          "Keresett gyártásiszám: " + mDataClass.getConstNum_Cut(),
           style: TextStyle(fontSize: 20,  color: Colors.white)
       ),
 
