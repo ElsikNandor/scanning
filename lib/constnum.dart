@@ -224,15 +224,15 @@ meterController.init();
                                   switch(meterNumber.length)
                                   {
                                     case 18 :
-                                      meterNumber_cut = meterNumber.substring(2);
-                                      meterNumber_cut = meterNumber_cut.substring(0,8);
+                                      meterNumber_cut = meterNumber.substring(0);
+                                      meterNumber_cut = meterNumber_cut.substring(0,10);
                                       mDataClass.setConstNum_Cut(meterNumber_cut);
                                       //print("METER");
-                                      print("FG_18" + meterNumber);
+                                      //print("FG_18" + meterNumber);
                                       break;
                                     case 14 :
-                                      meterNumber_cut = meterNumber.substring(meterNumber.length-8);
-                                      print("FG_14" + meterNumber);
+                                      meterNumber_cut = meterNumber.substring(meterNumber.length-10);
+//                                      print("FG_14" + meterNumber);
                                       mDataClass.setConstNum_Cut(meterNumber_cut);
                                       break;
                                     default :
@@ -261,8 +261,9 @@ meterController.init();
                                   break;
                                 case "ED" :
                                   if( meterNumber.length == 14) {
-                                    meterNumber_cut = meterNumber.substring(meterNumber.length-8);
-                                    //print("METER");
+                                    meterNumber_cut = meterNumber.substring(meterNumber.length-10);
+                                    mDataClass.setConstNum_Cut(meterNumber_cut);
+                                    print("ÉD_14" + meterNumber);
                                     print(meterNumber);
                                   }
                                   else
@@ -270,22 +271,26 @@ meterController.init();
                                       //print("METER ELSE");
                                      print("meter rövid: " +meterNumber);
                                      meterNumber_cut = meterNumber;
+                                     mDataClass.setConstNum_Cut(meterNumber_cut);
                                     }
                                   break;
                                 case "EON" :
                                   if( meterNumber.length == 15) {
-                                    meterNumber_cut = meterNumber.substring(meterNumber.length-8);
+                                    meterNumber_cut = meterNumber.substring(meterNumber.length-10);
+                                    mDataClass.setConstNum_Cut(meterNumber_cut);
                                   }
                                   else
                                   {
                                     //print("METER ELSE");
                                     print("meter rövid: " +meterNumber);
                                     meterNumber_cut = meterNumber;
+                                    mDataClass.setConstNum_Cut(meterNumber_cut);
                                   }
                                   break;
                                 case "OT" :
                                   print("OT meter number");
                                   meterNumber_cut = meterNumber;
+                                  mDataClass.setConstNum_Cut(meterNumber_cut);
                                   break;
                               }
 
