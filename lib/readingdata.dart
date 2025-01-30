@@ -125,7 +125,7 @@ class _readingDataState extends State<readingData> {
           myListElements(title: "Számlálóállás:", content: readMeterDataMap['countPos'].toString()),
           //myListElements(title: "Számlálóállás:", content: argString.split(";")[5]),
           SizedBox(height: 5,),
-          myListElements(title: "Cserekerék:", content: "-"),
+          myListElements(title: "Cserekerék:", content: readMeterDataMap['gear'].toString()),
           SizedBox(height: 5,),
           myListElements(title: "Rögzítés időpontja:", content: savedate),
         ],//+"_" + argString.split(";")[8]+"_" + argString.split(";")[9]

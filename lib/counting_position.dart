@@ -76,7 +76,15 @@ class _CountPosState extends State<CountPos> {
                                   if (_formKey.currentState!.validate()) {
                                     mDataClass.setCountPos(meterNumber.toString());
                                     //readMeterDataMap.addEntries({"countPos" : meterNumber.toString()}.entries);
+                                    if( mDataClass.getOwner().toString() == "Tigáz")
+                                      {
+                                        Navigator.pushReplacementNamed(context, '/gearpairs');
+                                      }
+                                    else
+                                      {
                                         Navigator.pushReplacementNamed(context, '/readingData');
+                                      }
+
                                           //  arguments: ScreenArguments(userName, "$userName;$meterNumber", "") );
                                     /*Navigator.pushReplacementNamed(context, '/yof',
                                         arguments: ScreenArguments(userName, userName+";"+meterNumber, "") );

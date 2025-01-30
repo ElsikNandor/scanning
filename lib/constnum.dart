@@ -241,23 +241,21 @@ meterController.init();
                                       mDataClass.setConstNum_Cut(meterNumber_cut);
                                       break;
                                   }
-                                  /*if( meterNumber.length == 18) {
-                                    meterNumber_cut = meterNumber.substring(2);
-                                    meterNumber_cut = meterNumber.substring(0,8);
-                                    //print("METER");
-                                    print("FG_mn" + meterNumber);
-                                  }
-                                  if( meterNumber.length == 14) {
+                                  break;
+                                case "Tigaz" :
+                                  if( meterNumber.length == 15) {
                                     meterNumber_cut = meterNumber.substring(meterNumber.length-8);
-                                    //print("METER");
-                                    //print(meterNumber);
+                                    mDataClass.setConstNum_Cut(meterNumber_cut);
+                                    print("Tigáz_15 " + meterNumber);
+                                    print(meterNumber);
                                   }
                                   else
                                   {
                                     //print("METER ELSE");
-                                    print("meter rövidFG : " +meterNumber);
+                                    print("meter rövid: " +meterNumber);
                                     meterNumber_cut = meterNumber;
-                                  }*/
+                                    mDataClass.setConstNum_Cut(meterNumber_cut);
+                                  }
                                   break;
                                 case "ED" :
                                   if( meterNumber.length == 14) {
@@ -287,6 +285,7 @@ meterController.init();
                                     mDataClass.setConstNum_Cut(meterNumber_cut);
                                   }
                                   break;
+
                                 case "OT" :
                                   print("OT meter number");
                                   meterNumber_cut = meterNumber;

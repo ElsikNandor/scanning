@@ -423,7 +423,7 @@ class CounterStorage  {
           meterdataMap["mtype"].toString()+";"+
           meterdataMap["countPos"].toString()+";"+
           meterdataMap["lastSaveQuality"].toString()+";"+
-          meterdataMap["yof"].toString()+";"+
+          meterdataMap["gear"].toString()+";"+
           meterdataMap["savedate"].toString();
       }
     else
@@ -437,7 +437,7 @@ class CounterStorage  {
             meterdataMap["countPos"].toString()+";"+
             meterdataMap["lastSaveQuality"].toString()+";"+
             meterdataMap["lastSaveQualityText"].toString()+";"+
-            meterdataMap["yof"].toString()+";"+
+            meterdataMap["gear"].toString()+";"+
             meterdataMap["savedate"].toString();
       }
     try{
@@ -461,13 +461,13 @@ class CounterStorage  {
             {
               print("JÓ MENTÉS NINCS FÁJL");
               String Titles ;
-              Titles = "Felhasználó;Megrendelő;Megrendelésszám;Gyáriszám;Gyáriszám rövid;Mérő típus;Számlálóállás;Minősítés;Gyártási év;Mentés dátuma";
+              Titles = "Felhasználó;Megrendelő;Megrendelésszám;Gyáriszám;Gyáriszám rövid;Mérő típus;Számlálóállás;Minősítés;Cserekerék;Mentés dátuma";
               file.writeAsString('$Titles\n$meterdata\n', encoding: utf8);
             }
             else
               {
               String Titles ;
-              Titles = "Felhasználó;Megrendelő;Megrendelésszám;Gyáriszám;Gyáriszám rövid;Mérő típus;Számlálóállás;Minősítés;Minősítés megjegyzés;Gyártási év;Mentés dátuma";
+              Titles = "Felhasználó;Megrendelő;Megrendelésszám;Gyáriszám;Gyáriszám rövid;Mérő típus;Számlálóállás;Minősítés;Minősítés megjegyzés;Cserekerék;Mentés dátuma";
               file.writeAsString('$Titles\n$meterdata\n', encoding: utf8);
 
               }
@@ -537,6 +537,7 @@ class meterDataClass  {
     this.meterDataMap['constnum_cut'] = '';
     this.meterDataMap['mtype'] = '';
     this.meterDataMap['countPos'] = '';
+    this.meterDataMap['gears'] = '';
     this.meterDataMap['lastSaveQuality'] = '';
     this.meterDataMap['lastSaveQualityText'] = '';
     this.meterDataMap['lastSaveNum'] = '';
@@ -555,6 +556,7 @@ class meterDataClass  {
     readMeterDataMap['constnum_cut'] = '';
     readMeterDataMap['mtype'] = '';
     readMeterDataMap['countPos'] = '';
+    readMeterDataMap['gear'] = '';
     readMeterDataMap['lastSaveQuality'] = '';
     readMeterDataMap['lastSaveQualityText'] = '';
     readMeterDataMap['lastSaveNum'] = '';
@@ -573,6 +575,7 @@ class meterDataClass  {
     readMeterDataMap['constnum_cut'] = '';
     readMeterDataMap['mtype'] = '';
     readMeterDataMap['countPos'] = '';
+    readMeterDataMap['gear'] = '';
     readMeterDataMap['lastSaveQuality'] = '';
     readMeterDataMap['lastSaveQualityText'] = '';
     readMeterDataMap['lastSaveNum'] = '';
@@ -635,6 +638,15 @@ class meterDataClass  {
 
   String getCountPos(){
     return readMeterDataMap['countPos'].toString();
+  }
+
+  void setGear(String gear)
+  {
+    readMeterDataMap.update("gear", (value) => gear);
+  }
+
+  String getGear(){
+    return readMeterDataMap['gear'].toString();
   }
 
 

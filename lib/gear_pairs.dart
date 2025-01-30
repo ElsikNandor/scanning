@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:scanning/main.dart';
 import 'dart:async';
 import 'screenargument.dart';
 import 'myclasses.dart';
@@ -39,19 +40,18 @@ class _GearPairsState extends State<GearPairs> {
 
   @override
   Widget build(BuildContext context) {
-    final args = ModalRoute
+    /*final args = ModalRoute
         .of(context)!
         .settings
         .arguments as ScreenArguments;
     argString = args.message;
-    String userN = argString.split(";")[0];
+    String userN = argString.split(";")[0];*/
     final formkey = GlobalKey<FormState>();
     return Scaffold(
       appBar: AppBar(
-          title: Text("Cserekerék kiválasztása | Adatrögzítő: ${args.message.split(";")[0]} | Megrendelő: ${args.message.split(";")[1]}"),
+          title: Text("Cserekerék kiválasztása | Adatrögzítő: ${ mDataClass.getUser().toString() } | Megrendelő: ${mDataClass.getOwner().toString()}"),
           actions: <Widget>[
-            myMenu(username: argString.split(";")[0], message: argString, mlogin: 0)
-          ]
+            myMenu( username: "a", message: "a", mlogin: 0,)]
       ),
       body:
       Scrollbar(child:
@@ -76,8 +76,9 @@ class _GearPairsState extends State<GearPairs> {
                 )
             ),
             onPressed: () {
-              Navigator.pushReplacementNamed(context, "/readingData",
-                  arguments: ScreenArguments(userN, "$argString;${gears[index].gear}", ""));
+              mDataClass.setGear(gears[index].gear);
+              Navigator.pushReplacementNamed(context, "/readingData");
+                  //arguments: ScreenArguments(userN, "$argString;${gears[index].gear}", ""));
             },
             child: Column(
               children: [

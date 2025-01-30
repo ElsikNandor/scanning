@@ -55,7 +55,7 @@ Map<String, String> ownerMap = {
   "Főgáz" : "FG",
   "Égáz" : "ED",
   "EON" : "EON",
-  "Tigáz" : "4",
+  "Tigáz" : "Tigaz",
   "Egyéb" : "OT"};
 
 List<String> ownersList = [
@@ -101,7 +101,7 @@ class MyApp extends State<MyApp_prev> {
   }
 
   void setFullScreen(bool isFullScreen) {
-    FullScreenWindow.setFullScreen(isFullScreen);
+    //FullScreenWindow.setFullScreen(isFullScreen);
   }
   void showScreenSize(BuildContext context) async {
     Size logicalSize = await FullScreenWindow.getScreenSize(context);
