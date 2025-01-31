@@ -103,6 +103,10 @@ class ItemWidget extends StatelessWidget {
         width: 250,
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
+            textStyle: const TextStyle(
+                color: Colors.white,
+                fontSize: 25,
+                fontStyle: FontStyle.normal),
             //fixedSize: Size(50, 50),
             //minimumSize: Size(20, 20),
             //maximumSize: Size(100, 100),

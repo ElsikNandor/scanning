@@ -283,7 +283,7 @@ class _HomePageState extends State<HomePage> {
   mDataClass.resetDataMapAll();
     return Scaffold(
       appBar: AppBar(
-        title: Text("Verzió: 2025.01.07. Adatrögzítő választó"),
+        title: Text("Verzió: 2025.01.31. Adatrögzítő választó"),
         actions: [myMenu(username : "", message: "", mlogin: 1,)],
       ),
       body:
